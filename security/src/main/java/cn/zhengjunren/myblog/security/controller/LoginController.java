@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,6 +34,7 @@ import java.util.Objects;
  * @date 2019/11/12 10:59
  */
 @RestController
+@CrossOrigin
 public class LoginController {
 
     private static final String URL_OAUTH_TOKEN = "http://localhost:8000/oauth/token";
@@ -80,7 +82,7 @@ public class LoginController {
             Map<String, Object> jsonMap = MapperUtils.json2map(jsonString);
             String token = String.valueOf(jsonMap.get("access_token"));
             result.put("token", token);
-            responseResult = new ResponseResult<>(HttpStatus.OK.value(), "登录成功", result);
+            responseResult = new ResponseResult<>(20000, "登录成功", result);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -92,7 +94,7 @@ public class LoginController {
         String token = request.getParameter("access_token");
         OAuth2AccessToken oAuth2AccessToken = tokenStore.readAccessToken(token);
         tokenStore.removeAccessToken(oAuth2AccessToken);
-        return new ResponseResult<>(200, "注销成功", null);
+        return new ResponseResult<>(20000, "注销成功", null);
     }
 
 }

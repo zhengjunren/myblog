@@ -18,7 +18,7 @@ public class ResponseResult<T> implements Serializable {
     /**
      * 状态码
      */
-    private Integer state;
+    private Integer code;
     /**
      * 消息
      */
@@ -30,36 +30,36 @@ public class ResponseResult<T> implements Serializable {
     public ResponseResult() {
         super();
     }
-    public ResponseResult(Integer state) {
+    public ResponseResult(Integer code) {
         super();
-        this.state = state;
+        this.code = code;
     }
-    public ResponseResult(Integer state, String message) {
+    public ResponseResult(Integer code, String message) {
         super();
-        this.state = state;
+        this.code = code;
         this.message = message;
     }
-    public ResponseResult(Integer state, Throwable throwable) {
+    public ResponseResult(Integer code, Throwable throwable) {
         super();
-        this.state = state;
+        this.code = code;
         this.message = throwable.getMessage();
     }
-    public ResponseResult(Integer state, T data) {
+    public ResponseResult(Integer code, T data) {
         super();
-        this.state = state;
+        this.code = code;
         this.data = data;
     }
-    public ResponseResult(Integer state, String message, T data) {
+    public ResponseResult(Integer code, String message, T data) {
         super();
-        this.state = state;
+        this.code = code;
         this.message = message;
         this.data = data;
     }
-    public Integer getState() {
-        return state;
+    public Integer getcode() {
+        return code;
     }
-    public void setState(Integer state) {
-        this.state = state;
+    public void setcode(Integer code) {
+        this.code = code;
     }
     public String getMessage() {
         return message;
@@ -79,7 +79,7 @@ public class ResponseResult<T> implements Serializable {
         int result = 1;
         result = prime * result + ((data == null) ? 0 : data.hashCode());
         result = prime * result + ((message == null) ? 0 : message.hashCode());
-        result = prime * result + ((state == null) ? 0 : state.hashCode());
+        result = prime * result + ((code == null) ? 0 : code.hashCode());
         return result;
     }
     @Override
@@ -108,11 +108,11 @@ public class ResponseResult<T> implements Serializable {
         } else if (!message.equals(other.message)) {
             return false;
         }
-        if (state == null) {
-            if (other.state != null) {
+        if (code == null) {
+            if (other.code != null) {
                 return false;
             }
-        } else if (!state.equals(other.state)) {
+        } else if (!code.equals(other.code)) {
             return false;
         }
         return true;
