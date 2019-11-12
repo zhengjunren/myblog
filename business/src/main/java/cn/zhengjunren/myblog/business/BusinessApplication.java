@@ -1,0 +1,22 @@
+package cn.zhengjunren.myblog.business;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import tk.mybatis.spring.annotation.MapperScan;
+
+/**
+ * <p>ClassName: BusinessApplication</p>
+ * <p>Description: </p>
+ *
+ * @author ZhengJunren
+ * @version 1.0.0
+ * @date 2019/11/12 9:35
+ */
+@SpringBootApplication
+@MapperScan("cn.zhengjunren.myblog.business.mapper")
+public class BusinessApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(BusinessApplication.class, args);
+    }
+}

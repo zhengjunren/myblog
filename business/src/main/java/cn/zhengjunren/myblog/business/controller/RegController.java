@@ -1,0 +1,55 @@
+package cn.zhengjunren.myblog.business.controller;
+
+import cn.zhengjunren.myblog.business.domain.TbUser;
+import cn.zhengjunren.myblog.business.service.TbUserService;
+import cn.zhengjunren.myblog.commons.dto.ResponseResult;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * <p>ClassName: RegController</p>
+ * <p>Description: </p>
+ *
+ * @author ZhengJunren
+ * @version 1.0.0
+ * @date 2019/11/12 10:13
+ */
+
+@RestController
+@RequestMapping("reg")
+public class RegController {
+
+    @Autowired
+    TbUserService tbUserService;
+
+    @PostMapping()
+    public ResponseResult<TbUser> reg(@RequestBody TbUser tbUser) {
+        String validateRegResult = validateReg(tbUser);
+        //验证通过
+        if (validateRegResult == null) {
+            int result = tbUserService.insert(tbUser);
+            if (result > 0){
+                return new ResponseResult<>(HttpStatus.OK.value(), "用户注册成功", tbUser);
+            }
+        }
+        return new ResponseResult<>(HttpStatus.NOT_ACCEPTABLE.value(),validateRegResult != null ? validateRegResult : "用户注册失败！");
+    }
+
+    /**
+     * 注册信息验证
+     * @param tbUser {@link TbUser}
+     * @return 验证结果
+     */
+    private String validateReg(TbUser tbUser) {
+        TbUser user = tbUserService.getByUsername(tbUser.getUsername());
+        //已经有这个用户名了，返回值不为空
+        if (user != null) {
+            return "用户名重复，请重试！";
+        }
+        return null;
+    }
+}
