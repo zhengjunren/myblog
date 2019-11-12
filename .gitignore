@@ -1,5 +1,5 @@
 .idea/
-targe/
+target/
 *.iml
 
 # Compiled class file
