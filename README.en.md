@@ -1,22 +1,18 @@
-# blog-v2
+# myblog
 
 #### Description
-{**When you're done, you can delete the content in this README and update the file with details for others getting started with your repository**}
+This blog system which is modified by final exam project of Sophomore semester is a springboot project
 
 #### Software Architecture
-Software architecture description
+
 
 #### Installation
 
-1. xxxx
-2. xxxx
-3. xxxx
+pending upgrade
 
 #### Instructions
 
-1. xxxx
-2. xxxx
-3. xxxx
+pending upgrade
 
 #### Contribution
 
