@@ -28,8 +28,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private TbUserService tbUserService;
 
-    private static final String USERNAME = "admin";
-    private static final String PASSWORD = "$2a$10$WhCuqmyCsYdqtJvM0/J4seCU.xZQHe2snNE5VFUuBGUZWPbtdl3GG";
+
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         //根据用户名获取用户
