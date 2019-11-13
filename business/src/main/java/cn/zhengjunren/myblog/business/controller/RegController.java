@@ -4,7 +4,6 @@ import cn.zhengjunren.myblog.business.domain.TbUser;
 import cn.zhengjunren.myblog.business.service.TbUserService;
 import cn.zhengjunren.myblog.commons.dto.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,10 +32,10 @@ public class RegController {
         if (validateRegResult == null) {
             int result = tbUserService.insert(tbUser);
             if (result > 0){
-                return new ResponseResult<>(HttpStatus.OK.value(), "用户注册成功", tbUser);
+                return new ResponseResult<>(ResponseResult.CodeStatus.OK, "用户注册成功", tbUser);
             }
         }
-        return new ResponseResult<>(HttpStatus.NOT_ACCEPTABLE.value(),validateRegResult != null ? validateRegResult : "用户注册失败！");
+        return new ResponseResult<>(ResponseResult.CodeStatus.FAIL,validateRegResult != null ? validateRegResult : "用户注册失败！");
     }
 
     /**

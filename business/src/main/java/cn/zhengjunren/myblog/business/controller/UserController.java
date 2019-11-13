@@ -35,7 +35,7 @@ public class UserController {
         loginInfo.setName(authentication.getName());
         TbUser tbUser = tbUserService.getByUsername(authentication.getName());
         loginInfo.setAvatar(tbUser.getAvatar());
-        return new ResponseResult<>(20000, "获取用户信息", loginInfo);
+        return new ResponseResult<>(ResponseResult.CodeStatus.OK, "获取用户信息", loginInfo);
     }
 
 }

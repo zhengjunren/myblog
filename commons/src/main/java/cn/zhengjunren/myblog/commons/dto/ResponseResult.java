@@ -55,24 +55,7 @@ public class ResponseResult<T> implements Serializable {
         this.message = message;
         this.data = data;
     }
-    public Integer getcode() {
-        return code;
-    }
-    public void setcode(Integer code) {
-        this.code = code;
-    }
-    public String getMessage() {
-        return message;
-    }
-    public void setMessage(String message) {
-        this.message = message;
-    }
-    public T getData() {
-        return data;
-    }
-    public void setData(T data) {
-        this.data = data;
-    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -116,5 +99,15 @@ public class ResponseResult<T> implements Serializable {
             return false;
         }
         return true;
+    }
+
+    @Data
+    public class CodeStatus {
+
+        public static final int OK = 20000;
+        public static final int FAIL = 50000;
+        public static final int ILLEGAL_TOKEN = 50008;
+        public static final int OTHER_CLIENTS_LOGGED_IN = 50012;
+        public static final int TOKEN_EXPIRED = 50014;
     }
 }

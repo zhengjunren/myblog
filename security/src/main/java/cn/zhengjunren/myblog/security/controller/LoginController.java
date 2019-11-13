@@ -6,7 +6,6 @@ import cn.zhengjunren.myblog.commons.utils.OkHttpClientUtil;
 import cn.zhengjunren.myblog.security.dto.LoginParam;
 import okhttp3.Response;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -64,7 +63,7 @@ public class LoginController {
         // 验证密码是否正确
         UserDetails userDetails = userDetailsService.loadUserByUsername(loginParam.getUsername());
         if (userDetails == null || !passwordEncoder.matches(loginParam.getPassword(), userDetails.getPassword())) {
-            ResponseResult<Map<String, Object>> responseResult = new  ResponseResult<>(HttpStatus.BAD_REQUEST.value(), "账号或密码错误", null);
+            ResponseResult<Map<String, Object>> responseResult = new  ResponseResult<>(ResponseResult.CodeStatus.FAIL, "账号或密码错误", null);
             return responseResult;
         }
         // 通过 HTTP 客户端请求登录接口
@@ -82,7 +81,7 @@ public class LoginController {
             Map<String, Object> jsonMap = MapperUtils.json2map(jsonString);
             String token = String.valueOf(jsonMap.get("access_token"));
             result.put("token", token);
-            responseResult = new ResponseResult<>(20000, "登录成功", result);
+            responseResult = new ResponseResult<>(ResponseResult.CodeStatus.OK, "登录成功", result);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -94,7 +93,7 @@ public class LoginController {
         String token = request.getParameter("access_token");
         OAuth2AccessToken oAuth2AccessToken = tokenStore.readAccessToken(token);
         tokenStore.removeAccessToken(oAuth2AccessToken);
-        return new ResponseResult<>(20000, "注销成功", null);
+        return new ResponseResult<>(ResponseResult.CodeStatus.OK, "注销成功", null);
     }
 
 }
