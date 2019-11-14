@@ -2,6 +2,7 @@ package cn.zhengjunren.myblog.business.controller;
 
 import cn.zhengjunren.myblog.business.domain.TbUser;
 import cn.zhengjunren.myblog.business.dto.LoginInfo;
+import cn.zhengjunren.myblog.business.dto.Status;
 import cn.zhengjunren.myblog.business.dto.UserListInfo;
 import cn.zhengjunren.myblog.business.service.TbUserService;
 import cn.zhengjunren.myblog.commons.dto.ResponseResult;
@@ -61,10 +62,10 @@ public class UserController {
     }
 
     @PostMapping("status")
-    public ResponseResult<TbUser> modifyStatus(String status) {
+    public ResponseResult<TbUser> modifyStatus(@RequestBody Status status) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         TbUser tbUser = tbUserService.getByUsername(authentication.getName());
-        tbUser.setStatus(status);
+        tbUser.setStatus(status.getValue());
         int result = tbUserService.update(tbUser);
         if (result > 0) {
             return new ResponseResult<>(ResponseResult.CodeStatus.OK,"更新用户状态成功", null);

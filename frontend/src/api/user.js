@@ -43,6 +43,6 @@ export function modifyStatus(status) {
   return request({
     url: '/user/status',
     method: 'post',
-    params: status
+    data: {value:status}
   })
 }
