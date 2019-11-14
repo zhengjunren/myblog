@@ -7,6 +7,7 @@ import cn.zhengjunren.myblog.business.dto.UserListInfo;
 import cn.zhengjunren.myblog.business.service.TbUserService;
 import cn.zhengjunren.myblog.commons.dto.ResponseResult;
 import com.github.pagehelper.PageInfo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -39,7 +40,7 @@ public class UserController {
         LoginInfo loginInfo = new LoginInfo();
         loginInfo.setName(authentication.getName());
         TbUser tbUser = tbUserService.getByUsername(authentication.getName());
-        loginInfo.setAvatar(tbUser.getAvatar());
+        BeanUtils.copyProperties(tbUser, loginInfo);
         return new ResponseResult<>(ResponseResult.CodeStatus.OK, "获取用户信息", loginInfo);
     }
 
@@ -71,5 +72,24 @@ public class UserController {
             return new ResponseResult<>(ResponseResult.CodeStatus.OK,"更新用户状态成功", null);
         }
         return  new ResponseResult<>(ResponseResult.CodeStatus.FAIL,"网络错误", null);
+    }
+
+    @PostMapping("profile")
+    public ResponseResult<Void> getProfile(@RequestBody TbUser tbUser) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        TbUser oldTbUser = tbUserService.getByUsername(authentication.getName());
+        int result = tbUserService.modifyProfile(oldTbUser, tbUser);
+        return commonResponse("个人信息更新成功", "网络错误", result);
+    }
+
+    private ResponseResult<Void> commonResponse(String successMessage, String failMessage, int result) {
+        return commonResponse(successMessage, failMessage, result, 0);
+    }
+
+    private ResponseResult<Void> commonResponse(String successMessage, String failMessage, int result,int standard){
+        if (result > standard) {
+            return new ResponseResult<>(ResponseResult.CodeStatus.OK,successMessage, null);
+        }
+        return  new ResponseResult<>(ResponseResult.CodeStatus.FAIL,failMessage, null);
     }
 }

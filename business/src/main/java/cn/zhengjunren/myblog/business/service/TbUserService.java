@@ -38,8 +38,17 @@ public interface TbUserService{
     public PageInfo<TbUser> page(Integer pageNum, Integer pageSize);
 
     /**
-     * 更新用户信息
+     * 管理员更新用户信息
      * @param tbUser {@link TbUser}
+     * @return 是否更新成功
      */
     public int update(TbUser tbUser);
+
+    /**
+     * 更新个人信息
+     * @param oldTbUser 原用户信息
+     * @param newTbUser 用户修改后的信息
+     * @return 是否更新成功
+     */
+    public int modifyProfile(TbUser oldTbUser, TbUser newTbUser);
 }

@@ -78,6 +78,28 @@ export const constantRoutes = [
   },
 
   {
+    path: '/profile',
+    component: Layout,
+    redirect: '/profile/',
+    name: 'Profile',
+    meta: { title: '个人信息', icon: 'example' },
+    children: [
+      {
+        path: '',
+        name: 'UserList',
+        component: () => import('@/views/user/profile'),
+        meta: { title: '修改信息', icon: 'table' }
+      },
+      {
+        path: 'tree',
+        name: 'Tree',
+        component: () => import('@/views/tree/index'),
+        meta: { title: 'Tree', icon: 'tree' }
+      }
+    ]
+  },
+
+  {
     path: '/form',
     component: Layout,
     children: [

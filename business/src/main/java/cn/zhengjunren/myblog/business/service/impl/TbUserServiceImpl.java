@@ -50,4 +50,13 @@ public class TbUserServiceImpl implements TbUserService{
         tbUser.setPassword(user.getPassword());
         return tbUserMapper.updateByPrimaryKey(tbUser);
     }
+
+    @Override
+    public int modifyProfile(TbUser oldTbUser, TbUser newTbUser) {
+        oldTbUser.setEmail(newTbUser.getEmail());
+        oldTbUser.setAvatar(newTbUser.getAvatar());
+        oldTbUser.setNickname(newTbUser.getNickname());
+        oldTbUser.setUrl(newTbUser.getUrl());
+        return tbUserMapper.updateByPrimaryKey(oldTbUser);
+    }
 }
