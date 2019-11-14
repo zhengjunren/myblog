@@ -91,10 +91,10 @@ export const constantRoutes = [
         meta: { title: '修改信息', icon: 'table' }
       },
       {
-        path: 'tree',
-        name: 'Other',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
+        path: 'avatar',
+        name: 'UserAvatar',
+        component: () => import('@/views/user/avatar'),
+        meta: { title: '修改头像', icon: 'table' }
       }
     ]
   },

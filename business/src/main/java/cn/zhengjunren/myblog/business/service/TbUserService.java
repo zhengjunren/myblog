@@ -51,4 +51,12 @@ public interface TbUserService{
      * @return 是否更新成功
      */
     public int modifyProfile(TbUser oldTbUser, TbUser newTbUser);
+
+    /**
+     * 修改头像
+     * @param username 用户名
+     * @param path 头像路径
+     * @return 是否更新成功
+     */
+    public int modifyAvatar(String username, String path);
 }

@@ -224,7 +224,7 @@
                 })
             },
             handleModifyStatus(row, status) {
-                modifyStatus(status).then(response => {
+                modifyStatus(row.username, status).then(response => {
                     this.$message({
                         message: response.message,
                         type: 'success'

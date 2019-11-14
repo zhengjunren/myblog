@@ -9,11 +9,7 @@
       label-width="120px"
     >
       <el-form-item label="头像">
-        <div class="avatar-container">
-          <div class=" avatar-wrapper">
-            <img :src="form.avatar+'?imageView2/1/w/60/h/60'" width="60" height="60" class="user-avatar">
-          </div>
-        </div>
+        <PanThumb :image="form.avatar" :width=width :height=height />
       </el-form-item>
       <el-form-item label="用户名">
         <el-input v-model="form.name" :disabled="true" />
@@ -48,11 +44,15 @@
 </template>
 
 <script>
+    import PanThumb from '@/components/PanThumb'
     import { getInfo, updateProfile } from "@/api/user";
     export default {
         name: "profile",
+        components: {  PanThumb },
         data() {
             return {
+                width:'100px',
+                height:'100px',
                 formLoading: true,
                 form:{
                     name:'',

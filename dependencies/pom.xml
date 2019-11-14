@@ -47,6 +47,18 @@
                 <scope>import</scope>
             </dependency>
 
+            <!-- Ali Cloud -->
+            <dependency>
+                <groupId>com.aliyun.oss</groupId>
+                <artifactId>aliyun-sdk-oss</artifactId>
+                <version>${aliyun-sdk-oss.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
 
             <!-- DataSource -->
             <dependency>
@@ -75,6 +87,8 @@
                 <artifactId>pagehelper-spring-boot-starter</artifactId>
                 <version>${spring-boot-pagehelper.version}</version>
             </dependency>
+
+
             <!-- Commons -->
             <dependency>
                 <groupId>com.squareup.okhttp3</groupId>

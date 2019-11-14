@@ -39,18 +39,28 @@ export function updateUser(data) {
   })
 }
 
-export function modifyStatus(status) {
+export function modifyStatus(username, status) {
   return request({
     url: '/user/status',
     method: 'post',
-    data: {value:status}
+    data: {
+      'value':status,
+      'username': username
+    }
   })
 }
-
 
 export function updateProfile(data) {
   return request({
     url: '/user/profile',
+    method: 'post',
+    data
+  })
+}
+
+export function updateAvatar(data) {
+  return request({
+    url: '/user/avatar',
     method: 'post',
     data
   })

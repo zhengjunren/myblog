@@ -78,6 +78,13 @@ const actions = {
       removeToken()
       resolve()
     })
+  },
+
+  setAvatar({ commit }, avatar) {
+    return new Promise(resolve => {
+      commit('SET_AVATAR', avatar)
+      resolve()
+    })
   }
 }
 

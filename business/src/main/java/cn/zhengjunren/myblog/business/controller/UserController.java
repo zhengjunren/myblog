@@ -1,8 +1,9 @@
 package cn.zhengjunren.myblog.business.controller;
 
 import cn.zhengjunren.myblog.business.domain.TbUser;
+import cn.zhengjunren.myblog.business.dto.AvatarInfo;
 import cn.zhengjunren.myblog.business.dto.LoginInfo;
-import cn.zhengjunren.myblog.business.dto.Status;
+import cn.zhengjunren.myblog.business.dto.StatusInfo;
 import cn.zhengjunren.myblog.business.dto.UserListInfo;
 import cn.zhengjunren.myblog.business.service.TbUserService;
 import cn.zhengjunren.myblog.commons.dto.ResponseResult;
@@ -63,15 +64,11 @@ public class UserController {
     }
 
     @PostMapping("status")
-    public ResponseResult<TbUser> modifyStatus(@RequestBody Status status) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        TbUser tbUser = tbUserService.getByUsername(authentication.getName());
-        tbUser.setStatus(status.getValue());
+    public ResponseResult<Void> modifyStatus(@RequestBody StatusInfo statusInfo) {
+        TbUser tbUser = tbUserService.getByUsername(statusInfo.getUsername());
+        tbUser.setStatus(statusInfo.getValue());
         int result = tbUserService.update(tbUser);
-        if (result > 0) {
-            return new ResponseResult<>(ResponseResult.CodeStatus.OK,"更新用户状态成功", null);
-        }
-        return  new ResponseResult<>(ResponseResult.CodeStatus.FAIL,"网络错误", null);
+        return commonResponse("更新用户状态成功", "网络错误", result);
     }
 
     @PostMapping("profile")
@@ -80,6 +77,17 @@ public class UserController {
         TbUser oldTbUser = tbUserService.getByUsername(authentication.getName());
         int result = tbUserService.modifyProfile(oldTbUser, tbUser);
         return commonResponse("个人信息更新成功", "网络错误", result);
+    }
+
+    /**
+     * 更新头像
+     * @param avatarInfo {@link AvatarInfo}
+     * @return {@link ResponseResult<Void> }
+     */
+    @PostMapping("avatar")
+    public ResponseResult<Void> modifyAvatar(@RequestBody AvatarInfo avatarInfo) {
+        int result = tbUserService.modifyAvatar(avatarInfo.getUsername(), avatarInfo.getPath());
+        return commonResponse("头像更新成功", "网络错误，请重新上传", result);
     }
 
     private ResponseResult<Void> commonResponse(String successMessage, String failMessage, int result) {

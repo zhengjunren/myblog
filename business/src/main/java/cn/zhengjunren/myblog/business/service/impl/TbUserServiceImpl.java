@@ -59,4 +59,11 @@ public class TbUserServiceImpl implements TbUserService{
         oldTbUser.setUrl(newTbUser.getUrl());
         return tbUserMapper.updateByPrimaryKey(oldTbUser);
     }
+
+    @Override
+    public int modifyAvatar(String username, String path) {
+        TbUser tbUser = getByUsername(username);
+        tbUser.setAvatar(path);
+        return tbUserMapper.updateByPrimaryKey(tbUser);
+    }
 }
