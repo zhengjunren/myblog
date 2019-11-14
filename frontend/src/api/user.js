@@ -46,3 +46,12 @@ export function modifyStatus(status) {
     data: {value:status}
   })
 }
+
+
+export function updateProfile(data) {
+  return request({
+    url: '/user/profile',
+    method: 'post',
+    data
+  })
+}

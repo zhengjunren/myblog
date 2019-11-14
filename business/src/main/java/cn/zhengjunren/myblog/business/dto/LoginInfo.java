@@ -1,9 +1,9 @@
 package cn.zhengjunren.myblog.business.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
-import javax.persistence.Column;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>ClassName: LoginInfo</p>
@@ -30,10 +30,11 @@ public class LoginInfo {
 
     private String lastLoginIp;
 
-    private LocalDateTime registerTime;
+    @JsonFormat(timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
+    private Date registerTime;
 
-    private LocalDateTime lastLoginTime;
+    @JsonFormat(timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
+    private Date lastLoginTime;
 
-    @Column(name = "`status`")
     private String status;
 }

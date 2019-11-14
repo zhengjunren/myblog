@@ -86,13 +86,13 @@ export const constantRoutes = [
     children: [
       {
         path: '',
-        name: 'UserList',
+        name: 'UserProfile',
         component: () => import('@/views/user/profile'),
         meta: { title: '修改信息', icon: 'table' }
       },
       {
         path: 'tree',
-        name: 'Tree',
+        name: 'Other',
         component: () => import('@/views/tree/index'),
         meta: { title: 'Tree', icon: 'tree' }
       }

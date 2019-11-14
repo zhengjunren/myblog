@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @version 1.0.0
  * @date 2019/11/12 13:10
  */
-@CrossOrigin
+@CrossOrigin(origins = "*", maxAge = 3600L)
 @RestController
 @RequestMapping("user")
 public class UserController {

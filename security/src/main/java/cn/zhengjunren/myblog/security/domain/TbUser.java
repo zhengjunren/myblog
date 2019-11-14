@@ -6,7 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @Table(name = "tb_user")
@@ -38,10 +38,10 @@ public class TbUser {
     private String lastLoginIp;
 
     @Column(name = "register_time")
-    private LocalDateTime registerTime;
+    private Date registerTime;
 
     @Column(name = "last_login_time")
-    private LocalDateTime lastLoginTime;
+    private Date lastLoginTime;
 
     @Column(name = "`status`")
     private String status;

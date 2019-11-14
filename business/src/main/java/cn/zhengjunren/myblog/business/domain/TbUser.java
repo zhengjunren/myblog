@@ -1,12 +1,13 @@
 package cn.zhengjunren.myblog.business.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>ClassName: TbUser</p>
@@ -46,11 +47,13 @@ public class TbUser {
     @Column(name = "last_login_ip")
     private String lastLoginIp;
 
+    @JsonFormat(timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
     @Column(name = "register_time")
-    private LocalDateTime registerTime;
+    private Date registerTime;
 
+    @JsonFormat(timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
     @Column(name = "last_login_time")
-    private LocalDateTime lastLoginTime;
+    private Date lastLoginTime;
 
     @Column(name = "`status`")
     private String status;
