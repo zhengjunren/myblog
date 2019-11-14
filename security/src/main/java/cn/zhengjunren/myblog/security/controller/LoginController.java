@@ -3,8 +3,12 @@ package cn.zhengjunren.myblog.security.controller;
 import cn.zhengjunren.myblog.commons.dto.ResponseResult;
 import cn.zhengjunren.myblog.commons.utils.MapperUtils;
 import cn.zhengjunren.myblog.commons.utils.OkHttpClientUtil;
+import cn.zhengjunren.myblog.security.domain.TbUser;
 import cn.zhengjunren.myblog.security.dto.LoginParam;
+import cn.zhengjunren.myblog.security.enums.StatusEnum;
+import cn.zhengjunren.myblog.security.service.TbUserService;
 import okhttp3.Response;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -49,7 +53,8 @@ public class LoginController {
     public BCryptPasswordEncoder passwordEncoder;
     @Resource
     public TokenStore tokenStore;
-
+    @Autowired
+    TbUserService tbUserService;
     /**
      * 登录
      *
@@ -64,6 +69,10 @@ public class LoginController {
         UserDetails userDetails = userDetailsService.loadUserByUsername(loginParam.getUsername());
         if (userDetails == null || !passwordEncoder.matches(loginParam.getPassword(), userDetails.getPassword())) {
             return new  ResponseResult<>(ResponseResult.CodeStatus.FAIL, "账号或密码错误", null);
+        }
+        TbUser tbUser = tbUserService.getByUsername(loginParam.getUsername());
+        if (!tbUser.getStatus().equals(StatusEnum.NORMAL.getValue())) {
+            return new  ResponseResult<>(ResponseResult.CodeStatus.STATUS_ERROR, String.format("你的账号%s了，请联系管理员", tbUser.getStatus()), null);
         }
         // 通过 HTTP 客户端请求登录接口
         Map<String, String> params = new HashMap<>();

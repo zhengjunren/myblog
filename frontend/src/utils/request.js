@@ -51,10 +51,21 @@ service.interceptors.response.use(
         duration: 5 * 1000
       })
 
+      if (res.code === 30000) {
+        this.$alert(res.message, '警告', {
+          confirmButtonText: '确定',
+          callback: action => {
+            this.$message({
+              type: 'warning ',
+              message: `action: ${ action }`
+            });
+          }
+        });
+      }
       // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
       if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
         // to re-login
-        MessageBox.confirm('你已经注销, 你可以取消留在当前界面或者再次登录', '确认注销', {
+        MessageBox.confirm('你已经退出当前登录, 你可以取消留在当前界面或者再次登录', '确认注销', {
           confirmButtonText: 'Re-Login',
           cancelButtonText: 'Cancel',
           type: 'warning'
