@@ -1,8 +1,12 @@
 package cn.zhengjunren.myblog.security.domain;
 
-import java.time.LocalDateTime;
-import javax.persistence.*;
 import lombok.Data;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.time.LocalDateTime;
 
 @Data
 @Table(name = "tb_user")
@@ -40,5 +44,5 @@ public class TbUser {
     private LocalDateTime lastLoginTime;
 
     @Column(name = "`status`")
-    private Integer status;
+    private String status;
 }

@@ -63,8 +63,7 @@ public class LoginController {
         // 验证密码是否正确
         UserDetails userDetails = userDetailsService.loadUserByUsername(loginParam.getUsername());
         if (userDetails == null || !passwordEncoder.matches(loginParam.getPassword(), userDetails.getPassword())) {
-            ResponseResult<Map<String, Object>> responseResult = new  ResponseResult<>(ResponseResult.CodeStatus.FAIL, "账号或密码错误", null);
-            return responseResult;
+            return new  ResponseResult<>(ResponseResult.CodeStatus.FAIL, "账号或密码错误", null);
         }
         // 通过 HTTP 客户端请求登录接口
         Map<String, String> params = new HashMap<>();

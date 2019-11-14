@@ -10,11 +10,11 @@
       <div class="bullshit">
         <div class="bullshit__oops">OOPS!</div>
         <div class="bullshit__info">All rights reserved
-          <a style="color:#20a0ff" href="https://wallstreetcn.com" target="_blank">wallstreetcn</a>
+          <a style="color:#20a0ff" href="http://www.zhengjunren.cn" target="_blank">zhengjunren</a>
         </div>
         <div class="bullshit__headline">{{ message }}</div>
-        <div class="bullshit__info">Please check that the URL you entered is correct, or click the button below to return to the homepage.</div>
-        <a href="" class="bullshit__return-home">Back to home</a>
+        <div class="bullshit__info">请确定你输入的网址，或者点击下面的按钮回到首页.</div>
+        <a href="" class="bullshit__return-home">回到首页</a>
       </div>
     </div>
   </div>
@@ -26,7 +26,7 @@ export default {
   name: 'Page404',
   computed: {
     message() {
-      return 'The webmaster said that you can not enter this page...'
+      return '你不能到这里...'
     }
   }
 }

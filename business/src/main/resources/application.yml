@@ -31,3 +31,10 @@ security:
 mybatis:
   type-aliases-package: cn.zhengjunren.myblog.business.domain
   mapper-locations: classpath:mapper/*.xml
+
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: countSql
+  page-size-zero: true

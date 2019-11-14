@@ -22,3 +22,27 @@ export function logout(token) {
     params: { access_token: token }
   })
 }
+
+export function fetchList(query) {
+  return request({
+    url: '/user/list',
+    method: 'get',
+    params: query
+  })
+}
+
+export function updateUser(data) {
+  return request({
+    url: '/user/',
+    method: 'post',
+    data
+  })
+}
+
+export function modifyStatus(status) {
+  return request({
+    url: '/user/status',
+    method: 'post',
+    params: status
+  })
+}

@@ -53,5 +53,5 @@ public class TbUser {
     private LocalDateTime lastLoginTime;
 
     @Column(name = "`status`")
-    private Integer status;
+    private String status;
 }
