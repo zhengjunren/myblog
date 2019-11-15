@@ -2,6 +2,7 @@ package cn.zhengjunren.myblog.search.domain;
 
 import lombok.Data;
 import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -26,6 +27,7 @@ public class TbUser {
     @GeneratedValue(generator = "JDBC")
     private Integer id;
 
+    @Field(searchAnalyzer = "standard")
     @Column(name = "username")
     private String username;
 
@@ -35,6 +37,7 @@ public class TbUser {
     @Column(name = "nickname")
     private String nickname;
 
+    @Field(searchAnalyzer = "standard")
     @Column(name = "email")
     private String email;
 
