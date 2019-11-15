@@ -66,10 +66,11 @@ export function updateAvatar(data) {
   })
 }
 
-export function search(data) {
+export function search(data, page, limit) {
   return request({
     url: 'http://localhost:8500/user/search',
     method: 'post',
+    params: { page: page, limit:limit },
     data
   })
 }

@@ -94,7 +94,7 @@
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit"
+    <pagination v-show="total>0" :total="total" :page.sync="isSearch ? searchPage : listQuery.page" :limit.sync="isSearch ? searchLimit : listQuery.limit"
                 @pagination="isSearch? search : getList"/>
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px"
@@ -131,6 +131,7 @@
     import waves from '@/directive/waves'
     import Pagination from '@/components/Pagination'
     import Link from "../../layout/components/Sidebar/Link";
+    import {getList} from "../../api/table";
 
     export default {
         name: "UserListTable",
@@ -160,6 +161,8 @@
                     page: 1,
                     limit: 10,
                 },
+                searchPage:1,
+                searchLimit:10,
                 query:{
                     username:'',
                     status:'',
@@ -261,18 +264,23 @@
                     row.status = status
                 })
             },
+
             search() {
-                search(this.query).then(response => {
-                    this.list = response.data.items
-                    this.total = response.data.total
-                    // 模拟请求时间
-                    if (this.query != null) {
-                        this.isSearch = true
-                    }
-                    setTimeout(() => {
-                        this.listLoading = false
-                    }, 500)
-                })
+                if (this.query.username === "" && this.query.nickname === "" && this.query.status === "" && this.query.email === "") {
+                    this.getList()
+                    this.isSearch = false
+                }
+                else {
+                    search(this.query, this.searchPage, this.searchLimit).then(response => {
+                        this.list = response.data.items
+                        this.total = response.data.total
+                        // 模拟请求时间
+                        setTimeout(() => {
+                            this.listLoading = false
+                        }, 500)
+                    })
+                    this.isSearch = true
+                }
               },
         }
     }
