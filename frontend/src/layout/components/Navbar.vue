@@ -47,6 +47,7 @@ export default {
     },
     async logout() {
       await this.$store.dispatch('user/logout')
+      await this.$store.dispatch('user/removeAvatar')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     }
   }

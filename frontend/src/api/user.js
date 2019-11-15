@@ -65,3 +65,11 @@ export function updateAvatar(data) {
     data
   })
 }
+
+export function search(data) {
+  return request({
+    url: 'http://localhost:8500/user/search',
+    method: 'post',
+    data
+  })
+}

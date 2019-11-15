@@ -1,5 +1,25 @@
 <template>
   <div class="app-container">
+    <div class="my-search-container">
+      <el-input v-model="query.username" placeholder="用户名" style="width: 150px;" class="my-search-item" @keyup.enter.native="" />
+      <el-input v-model="query.nickname" placeholder="昵称" style="width: 150px;" class="my-search-item" @keyup.enter.native="" />
+      <el-input v-model="query.email" placeholder="邮箱" style="width: 150px;" class="my-search-item" @keyup.enter.native="" />
+      <el-select v-model="query.status" placeholder="状态" clearable style="width: 90px" class="my-search-item">
+        <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
+      </el-select>
+      <el-button v-waves class="my-search-item" type="primary" icon="el-icon-search" @click="search">
+        搜索
+      </el-button>
+      <el-button class="my-search-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
+        增加
+      </el-button>
+      <el-button v-waves :loading="downloadLoading" class="my-search-item" type="primary" icon="el-icon-download" @click="">
+        导出
+      </el-button>
+      <el-checkbox v-model="showReviewer" class="my-search-item" style="margin-left:15px;" @change="tableKey=tableKey+1">
+        待续
+      </el-checkbox>
+    </div>
     <el-table
       :key="tableKey"
       v-loading="listLoading"
@@ -107,13 +127,15 @@
 </template>
 
 <script>
-    import {fetchList, updateUser, modifyStatus} from "@/api/user";
+    import {fetchList, updateUser, modifyStatus, search} from "@/api/user";
+    import waves from '@/directive/waves'
     import Pagination from '@/components/Pagination'
     import Link from "../../layout/components/Sidebar/Link";
 
     export default {
         name: "UserListTable",
         components: {Link, Pagination},
+        directives: { waves },
         filters: {
             statusFilter1(status) {
                 const statusMap = {
@@ -136,6 +158,12 @@
                 listQuery: {
                     page: 1,
                     limit: 10,
+                },
+                query:{
+                    username:'',
+                    status:'',
+                    email:'',
+                    nickname:''
                 },
                 statusOptions: ['正常', '冻结', '注销'],
                 importanceOptions: [1, 2, 3],
@@ -231,9 +259,17 @@
                     })
                     row.status = status
                 })
-
-
             },
+            search() {
+                search(this.query).then(response => {
+                    this.list = response.data.items
+                    this.total = response.data.total
+                    // 模拟请求时间
+                    setTimeout(() => {
+                        this.listLoading = false
+                    }, 500)
+                })
+              },
         }
     }
 </script>

@@ -80,6 +80,14 @@ const actions = {
     })
   },
 
+  // remove avatar
+  removeAvatar({ commit }) {
+    return new Promise(resolve => {
+      commit('SET_AVATAR', '')
+      resolve()
+    })
+  },
+
   setAvatar({ commit }, avatar) {
     return new Promise(resolve => {
       commit('SET_AVATAR', avatar)
