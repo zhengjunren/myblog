@@ -1,6 +1,7 @@
 package cn.zhengjunren.myblog.search.service;
 
 import cn.zhengjunren.myblog.search.domain.TbUser;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -14,4 +15,6 @@ import java.util.List;
  */
 public interface TbUserService{
     List<TbUser> selectAll();
+
+    PageInfo<TbUser> page(Integer pageNum, Integer pageSize);
 }

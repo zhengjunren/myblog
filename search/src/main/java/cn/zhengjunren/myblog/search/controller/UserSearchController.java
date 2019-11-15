@@ -5,7 +5,9 @@ import cn.zhengjunren.myblog.search.domain.TbUser;
 import cn.zhengjunren.myblog.search.dto.UserListInfo;
 import cn.zhengjunren.myblog.search.dto.UserSearchParm;
 import cn.zhengjunren.myblog.search.service.TbUserService;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.query.IndexQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
@@ -43,7 +45,13 @@ public class UserSearchController {
 
 
     @PostMapping("search")
-    public ResponseResult< UserListInfo > searchAll(@RequestBody UserSearchParm userSearchParm) {
+    public ResponseResult< UserListInfo > searchAll(@RequestBody UserSearchParm userSearchParm, Integer page, Integer limit) {
+        UserListInfo userListInfo = new UserListInfo();
+        if (userSearchParm == null) {
+            PageInfo<TbUser> pageInfo = tbUserService.page(page, limit);
+            userListInfo.setItems(pageInfo.getList());
+            userListInfo.setTotal(pageInfo.getTotal());
+        }
         List<TbUser> tbUsers = tbUserService.selectAll();
         List<IndexQuery> queries = new ArrayList<>();
         int counter = 0;
@@ -66,11 +74,13 @@ public class UserSearchController {
         NativeSearchQueryBuilder nativeSearchQueryBuilder = new NativeSearchQueryBuilder();
 
         setQuery(nativeSearchQueryBuilder, userSearchParm);
-        SearchQuery searchQuery = nativeSearchQueryBuilder.build();
+        SearchQuery searchQuery = nativeSearchQueryBuilder
+                .withPageable(PageRequest.of(page - 1, limit))
+                .build();
 
         List<TbUser> tbUserList = template.queryForList(searchQuery, TbUser.class);
         long count = template.count(searchQuery);
-        UserListInfo userListInfo = new UserListInfo();
+
         userListInfo.setItems(tbUserList);
         userListInfo.setTotal(count);
         return new ResponseResult<>(ResponseResult.CodeStatus.OK,"搜索成功", userListInfo);

@@ -95,7 +95,7 @@
     </el-table>
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit"
-                @pagination="getList"/>
+                @pagination="isSearch? search : getList"/>
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px"
                style="width: 400px; margin-left:50px;">
@@ -151,6 +151,7 @@
         },
         data() {
             return {
+                isSearch:false,
                 tableKey: 0,
                 list: null,
                 total: 0,
@@ -265,6 +266,9 @@
                     this.list = response.data.items
                     this.total = response.data.total
                     // 模拟请求时间
+                    if (this.query != null) {
+                        this.isSearch = true
+                    }
                     setTimeout(() => {
                         this.listLoading = false
                     }, 500)
