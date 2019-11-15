@@ -86,7 +86,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.funtl.spring.security.server.OAuth2ServerApplication</mainClass>
+                    <mainClass>cn.zhengjunren.myblog.security.SecurityApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>
