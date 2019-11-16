@@ -10,9 +10,6 @@
       <el-button v-waves class="my-search-item" type="primary" icon="el-icon-search" @click="search">
         搜索
       </el-button>
-      <el-button class="my-search-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
-        增加
-      </el-button>
       <el-button v-waves :loading="downloadLoading" class="my-search-item" type="primary" icon="el-icon-download" @click="handleDownload">
         导出
       </el-button>
@@ -94,8 +91,15 @@
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" :page.sync="isSearch ? searchPage : listQuery.page" :limit.sync="isSearch ? searchLimit : listQuery.limit"
-                @pagination="isSearch? search : getList"/>
+    <div v-if="isSearch===false">
+      <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit"
+                  @pagination="getList"/>
+    </div>
+    <div v-if="isSearch===true">
+      <pagination v-show="total>0" :total="total" :page.sync="searchPage" :limit.sync="searchLimit"
+                  @pagination="search" />
+    </div>
+
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px"
                style="width: 400px; margin-left:50px;">
@@ -163,7 +167,7 @@
                     limit: 10,
                 },
                 searchPage:1,
-                searchLimit:10,
+                searchLimit:2,
                 query:{
                     username:'',
                     status:'',
@@ -203,6 +207,7 @@
         },
         methods: {
             getList() {
+                console.log(this.isSearch)
                 this.listLoading = true
                 fetchList(this.listQuery).then(response => {
                     this.list = response.data.items
@@ -292,7 +297,7 @@
                     let downloadElement = document.createElement('a');
                     let href = window.URL.createObjectURL(blob); //创建下载的链接
                     downloadElement.href = href;
-                    downloadElement.download = 'forbidden-words.xlsx'; //下载后文件名
+                    downloadElement.download = '用户列表.xlsx'; //下载后文件名
                     document.body.appendChild(downloadElement);
                     downloadElement.click(); //点击下载
                     document.body.removeChild(downloadElement); //下载完成移除元素
