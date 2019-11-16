@@ -6,6 +6,7 @@ import cn.zhengjunren.myblog.search.dto.UserListInfo;
 import cn.zhengjunren.myblog.search.dto.UserSearchParm;
 import cn.zhengjunren.myblog.search.service.TbUserService;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
+import static org.elasticsearch.index.query.QueryBuilders.wildcardQuery;
 
 /**
  * <p>ClassName: SearchController</p>
@@ -72,8 +74,12 @@ public class UserSearchController {
         }
 
         NativeSearchQueryBuilder nativeSearchQueryBuilder = new NativeSearchQueryBuilder();
-
+        if (StringUtils.isNotBlank(userSearchParm.getUsername())){
+            nativeSearchQueryBuilder.withQuery(wildcardQuery("username", String.format("*%s*",userSearchParm.getUsername())));
+            userSearchParm.setUsername(null);
+        }
         setQuery(nativeSearchQueryBuilder, userSearchParm);
+
         SearchQuery searchQuery = nativeSearchQueryBuilder
                 .withPageable(PageRequest.of(page - 1, limit))
                 .build();
