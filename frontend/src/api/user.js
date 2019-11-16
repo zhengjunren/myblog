@@ -74,3 +74,11 @@ export function search(data, page, limit) {
     data
   })
 }
+
+export function getExcel() {
+  return request({
+    // responseType: 'blob',
+    url: '/excel/download',
+    method: 'get',
+  })
+}

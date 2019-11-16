@@ -13,7 +13,7 @@
       <el-button class="my-search-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
         增加
       </el-button>
-      <el-button v-waves :loading="downloadLoading" class="my-search-item" type="primary" icon="el-icon-download" @click="">
+      <el-button v-waves :loading="downloadLoading" class="my-search-item" type="primary" icon="el-icon-download" @click="handleDownload">
         导出
       </el-button>
       <el-checkbox v-model="showReviewer" class="my-search-item" style="margin-left:15px;" @change="tableKey=tableKey+1">
@@ -127,11 +127,12 @@
 </template>
 
 <script>
-    import {fetchList, updateUser, modifyStatus, search} from "@/api/user";
+    import {fetchList, getExcel, modifyStatus, search, updateUser} from "@/api/user";
     import waves from '@/directive/waves'
     import Pagination from '@/components/Pagination'
     import Link from "../../layout/components/Sidebar/Link";
-    import {getList} from "../../api/table";
+    import axios from 'axios'
+    import {getToken} from '../../utils/auth'
 
     export default {
         name: "UserListTable",
@@ -282,6 +283,22 @@
                     this.isSearch = true
                 }
               },
+            handleDownload(){
+                axios.get('http://localhost:9000/excel/download', {
+                    responseType: 'blob',
+                    params:{access_token: getToken()}
+                }).then(res => {
+                    let blob = new Blob([res.data], { type: 'application/ms-excel;charset=utf-8' });
+                    let downloadElement = document.createElement('a');
+                    let href = window.URL.createObjectURL(blob); //创建下载的链接
+                    downloadElement.href = href;
+                    downloadElement.download = 'forbidden-words.xlsx'; //下载后文件名
+                    document.body.appendChild(downloadElement);
+                    downloadElement.click(); //点击下载
+                    document.body.removeChild(downloadElement); //下载完成移除元素
+                    window.URL.revokeObjectURL(href); //释放掉blob对象
+                })
+            }
         }
     }
 </script>

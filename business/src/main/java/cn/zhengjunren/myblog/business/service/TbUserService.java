@@ -59,4 +59,10 @@ public interface TbUserService{
      * @return 是否更新成功
      */
     public int modifyAvatar(String username, String path);
+
+    /**
+     * 获取所有用户信息
+     * @return {@link List<TbUser>}
+     */
+    List<TbUser> selectAll();
 }

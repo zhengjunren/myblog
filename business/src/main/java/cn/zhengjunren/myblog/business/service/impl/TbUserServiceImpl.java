@@ -66,4 +66,9 @@ public class TbUserServiceImpl implements TbUserService{
         tbUser.setAvatar(path);
         return tbUserMapper.updateByPrimaryKey(tbUser);
     }
+
+    @Override
+    public List<TbUser> selectAll() {
+        return tbUserMapper.selectAll();
+    }
 }

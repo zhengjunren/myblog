@@ -92,6 +92,12 @@
             <version>${parent.version}</version>
         </dependency>
 
+        <!-- utils -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>easyexcel</artifactId>
+        </dependency>
+
     </dependencies>
 
 
