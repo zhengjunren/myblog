@@ -167,7 +167,7 @@
                     limit: 10,
                 },
                 searchPage:1,
-                searchLimit:2,
+                searchLimit:10,
                 query:{
                     username:'',
                     status:'',
