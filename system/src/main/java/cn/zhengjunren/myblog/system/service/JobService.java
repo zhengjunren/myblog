@@ -28,7 +28,7 @@ public interface JobService {
      * @param form 表单参数 {@link JobForm}
      * @throws SchedulerException 异常
      */
-    void deleteJob(JobForm form) throws SchedulerException;
+    boolean deleteJob(JobForm form) throws SchedulerException;
 
     /**
      * 暂停定时任务

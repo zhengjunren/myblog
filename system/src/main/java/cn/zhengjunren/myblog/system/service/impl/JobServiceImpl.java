@@ -79,10 +79,11 @@ public class JobServiceImpl implements JobService {
      * @throws SchedulerException 异常
      */
     @Override
-    public void deleteJob(JobForm form) throws SchedulerException {
+    public boolean deleteJob(JobForm form) throws SchedulerException {
         scheduler.pauseTrigger(TriggerKey.triggerKey(form.getJobClassName(), form.getJobGroupName()));
         scheduler.unscheduleJob(TriggerKey.triggerKey(form.getJobClassName(), form.getJobGroupName()));
-        scheduler.deleteJob(JobKey.jobKey(form.getJobClassName(), form.getJobGroupName()));
+        boolean result = scheduler.deleteJob(JobKey.jobKey(form.getJobClassName(), form.getJobGroupName()));
+        return result;
     }
 
     /**
