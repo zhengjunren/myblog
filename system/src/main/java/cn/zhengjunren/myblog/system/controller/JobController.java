@@ -9,6 +9,7 @@ import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,18 +29,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/job")
 @Slf4j
+@CrossOrigin(origins = "*", maxAge = 3600L)
 public class JobController {
 
     @Autowired
     private JobService jobService;
 
     @GetMapping
-    public ResponseResult<JobInfo> jobList(Integer currentPage, Integer pageSize) {
+    public ResponseResult<JobInfo> jobList(Integer page, Integer limit) {
 
-        PageInfo<JobAndTrigger> all = jobService.list(currentPage, pageSize);
+        PageInfo<JobAndTrigger> all = jobService.list(page, limit);
         JobInfo jobInfo = new JobInfo();
         jobInfo.setTotal(all.getTotal());
-        jobInfo.setItem(all.getList());
+        jobInfo.setItems(all.getList());
         return new ResponseResult<JobInfo>(ResponseResult.CodeStatus.OK, "任务列表获取成功", jobInfo);
     }
 

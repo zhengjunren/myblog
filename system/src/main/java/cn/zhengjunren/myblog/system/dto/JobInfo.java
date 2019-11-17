@@ -16,6 +16,6 @@ import java.util.List;
 @Data
 public class JobInfo {
 
-    List<JobAndTrigger> item;
+    List<JobAndTrigger> items;
     long total;
 }

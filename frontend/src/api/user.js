@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function login(data) {
   return request({
-    url: 'http://localhost:8000/user/login',
+    url: 'http://119.3.222.119:8000/user/login',
     method: 'post',
     data
   })
@@ -17,7 +17,7 @@ export function getInfo() {
 
 export function logout(token) {
   return request({
-    url: 'http://localhost:8000/user/logout',
+    url: 'http://119.3.222.119:8000/user/logout',
     method: 'post',
     params: { access_token: token }
   })
@@ -68,7 +68,7 @@ export function updateAvatar(data) {
 
 export function search(data, page, limit) {
   return request({
-    url: 'http://localhost:8500/user/search',
+    url: 'http://119.3.222.119:8500/user/search',
     method: 'post',
     params: { page: page, limit:limit },
     data

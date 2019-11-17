@@ -56,11 +56,33 @@ export const constantRoutes = [
   },
 
   {
+    path: '/system',
+    component: Layout,
+    redirect: '/system/list',
+    name: 'System',
+    meta: { title: '系统管理', icon: 'example' },
+    children: [
+      {
+        path: 'list',
+        name: 'SystemList',
+        component: () => import('@/views/task/list'),
+        meta: { title: '定时任务', icon: 'table' }
+      },
+      {
+        path: 'inline',
+        name: 'SystemInline',
+        component: () => import('@/views/task/inlineList'),
+        meta: { title: '表格内编辑', icon: 'tree' }
+      }
+    ]
+  },
+
+  {
     path: '/user',
     component: Layout,
     redirect: '/user/list',
     name: 'User',
-    meta: { title: '用户管理', icon: 'example' },
+    meta: { title: '用户管理', icon: 'user' },
     children: [
       {
         path: 'list',
@@ -70,7 +92,7 @@ export const constantRoutes = [
       },
       {
         path: 'tree',
-        name: 'Tree',
+        name: 'tTree',
         component: () => import('@/views/tree/index'),
         meta: { title: 'Tree', icon: 'tree' }
       }
