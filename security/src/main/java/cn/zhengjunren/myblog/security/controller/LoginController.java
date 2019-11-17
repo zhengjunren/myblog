@@ -42,7 +42,7 @@ import java.util.Objects;
  * @date 2019/11/12 10:59
  */
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "*", maxAge = 3600L)
 public class LoginController {
 
     private static final String URL_OAUTH_TOKEN = "http://localhost:8000/oauth/token";

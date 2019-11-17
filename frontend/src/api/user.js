@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function login(data) {
   return request({
-    url: 'http://119.3.222.119:8000/user/login',
+    url: 'http://localhost:8000/user/login',
     method: 'post',
     data
   })
@@ -10,7 +10,7 @@ export function login(data) {
 
 export function getInfo() {
   return request({
-    url: 'http://119.3.222.119:8000/user/info',
+    url: 'http://localhost:8000/user/info',
     method: 'get'
   })
 }
