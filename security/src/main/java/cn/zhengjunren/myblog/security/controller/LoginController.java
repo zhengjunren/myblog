@@ -4,18 +4,23 @@ import cn.zhengjunren.myblog.commons.dto.ResponseResult;
 import cn.zhengjunren.myblog.commons.utils.MapperUtils;
 import cn.zhengjunren.myblog.commons.utils.OkHttpClientUtil;
 import cn.zhengjunren.myblog.security.domain.TbUser;
+import cn.zhengjunren.myblog.security.dto.LoginInfo;
 import cn.zhengjunren.myblog.security.dto.LoginParam;
 import cn.zhengjunren.myblog.security.enums.StatusEnum;
 import cn.zhengjunren.myblog.security.service.TbUserService;
 import okhttp3.Response;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -102,6 +107,16 @@ public class LoginController {
         OAuth2AccessToken oAuth2AccessToken = tokenStore.readAccessToken(token);
         tokenStore.removeAccessToken(oAuth2AccessToken);
         return new ResponseResult<>(ResponseResult.CodeStatus.OK, "注销成功", null);
+    }
+
+    @GetMapping("info")
+    public ResponseResult<LoginInfo> info() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginInfo loginInfo = new LoginInfo();
+        loginInfo.setName(authentication.getName());
+        TbUser tbUser = tbUserService.getByUsername(authentication.getName());
+        BeanUtils.copyProperties(tbUser, loginInfo);
+        return new ResponseResult<>(ResponseResult.CodeStatus.OK, "获取用户信息", loginInfo);
     }
 
 }
