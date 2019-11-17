@@ -109,7 +109,7 @@ public class LoginController {
         return new ResponseResult<>(ResponseResult.CodeStatus.OK, "注销成功", null);
     }
 
-    @GetMapping("info")
+    @GetMapping("/user/info")
     public ResponseResult<LoginInfo> info() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         LoginInfo loginInfo = new LoginInfo();

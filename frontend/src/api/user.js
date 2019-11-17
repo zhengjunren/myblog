@@ -10,7 +10,7 @@ export function login(data) {
 
 export function getInfo() {
   return request({
-    url: '/user/info',
+    url: 'http://119.3.222.119:8000/user/info',
     method: 'get'
   })
 }
