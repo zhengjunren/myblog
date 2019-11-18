@@ -1,6 +1,8 @@
 package cn.zhengjunren.myblog.commons.utils;
 
 import cn.hutool.json.JSONObject;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
@@ -15,8 +17,11 @@ public class SecurityUtils {
 
     public static UserDetails getUserDetails() {
         UserDetails userDetails;
-        userDetails = (UserDetails) org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return userDetails;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object details = authentication.getDetails();
+//        userDetails = details;
+//        userDetails = (UserDetails)
+        return (UserDetails) details;
     }
 
     /**
@@ -24,8 +29,8 @@ public class SecurityUtils {
      * @return 系统用户名称
      */
     public static String getUsername(){
-        Object obj = getUserDetails();
-        return new JSONObject(obj).get("username", String.class);
+        UserDetails obj = getUserDetails();
+        return obj.getUsername();
     }
 
     /**

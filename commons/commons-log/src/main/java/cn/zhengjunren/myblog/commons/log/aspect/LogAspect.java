@@ -3,7 +3,6 @@ package cn.zhengjunren.myblog.commons.log.aspect;
 import cn.zhengjunren.myblog.commons.log.domain.TbLog;
 import cn.zhengjunren.myblog.commons.log.service.TbLogService;
 import cn.zhengjunren.myblog.commons.utils.RequestHolder;
-import cn.zhengjunren.myblog.commons.utils.SecurityUtils;
 import cn.zhengjunren.myblog.commons.utils.UserAgentUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -11,6 +10,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -62,7 +62,7 @@ public class LogAspect {
 
     public String getUsername() {
         try {
-            return SecurityUtils.getUsername();
+            return SecurityContextHolder.getContext().getAuthentication().getName();
         }catch (Exception e){
             return "";
         }
