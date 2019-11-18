@@ -1,6 +1,7 @@
 .idea/
 target/
 *.iml
+rebel*.xml
 package-lock.json
 npm-debug.log*
 yarn-debug.log*
