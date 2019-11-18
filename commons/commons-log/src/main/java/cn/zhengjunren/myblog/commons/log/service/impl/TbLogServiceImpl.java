@@ -1,6 +1,7 @@
 package cn.zhengjunren.myblog.commons.log.service.impl;
 
 import cn.hutool.json.JSONObject;
+import cn.zhengjunren.myblog.commons.dto.IpInfo;
 import cn.zhengjunren.myblog.commons.log.annotation.MyLog;
 import cn.zhengjunren.myblog.commons.log.domain.TbLog;
 import cn.zhengjunren.myblog.commons.log.mapper.TbLogMapper;
@@ -73,7 +74,8 @@ public class TbLogServiceImpl implements TbLogService {
                 e.printStackTrace();
             }
         }
-        log.setAddress(UserAgentUtils.getIpInfo(ip).getCountry()+UserAgentUtils.getIpInfo(ip).getArea()+UserAgentUtils.getIpInfo(ip).getCity());
+        IpInfo ipInfo = UserAgentUtils.getIpInfo(ip);
+        log.setAddress(ipInfo.getCountry()+ipInfo.getRegion()+ipInfo.getCity());
         log.setMethod(methodName);
         log.setUsername(username);
         log.setBrowser(browser);
