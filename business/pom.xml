@@ -88,10 +88,19 @@
         <!-- Project -->
         <dependency>
             <groupId>cn.zhengjunren.myblog</groupId>
-            <artifactId>commons</artifactId>
+            <artifactId>commons-utils</artifactId>
             <version>${parent.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>cn.zhengjunren.myblog</groupId>
+            <artifactId>commons-dto</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.zhengjunren.myblog</groupId>
+            <artifactId>commons-mapper</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
         <!-- utils -->
         <dependency>
             <groupId>com.alibaba</groupId>

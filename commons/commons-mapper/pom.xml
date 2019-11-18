@@ -4,12 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>cn.zhengjunren.myblog</groupId>
-        <artifactId>parent</artifactId>
+        <artifactId>commons</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>commons</artifactId>
+    <artifactId>commons-mapper</artifactId>
     <version>${parent.version}</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
     <url>http://www.zhengjunren.cn</url>
     <inceptionYear>2019-Now</inceptionYear>
     <licenses>
@@ -26,11 +26,13 @@
         </developer>
     </developers>
 
-    <modules>
-        <module>commons-dto</module>
-        <module>commons-utils</module>
-        <module>commons-log</module>
-        <module>commons-mapper</module>
-    </modules>
+    <dependencies>
+        <dependency>
+            <groupId>tk.mybatis</groupId>
+            <artifactId>mapper-spring-boot-starter</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
 
 </project>

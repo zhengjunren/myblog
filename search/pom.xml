@@ -89,7 +89,17 @@
         <!-- Project -->
         <dependency>
             <groupId>cn.zhengjunren.myblog</groupId>
-            <artifactId>commons</artifactId>
+            <artifactId>commons-dto</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.zhengjunren.myblog</groupId>
+            <artifactId>commons-utils</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.zhengjunren.myblog</groupId>
+            <artifactId>commons-mapper</artifactId>
             <version>${parent.version}</version>
         </dependency>
     </dependencies>

@@ -4,10 +4,10 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>cn.zhengjunren.myblog</groupId>
-        <artifactId>parent</artifactId>
+        <artifactId>commons</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>security</artifactId>
+    <artifactId>commons-log</artifactId>
     <version>${parent.version}</version>
     <packaging>jar</packaging>
     <url>http://www.zhengjunren.cn</url>
@@ -25,21 +25,19 @@
             <email>zhengjr989@gmail.com</email>
         </developer>
     </developers>
+
     <dependencies>
-        <!-- Spring Boot -->
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>provided</scope>
         </dependency>
 
-        <!-- Spring Security -->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-oauth2</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <!-- DataSource -->
@@ -47,6 +45,7 @@
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
             <version>${hikaricp.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -58,47 +57,51 @@
                     <artifactId>tomcat-jdbc</artifactId>
                 </exclusion>
             </exclusions>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>tk.mybatis</groupId>
             <artifactId>mapper-spring-boot-starter</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
-            <groupId>com.squareup.okhttp3</groupId>
-            <artifactId>okhttp</artifactId>
+            <groupId>eu.bitwalker</groupId>
+            <artifactId>UserAgentUtils</artifactId>
+            <scope>provided</scope>
         </dependency>
-        <!-- Project -->
+
+
+
         <dependency>
             <groupId>cn.zhengjunren.myblog</groupId>
             <artifactId>commons-dto</artifactId>
             <version>${parent.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>cn.zhengjunren.myblog</groupId>
             <artifactId>commons-utils</artifactId>
             <version>${parent.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>cn.zhengjunren.myblog</groupId>
             <artifactId>commons-mapper</artifactId>
             <version>${parent.version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <mainClass>cn.zhengjunren.myblog.security.SecurityApplication</mainClass>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+
 </project>

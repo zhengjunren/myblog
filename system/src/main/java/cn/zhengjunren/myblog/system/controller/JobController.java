@@ -1,6 +1,7 @@
 package cn.zhengjunren.myblog.system.controller;
 
 import cn.zhengjunren.myblog.commons.dto.ResponseResult;
+import cn.zhengjunren.myblog.commons.log.annotation.MyLog;
 import cn.zhengjunren.myblog.system.domain.JobAndTrigger;
 import cn.zhengjunren.myblog.system.dto.JobForm;
 import cn.zhengjunren.myblog.system.dto.JobInfo;
@@ -35,6 +36,9 @@ public class JobController {
     @Autowired
     private JobService jobService;
 
+
+
+    @MyLog("测试")
     @GetMapping
     public ResponseResult<JobInfo> jobList(Integer page, Integer limit) {
 

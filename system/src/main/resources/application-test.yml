@@ -45,7 +45,7 @@ security:
 
 logging:
   level:
-    cn.zhengjunren: debug
+    cn.zhengjunren: info
     cn.zhengjunren.myblog.system.mapper: trace
 
 mybatis:
