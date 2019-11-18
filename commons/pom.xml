@@ -8,7 +8,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>commons</artifactId>
-    <version>${parent.version}</version>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <url>http://www.zhengjunren.cn</url>
     <inceptionYear>2019-Now</inceptionYear>
