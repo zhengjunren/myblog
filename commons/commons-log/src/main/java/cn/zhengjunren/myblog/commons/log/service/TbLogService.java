@@ -1,6 +1,7 @@
 package cn.zhengjunren.myblog.commons.log.service;
 
 import cn.zhengjunren.myblog.commons.log.domain.TbLog;
+import org.aspectj.lang.ProceedingJoinPoint;
 
 /**
  * <p>ClassName: TbLogService</p>
@@ -18,4 +19,6 @@ public interface TbLogService{
      * @return 返回结果
      */
     int save(TbLog tbLog);
+
+    int save(String username, String browser, String ip, ProceedingJoinPoint joinPoint, TbLog log);
 }

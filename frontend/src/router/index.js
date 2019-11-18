@@ -58,21 +58,27 @@ export const constantRoutes = [
   {
     path: '/system',
     component: Layout,
-    redirect: '/system/list',
+    redirect: '/system/task',
     name: 'System',
     meta: { title: '系统管理', icon: 'example' },
     children: [
       {
-        path: 'list',
-        name: 'SystemList',
+        path: 'task',
+        name: 'TaskList',
         component: () => import('@/views/task/list'),
         meta: { title: '定时任务', icon: 'table' }
       },
       {
         path: 'inline',
-        name: 'SystemInline',
+        name: 'TaskListInline',
         component: () => import('@/views/task/inlineList'),
         meta: { title: '表格内编辑', icon: 'tree' }
+      },
+      {
+        path: 'log',
+        name: 'SystemLog',
+        component: () => import('@/views/log/list'),
+        meta: { title: '操作日志', icon: 'table' }
       }
     ]
   },

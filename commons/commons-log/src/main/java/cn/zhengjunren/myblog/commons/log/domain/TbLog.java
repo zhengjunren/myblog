@@ -48,4 +48,9 @@ public class TbLog {
 
     @Column(name = "browser")
     private String browser;
+
+    public TbLog(String logType, Long time) {
+        this.logType = logType;
+        this.time = time;
+    }
 }
