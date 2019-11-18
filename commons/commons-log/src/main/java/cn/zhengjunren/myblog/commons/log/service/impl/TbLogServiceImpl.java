@@ -26,6 +26,8 @@ import java.util.Date;
 @Service
 public class TbLogServiceImpl implements TbLogService {
 
+    private static final String LOGIN_PATH = "login";
+
     @Resource
     private TbLogMapper tbLogMapper;
 
@@ -61,12 +63,12 @@ public class TbLogServiceImpl implements TbLogService {
         }
         assert log != null;
         log.setRequestIp(ip);
-
-        String LOGINPATH = "login";
-        if(LOGINPATH.equals(signature.getName())){
+        log.setParams(params.toString() + " }");
+        if(LOGIN_PATH.equals(signature.getName())){
             try {
                 assert argValues != null;
                 username = new JSONObject(argValues[0]).get("username").toString();
+                log.setParams(String.format("{ loginParam: LoginParam(username=%s, password=******) }",username));
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -74,9 +76,8 @@ public class TbLogServiceImpl implements TbLogService {
         log.setAddress(UserAgentUtils.getIpInfo(ip).getCountry()+UserAgentUtils.getIpInfo(ip).getArea()+UserAgentUtils.getIpInfo(ip).getCity());
         log.setMethod(methodName);
         log.setUsername(username);
-        log.setParams(params.toString() + " }");
         log.setBrowser(browser);
         log.setCreateTime(new Date());
-        return tbLogMapper.insert(log);
+        return save(log);
     }
 }
