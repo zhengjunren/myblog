@@ -2,6 +2,7 @@ package cn.zhengjunren.myblog.business.controller;
 
 import cn.zhengjunren.myblog.business.domain.TbUser;
 import cn.zhengjunren.myblog.business.service.TbUserService;
+import cn.zhengjunren.myblog.commons.log.annotation.MyLog;
 import com.alibaba.excel.EasyExcel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -29,6 +30,7 @@ public class ExcelController {
     @Autowired
     TbUserService tbUserService;
 
+    @MyLog("导出用户列表excel")
     @GetMapping("download")
     public void download(HttpServletResponse response) throws IOException {
         // 这里注意 有同学反应使用swagger 会导致各种问题，请直接用浏览器或者用postman

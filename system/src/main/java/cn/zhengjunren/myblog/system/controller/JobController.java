@@ -36,9 +36,7 @@ public class JobController {
     @Autowired
     private JobService jobService;
 
-
-
-    @MyLog("测试")
+    @MyLog("获取任务列表")
     @GetMapping
     public ResponseResult<JobInfo> jobList(Integer page, Integer limit) {
 
@@ -49,12 +47,14 @@ public class JobController {
         return new ResponseResult<JobInfo>(ResponseResult.CodeStatus.OK, "任务列表获取成功", jobInfo);
     }
 
+    @MyLog("删除任务")
     @DeleteMapping
     public ResponseResult<Void> delete(@RequestBody JobForm jobForm) throws SchedulerException {
         jobService.deleteJob(jobForm);
         return new ResponseResult<>(ResponseResult.CodeStatus.FAIL, "删除任务失败");
     }
 
+    @MyLog("创建任务")
     @PostMapping
     public ResponseResult<Void> create(@RequestBody JobForm jobForm) {
         try {
@@ -68,6 +68,7 @@ public class JobController {
     /**
      * 暂停定时任务
      */
+    @MyLog("暂停任务")
     @PutMapping("pause")
     public ResponseResult<Void> pauseJob(@RequestBody JobForm form) {
         try {
@@ -81,6 +82,7 @@ public class JobController {
     /**
      * 恢复定时任务
      */
+    @MyLog("恢复任务")
     @PutMapping("resume")
     public ResponseResult<Void> resumeJob(@RequestBody JobForm form) {
         try {
@@ -95,6 +97,7 @@ public class JobController {
     /**
      * 修改定时任务，定时时间
      */
+    @MyLog("修改任务")
     @PutMapping("cron")
     public ResponseResult<Void> cronJob(@RequestBody JobForm form) {
         try {

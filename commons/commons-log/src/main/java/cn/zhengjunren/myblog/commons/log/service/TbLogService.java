@@ -1,5 +1,7 @@
 package cn.zhengjunren.myblog.commons.log.service;
 
+import cn.zhengjunren.myblog.commons.log.domain.TbLog;
+
 /**
  * <p>ClassName: TbLogService</p>
  * <p>Description: </p>
@@ -10,5 +12,10 @@ package cn.zhengjunren.myblog.commons.log.service;
  */
 public interface TbLogService{
 
-
+    /**
+     * 保存日志
+     * @param tbLog {@link TbLog}
+     * @return 返回结果
+     */
+    int save(TbLog tbLog);
 }

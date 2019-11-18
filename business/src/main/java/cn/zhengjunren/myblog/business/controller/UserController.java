@@ -7,6 +7,7 @@ import cn.zhengjunren.myblog.business.dto.StatusInfo;
 import cn.zhengjunren.myblog.business.dto.UserListInfo;
 import cn.zhengjunren.myblog.business.service.TbUserService;
 import cn.zhengjunren.myblog.commons.dto.ResponseResult;
+import cn.zhengjunren.myblog.commons.log.annotation.MyLog;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,7 @@ public class UserController {
         return new ResponseResult<>(ResponseResult.CodeStatus.OK, "获取用户信息", loginInfo);
     }
 
+    @MyLog("获取用户列表")
     @GetMapping("list")
     public ResponseResult<UserListInfo> list(Integer page, Integer limit) {
         PageInfo<TbUser> pageInfo = tbUserService.page(page, limit);
@@ -54,6 +56,7 @@ public class UserController {
         return new ResponseResult<>(ResponseResult.CodeStatus.OK,"分页获取用户列表", userListInfo);
     }
 
+    @MyLog("修改用户信息")
     @PostMapping("")
     public ResponseResult<Void> update(@RequestBody TbUser tbUser) {
         int result = tbUserService.update(tbUser);
@@ -63,6 +66,7 @@ public class UserController {
         return  new ResponseResult<>(ResponseResult.CodeStatus.FAIL,"网络错误", null);
     }
 
+    @MyLog("修改用户状态")
     @PostMapping("status")
     public ResponseResult<Void> modifyStatus(@RequestBody StatusInfo statusInfo) {
         TbUser tbUser = tbUserService.getByUsername(statusInfo.getUsername());
@@ -71,6 +75,7 @@ public class UserController {
         return commonResponse("更新用户状态成功", "网络错误", result);
     }
 
+    @MyLog("修改个人信息")
     @PostMapping("profile")
     public ResponseResult<Void> getProfile(@RequestBody TbUser tbUser) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -84,6 +89,7 @@ public class UserController {
      * @param avatarInfo {@link AvatarInfo}
      * @return {@link ResponseResult<Void> }
      */
+    @MyLog("修改个人头像")
     @PostMapping("avatar")
     public ResponseResult<Void> modifyAvatar(@RequestBody AvatarInfo avatarInfo) {
         int result = tbUserService.modifyAvatar(avatarInfo.getUsername(), avatarInfo.getPath());

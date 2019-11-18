@@ -1,6 +1,7 @@
 package cn.zhengjunren.myblog.search.controller;
 
 import cn.zhengjunren.myblog.commons.dto.ResponseResult;
+import cn.zhengjunren.myblog.commons.log.annotation.MyLog;
 import cn.zhengjunren.myblog.search.domain.TbUser;
 import cn.zhengjunren.myblog.search.dto.UserListInfo;
 import cn.zhengjunren.myblog.search.dto.UserSearchParm;
@@ -46,6 +47,7 @@ public class UserSearchController {
     TbUserService tbUserService;
 
 
+    @MyLog("搜索用户")
     @PostMapping("search")
     public ResponseResult< UserListInfo > searchAll(@RequestBody UserSearchParm userSearchParm, Integer page, Integer limit) {
         UserListInfo userListInfo = new UserListInfo();

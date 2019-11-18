@@ -2,6 +2,7 @@ package cn.zhengjunren.myblog.business.controller;
 
 import cn.zhengjunren.myblog.business.dto.FileInfo;
 import cn.zhengjunren.myblog.commons.dto.ResponseResult;
+import cn.zhengjunren.myblog.commons.log.annotation.MyLog;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.model.PutObjectRequest;
@@ -37,6 +38,7 @@ public class UploadController {
      * @param multipartFile @{code MultipartFile}
      * @return {@link ResponseResult<FileInfo>} 文件上传路径
      */
+    @MyLog("上传文件")
     @PostMapping(value = "")
     public ResponseResult<FileInfo> upload(MultipartFile multipartFile) {
         String fileName = multipartFile.getOriginalFilename();

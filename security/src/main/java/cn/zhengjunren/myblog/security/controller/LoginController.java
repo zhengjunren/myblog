@@ -1,6 +1,7 @@
 package cn.zhengjunren.myblog.security.controller;
 
 import cn.zhengjunren.myblog.commons.dto.ResponseResult;
+import cn.zhengjunren.myblog.commons.log.annotation.MyLog;
 import cn.zhengjunren.myblog.commons.utils.MapperUtils;
 import cn.zhengjunren.myblog.commons.utils.OkHttpClientUtil;
 import cn.zhengjunren.myblog.security.domain.TbUser;
@@ -66,6 +67,7 @@ public class LoginController {
      * @param loginParam 登录参数
      * @return {@link ResponseResult}
      */
+    @MyLog("用户登录")
     @PostMapping(value = "/user/login")
     public ResponseResult<Map<String, Object>> login(@RequestBody LoginParam loginParam) {
         // 封装返回的结果集
@@ -101,6 +103,7 @@ public class LoginController {
         return responseResult;
     }
 
+    @MyLog("用户注销")
     @PostMapping("/user/logout")
     public ResponseResult<Void> logout(HttpServletRequest request) {
         String token = request.getParameter("access_token");

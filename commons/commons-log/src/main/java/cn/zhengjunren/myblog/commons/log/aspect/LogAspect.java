@@ -1,12 +1,20 @@
 package cn.zhengjunren.myblog.commons.log.aspect;
 
+import cn.zhengjunren.myblog.commons.dto.IpInfo;
+import cn.zhengjunren.myblog.commons.log.annotation.MyLog;
+import cn.zhengjunren.myblog.commons.log.domain.TbLog;
+import cn.zhengjunren.myblog.commons.log.service.TbLogService;
 import cn.zhengjunren.myblog.commons.utils.MapperUtils;
-import eu.bitwalker.useragentutils.UserAgent;
+import cn.zhengjunren.myblog.commons.utils.UserAgentUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -29,6 +37,9 @@ import java.util.Objects;
 public class LogAspect {
     private static final String START_TIME = "request-start";
 
+    @Autowired
+    private TbLogService tbLogService;
+
     private long currentTime = 0L;
     /**
      * 切入点
@@ -47,26 +58,40 @@ public class LogAspect {
      */
     @Around("log()")
     public Object aroundLog(ProceedingJoinPoint point) throws Throwable {
+        currentTime = System.currentTimeMillis();
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        TbLog tbLog = new TbLog();
+        //设置操作者名
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        tbLog.setUsername(username);
 
         HttpServletRequest request = Objects.requireNonNull(attributes).getRequest();
-        currentTime = System.currentTimeMillis();
-        System.out.println("请求url"+ request.getRequestURL());
-        log.info("【请求 耗时】：{}", System.currentTimeMillis() - currentTime);
-        log.info("【请求 URL】：{}", request.getRequestURL());
-        log.info("【请求 IP】：{}", request.getRemoteAddr());
-        log.info("【请求类名】：{}，【请求方法名】：{}", point.getSignature().getDeclaringTypeName(), point.getSignature().getName());
+
+        //请求方法描述
+        MethodSignature signature = (MethodSignature)point.getSignature();
+        tbLog.setDescription(signature.getMethod().getAnnotation(MyLog.class).value());
 
         Map<String, String[]> parameterMap = request.getParameterMap();
+        //设置请求参数
+        tbLog.setParams(MapperUtils.mapToJson(parameterMap));
 
-        log.info("【请求参数】：{}，", MapperUtils.mapToJson(parameterMap));
-//        log.info("【请求参数】：{}，", JSONUtil.toJsonStr(parameterMap));
+        //请求方法名
+        tbLog.setMethod(String.format("%s.%s",point.getSignature().getDeclaringTypeName(),point.getSignature().getName()));
 
-        String header = request.getHeader("User-Agent");
-        UserAgent userAgent = UserAgent.parseUserAgentString(header);
-        log.info("【浏览器类型】：{}，【操作系统】：{}，【原始User-Agent】：{}", userAgent.getBrowser().toString(), userAgent.getOperatingSystem().toString(), header);
+        //设置请求ip
+        tbLog.setRequestIp(UserAgentUtils.getIpAddr(request));
+        IpInfo ipInfo = UserAgentUtils.getIpInfo(UserAgentUtils.getIpAddr(request));
+        tbLog.setAddress(ipInfo.getCountry() + ipInfo.getCity() + ipInfo.getArea());
+
+        //请求浏览器
+        tbLog.setBrowser(UserAgentUtils.getBrowser(request).toString());
         Object result = point.proceed();
-        log.info("【返回值】：{}", MapperUtils.obj2json(result));
+        tbLog.setLogType("info");
+        tbLog.setTime(System.currentTimeMillis() - currentTime);
+        tbLogService.save(tbLog);
         return result;
     }
+
+
 }

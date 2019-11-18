@@ -3,6 +3,7 @@ package cn.zhengjunren.myblog.business.controller;
 import cn.zhengjunren.myblog.business.domain.TbUser;
 import cn.zhengjunren.myblog.business.service.TbUserService;
 import cn.zhengjunren.myblog.commons.dto.ResponseResult;
+import cn.zhengjunren.myblog.commons.log.annotation.MyLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +26,7 @@ public class RegController {
     @Autowired
     TbUserService tbUserService;
 
+    @MyLog("用户注册")
     @PostMapping()
     public ResponseResult<TbUser> reg(@RequestBody TbUser tbUser) {
         String validateRegResult = validateReg(tbUser);

@@ -12,8 +12,8 @@ import tk.mybatis.spring.annotation.MapperScan;
  * @version 1.0.0
  * @date 2019/11/12 9:35
  */
-@SpringBootApplication
-@MapperScan("cn.zhengjunren.myblog.business.mapper")
+@SpringBootApplication(scanBasePackages = "cn.zhengjunren.myblog")
+@MapperScan({"cn.zhengjunren.myblog.business.mapper","cn.zhengjunren.myblog.commons.log.mapper"})
 public class BusinessApplication {
 
     public static void main(String[] args) {
