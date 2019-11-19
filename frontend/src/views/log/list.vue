@@ -24,12 +24,12 @@
           <span>{{ scope.row.requestIp }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="IP来源" prop="address" align="center" width="150">
+      <el-table-column label="IP来源" prop="address" align="center" min-width="150">
         <template slot-scope="scope">
           <span>{{ scope.row.address }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="描述" prop="description" align="center" width="150">
+      <el-table-column label="描述" prop="description" align="center" min-width="150">
         <template slot-scope="scope">
           <span>{{ scope.row.description }}</span>
         </template>
@@ -39,7 +39,7 @@
           <span>{{ scope.row.browser }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="耗时" class-name="status-col" align="center" width="80">
+      <el-table-column label="耗时" class-name="status-col" align="center" min-width="100">
         <template slot-scope="{row}">
           <el-tag :type="row.time | statusFilter2">
             {{ row.time  | statusFilter}}

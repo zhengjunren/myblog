@@ -1,17 +1,17 @@
 <template>
   <div class="app-container">
     <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
-      <el-table-column label="序号" prop="id" align="center" width="70">
+      <el-table-column label="序号" prop="id" align="center" min-width="50">
         <template slot-scope="scope">
           <span>{{ scope.$index + (listQuery.page-1) * (listQuery.limit) + 1 }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="任务名" prop="jobName" align="center" width="180">
+      <el-table-column label="任务名" prop="jobName" align="center" min-width="160">
         <template slot-scope="scope">
           <span>{{ scope.row.jobName }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="任务组" prop="jobGroup" align="center" width="100">
+      <el-table-column label="任务组" prop="jobGroup" align="center" min-width="80">
         <template slot-scope="scope">
           <span>{{ scope.row.jobGroup }}</span>
         </template>
@@ -26,19 +26,19 @@
           <span>{{ scope.row.triggerName }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="触发器组" prop="triggerGroup" align="center" width="100">
+      <el-table-column label="触发器组" prop="triggerGroup" align="center" min-width="80">
         <template slot-scope="scope">
           <span>{{ scope.row.triggerGroup }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="状态" prop="triggerState" align="center" width="100">
+      <el-table-column label="状态" prop="triggerState" align="center" min-width="80">
         <template slot-scope="{row}">
           <el-tag :type="row.triggerState | statusFilter1">
             {{ row.triggerState | statusFilter}}
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column min-width="100px" label="表达式">
+      <el-table-column min-width="230px" label="表达式">
         <template slot-scope="{row}">
           <template v-if="row.edit">
             <el-input v-model="row.cronExpression" class="edit-input" size="small" />
@@ -55,7 +55,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="操作" width="280">
+      <el-table-column align="center" label="操作" min-width="250">
         <template slot-scope="{row}">
           <el-button
             v-if="row.edit"

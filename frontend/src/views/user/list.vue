@@ -41,7 +41,7 @@
           <span>{{ scope.row.nickname }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="邮箱" prop="email" align="center" width="180">
+      <el-table-column label="邮箱" prop="email" align="center" min-width="180">
         <template slot-scope="scope">
           <span>{{ scope.row.email }}</span>
         </template>
@@ -56,12 +56,12 @@
 
         </template>
       </el-table-column>
-      <el-table-column label="用户首页" prop="url" align="center" width="200">
+      <el-table-column label="用户首页" prop="url" align="center" min-width="200">
         <template slot-scope="{row}">
           <el-link v-bind:href="row.url" target="_blank" type="primary">{{row.url}}</el-link>
         </template>
       </el-table-column>
-      <el-table-column label="上次登录时间" prop="lastLoginTime" align="center" width="180">
+      <el-table-column label="上次登录时间" prop="lastLoginTime" align="center" min-width="180">
         <template slot-scope="scope">
           <span>{{ scope.row.lastLoginTime }}</span>
         </template>
@@ -137,7 +137,6 @@
     import Link from "../../layout/components/Sidebar/Link";
     import axios from 'axios'
     import {getToken} from '../../utils/auth'
-
     export default {
         name: "UserListTable",
         components: {Link, Pagination},
@@ -202,6 +201,7 @@
                 downloadLoading: false
             }
         },
+
         created() {
             this.getList()
         },
