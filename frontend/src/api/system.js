@@ -1,10 +1,13 @@
 import request from '@/utils/request'
 
+const BASE_URL = "http://localhost:8600"
+
 export function fetchLogList(query) {
   return request({
-    url: 'http://localhost:8600/log/list',
+    url: '/log/list',
     method: 'get',
-    params: query
+    params: query,
+    baseURL: BASE_URL
   })
 }
 
@@ -12,63 +15,71 @@ export function fetchLogList(query) {
 
 export function getTaskList(query) {
   return request({
-    url: 'http://localhost:8600/job',
+    url: '/job',
     method: 'get',
-    params: query
+    params: query,
+    baseURL: BASE_URL
   })
 }
 
 export function resumeTask(data) {
   return request({
-    url: 'http://localhost:8600/job/resume',
+    url: '/job/resume',
     method: 'put',
+    baseURL: BASE_URL,
     data
   })
 }
 
 export function pauseTask(data) {
   return request({
-    url: 'http://localhost:8600/job/pause',
+    url: '/job/pause',
     method: 'put',
+    baseURL: BASE_URL,
     data
   })
 }
 
 export function updateTask(data) {
   return request({
-    url: 'http://localhost:8600/job/cron',
+    url: '/job/cron',
     method: 'put',
+    baseURL: BASE_URL,
     data
   })
 }
 
 export function deleteTask(data) {
   return request({
-    url: 'http://localhost:8600/job/',
+    url: '/job/',
     method: 'delete',
+    baseURL: BASE_URL,
     data
   })
 }
 
 export function createTask(data) {
   return request({
-    url: 'http://localhost:8600/job/',
+    url: '/job/',
     method: 'post',
+    baseURL: BASE_URL,
     data
   })
 }
 
 export function fetchEmailConfig() {
   return request({
-    url: 'http://localhost:8600/email/',
+    url: '/email/',
+    baseURL: BASE_URL,
     method: 'get',
   })
 }
 
 export function updateEmailConfig(data) {
   return request({
-    url: 'http://localhost:8600/email/',
+    url: '/email/',
     method: 'put',
+    baseURL: BASE_URL,
     data
   })
 }
