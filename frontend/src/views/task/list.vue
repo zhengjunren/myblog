@@ -89,7 +89,7 @@
 </template>
 
 <script>
-    import { getTaskList, resumeTask, pauseTask, updateTask } from "@/api/task";
+    import { getTaskList, resumeTask, pauseTask, updateTask } from "@/api/system";
     export default {
         name: "TaskList",
         filters: {

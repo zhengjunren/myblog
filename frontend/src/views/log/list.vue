@@ -71,7 +71,7 @@
 </template>
 
 <script>
-    import {fetchList} from "@/api/log";
+    import {fetchLogList} from "@/api/system";
     import Pagination from '@/components/Pagination'
     export default {
         name: "LogList",
@@ -112,7 +112,7 @@
         methods: {
             getList() {
                 this.listLoading = true
-                fetchList(this.listQuery).then(response => {
+                fetchLogList(this.listQuery).then(response => {
                     this.list = response.data.items
                     this.total = response.data.total
                     // 模拟请求时间

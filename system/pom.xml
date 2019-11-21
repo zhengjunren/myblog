@@ -89,6 +89,12 @@
             <artifactId>commons-lang3</artifactId>
         </dependency>
 
+        <!-- 邮件 -->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+        </dependency>
+
 
         <!-- Project -->
         <dependency>

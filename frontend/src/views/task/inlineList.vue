@@ -90,7 +90,7 @@
 </template>
 
 <script>
-    import { getTaskList, resumeTask, pauseTask, updateTask, deleteTask } from "@/api/task";
+    import { getTaskList, resumeTask, pauseTask, updateTask, deleteTask } from "@/api/system";
 
     export default {
         name: 'InlineEditTable',

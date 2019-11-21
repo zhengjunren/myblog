@@ -86,6 +86,12 @@ export const constantRoutes = [
         meta: { title: '表格内编辑', icon: 'tree' }
       },
       {
+        path: 'email',
+        name: 'SystemEmail',
+        component: () => import('@/views/email/index'),
+        meta: { title: '邮件工具', icon: 'email' }
+      },
+      {
         path: 'log',
         name: 'SystemLog',
         component: () => import('@/views/log/list'),
