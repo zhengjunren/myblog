@@ -18,3 +18,13 @@ export function validUsername(str) {
   const valid_map = ['admin', 'editor']
   return true
 }
+
+/**
+ * 验证邮箱
+ * @param str
+ * @returns {boolean}
+ */
+export function validatEmail(str) {
+  const reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/
+  return reg.test(str)
+}

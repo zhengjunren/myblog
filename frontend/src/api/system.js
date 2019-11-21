@@ -83,3 +83,13 @@ export function updateEmailConfig(data) {
     data
   })
 }
+
+
+export function sendMail(data) {
+  return request({
+    url: '/email/',
+    method: 'post',
+    baseURL: BASE_URL,
+    data
+  })
+}
