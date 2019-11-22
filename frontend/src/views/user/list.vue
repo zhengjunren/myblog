@@ -131,7 +131,7 @@
 </template>
 
 <script>
-    import {fetchList, getExcel, modifyStatus, search, updateUser} from "@/api/user";
+    import {fetchList, modifyStatus, search, updateUser} from "@/api/user";
     import waves from '@/directive/waves'
     import Pagination from '@/components/Pagination'
     import Link from "../../layout/components/Sidebar/Link";
@@ -288,7 +288,7 @@
                 }
               },
             handleDownload(){
-                axios.get('http://localhost:9000/excel/download', {
+                axios.get(process.env.VUE_APP_BASE_API + '/excel/download', {
                     responseType: 'blob',
                     params:{access_token: getToken()}
                 }).then(res => {
