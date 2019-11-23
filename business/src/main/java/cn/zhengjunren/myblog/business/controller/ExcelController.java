@@ -31,7 +31,7 @@ public class ExcelController {
     TbUserService tbUserService;
 
     @MyLog("导出用户列表excel")
-    @GetMapping("download")
+    @GetMapping("user")
     public void download(HttpServletResponse response) throws IOException {
         // 这里注意 有同学反应使用swagger 会导致各种问题，请直接用浏览器或者用postman
         response.setContentType("application/vnd.ms-excel");

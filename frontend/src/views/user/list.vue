@@ -48,12 +48,11 @@
       </el-table-column>
       <el-table-column label="头像" prop="email" align="center" width="80">
         <template slot-scope="{row}">
-          <div class="avatar-container">
-            <div class=" avatar-wrapper">
-              <img :src="row.avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
-            </div>
-          </div>
-
+          <el-image
+            style="width: 40px; height: 40px; border-radius: 10px;"
+            :src="row.avatar"
+            :preview-src-list="[row.avatar]">
+          </el-image>
         </template>
       </el-table-column>
       <el-table-column label="用户首页" prop="url" align="center" min-width="200">
@@ -288,7 +287,7 @@
                 }
               },
             handleDownload(){
-                axios.get(process.env.VUE_APP_BASE_API + '/excel/download', {
+                axios.get(process.env.VUE_APP_BASE_API + '/excel/user', {
                     responseType: 'blob',
                     params:{access_token: getToken()}
                 }).then(res => {
