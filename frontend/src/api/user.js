@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
-export const SECURITY_URL = "http://119.3.222.119:8000"
-export const SEARCH_URL = "http://119.3.222.119:8500"
+export const SECURITY_URL = "http://localhost:8000"
+export const SEARCH_URL = "http://localhost:8500"
 
 export function login(data) {
     return request({
@@ -30,7 +30,7 @@ export function logout(token) {
 
 export function search(data, page, limit) {
     return request({
-        url: '/user/search',
+        url: '/search/user',
         method: 'post',
         baseURL: SEARCH_URL,
         params: { page: page, limit: limit },

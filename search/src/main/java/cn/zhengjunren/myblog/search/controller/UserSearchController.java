@@ -37,7 +37,7 @@ import static org.elasticsearch.index.query.QueryBuilders.wildcardQuery;
  */
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600L)
-@RequestMapping("user")
+@RequestMapping("search")
 public class UserSearchController {
 
     @Autowired
@@ -48,7 +48,7 @@ public class UserSearchController {
 
 
     @MyLog("搜索用户")
-    @PostMapping("search")
+    @PostMapping("user")
     public ResponseResult< UserListInfo > searchAll(@RequestBody UserSearchParm userSearchParm, Integer page, Integer limit) {
         UserListInfo userListInfo = new UserListInfo();
         if (userSearchParm == null) {

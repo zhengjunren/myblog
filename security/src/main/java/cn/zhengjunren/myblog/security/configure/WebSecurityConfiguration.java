@@ -16,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.CorsUtils;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Collections;
@@ -64,7 +65,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
                 .antMatchers("/user/login")
-                .antMatchers("/user/logout");
+                .antMatchers("/user/logout")
+                .antMatchers(HttpMethod.OPTIONS);
     }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -76,10 +78,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // 放行OPTIONS请求
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 //解决spring security 对 preflight 的放行
-//                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-                // 增加了授权访问配置
-                .antMatchers("/user/info").hasAuthority("USER")
-                .antMatchers("/user/logout").hasAuthority("USER");
+                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+                .and()
+                .cors()
+                .and()
+                .csrf().disable();
     }
 
     @Bean
