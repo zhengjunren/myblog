@@ -122,4 +122,10 @@ public class LoginController {
         return new ResponseResult<>(ResponseResult.CodeStatus.OK, "获取用户信息", loginInfo);
     }
 
+    @GetMapping("test")
+    public Map<String, String> test() {
+        Map<String, String> map = new HashMap<>();
+        map.put("test", "tests");
+        return map;
+    }
 }

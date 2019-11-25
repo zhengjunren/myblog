@@ -8,7 +8,12 @@ import cn.zhengjunren.myblog.business.dto.UserListInfo;
 import cn.zhengjunren.myblog.business.service.TbUserService;
 import cn.zhengjunren.myblog.commons.dto.ResponseResult;
 import cn.zhengjunren.myblog.commons.log.annotation.MyLog;
+import cn.zhengjunren.myblog.commons.utils.DataTypeUtils;
+import cn.zhengjunren.myblog.commons.utils.ParamTypeUtils;
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -37,6 +42,7 @@ public class UserController {
     TbUserService tbUserService;
 
     @GetMapping("info")
+    @ApiOperation(value = "获取用户信息")
     public ResponseResult<LoginInfo> info() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         LoginInfo loginInfo = new LoginInfo();
@@ -48,6 +54,11 @@ public class UserController {
 
     @MyLog("获取用户列表")
     @GetMapping("list")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "页码", required = true, dataType = DataTypeUtils.INTEGER, paramType = ParamTypeUtils.QUERY),
+            @ApiImplicitParam(name = "limit", value = "笔数", required = true, dataType = DataTypeUtils.INTEGER, paramType = ParamTypeUtils.QUERY),
+    })
+    @ApiOperation(value = "获取用户列表", notes="根据页码、笔数查询用户列表")
     public ResponseResult<UserListInfo> list(Integer page, Integer limit) {
         PageInfo<TbUser> pageInfo = tbUserService.page(page, limit);
         UserListInfo userListInfo = new UserListInfo();
@@ -58,6 +69,8 @@ public class UserController {
 
     @MyLog("修改用户信息")
     @PostMapping("")
+    @ApiOperation(value = "修改用户信息", notes="修改除密码外的属性")
+    @ApiImplicitParam(name = "tbUser", value = "用户信息", required = true, dataType = "TbUser", paramType = ParamTypeUtils.BODY)
     public ResponseResult<Void> update(@RequestBody TbUser tbUser) {
         int result = tbUserService.update(tbUser);
         if (result > 0) {
@@ -68,6 +81,8 @@ public class UserController {
 
     @MyLog("修改用户状态")
     @PostMapping("status")
+    @ApiOperation(value = "修改用户状态", notes="状态为：正常、冻结、注销")
+    @ApiImplicitParam(name = "statusInfo", value = "状态", required = true, dataType = "StatusInfo", paramType = ParamTypeUtils.BODY)
     public ResponseResult<Void> modifyStatus(@RequestBody StatusInfo statusInfo) {
         TbUser tbUser = tbUserService.getByUsername(statusInfo.getUsername());
         tbUser.setStatus(statusInfo.getValue());
@@ -77,6 +92,8 @@ public class UserController {
 
     @MyLog("修改个人信息")
     @PostMapping("profile")
+    @ApiOperation(value = "修改个人信息", notes="只能修改邮件、头像、首页、昵称")
+    @ApiImplicitParam(name = "tbUser", value = "个人信息", required = true, dataType = "TbUser", paramType = ParamTypeUtils.BODY)
     public ResponseResult<Void> getProfile(@RequestBody TbUser tbUser) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         TbUser oldTbUser = tbUserService.getByUsername(authentication.getName());
@@ -91,6 +108,8 @@ public class UserController {
      */
     @MyLog("修改个人头像")
     @PostMapping("avatar")
+    @ApiOperation(value = "修改个人头像")
+    @ApiImplicitParam(name = "avatarInfo", value = "头像信息", required = true, dataType = "AvatarInfo", paramType = ParamTypeUtils.BODY)
     public ResponseResult<Void> modifyAvatar(@RequestBody AvatarInfo avatarInfo) {
         int result = tbUserService.modifyAvatar(avatarInfo.getUsername(), avatarInfo.getPath());
         return commonResponse("头像更新成功", "网络错误，请重新上传", result);

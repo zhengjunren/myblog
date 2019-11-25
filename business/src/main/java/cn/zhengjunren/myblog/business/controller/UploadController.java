@@ -6,6 +6,8 @@ import cn.zhengjunren.myblog.commons.log.annotation.MyLog;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.model.PutObjectRequest;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,9 +41,11 @@ public class UploadController {
      * @return {@link ResponseResult<FileInfo>} 文件上传路径
      */
     @MyLog("上传文件")
-    @PostMapping(value = "")
-    public ResponseResult<FileInfo> upload(MultipartFile multipartFile) {
+    @PostMapping(value = "", headers = "Content-Type=multipart/form-data")
+    @ApiOperation(value = "上传文件")
+    public ResponseResult<FileInfo> upload(@ApiParam(value = "文件", required = true) MultipartFile multipartFile) {
         String fileName = multipartFile.getOriginalFilename();
+        assert fileName != null;
         String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
         String newName = UUID.randomUUID() + "." + suffix;
         OSS client = new OSSClientBuilder().build(ENDPOINT, ACCESS_KEY_ID, ACCESS_KEY_SECRET);

@@ -63,7 +63,6 @@
                 }).catch(() => {
                     this.formLoading = false
                 })
-                console.log('field: ' + field);
             },
             cropUploadFail(status, field){
                 this.$message({

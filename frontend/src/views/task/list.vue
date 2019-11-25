@@ -142,7 +142,6 @@
                 this.listLoading = true
                 getTaskList(this.listQuery).then(response => {
                     this.list = response.data.items
-                    console.log(response.data.items)
                     this.total = response.data.total
                     // 模拟请求时间
                     setTimeout(() => {

@@ -206,7 +206,6 @@
         },
         methods: {
             getList() {
-                console.log(this.isSearch)
                 this.listLoading = true
                 fetchList(this.listQuery).then(response => {
                     this.list = response.data.items
