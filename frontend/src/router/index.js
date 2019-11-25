@@ -75,15 +75,9 @@ export const constantRoutes = [
     children: [
       {
         path: 'task',
-        name: 'TaskList',
-        component: () => import('@/views/task/list'),
-        meta: { title: '定时任务', icon: 'table' }
-      },
-      {
-        path: 'inline',
         name: 'TaskListInline',
         component: () => import('@/views/task/inlineList'),
-        meta: { title: '表格内编辑', icon: 'tree' }
+        meta: { title: '定时任务', icon: 'tree' }
       },
       {
         path: 'email',
@@ -96,6 +90,12 @@ export const constantRoutes = [
         name: 'SystemLog',
         component: () => import('@/views/log/list'),
         meta: { title: '操作日志', icon: 'table' }
+      },
+      {
+        path: 'swagger2',
+        name: 'SystemSwagger',
+        component: () => import('@/views/swagger2/index'),
+        meta: { title: '接口文档', icon: 'documentation' }
       }
     ]
   },

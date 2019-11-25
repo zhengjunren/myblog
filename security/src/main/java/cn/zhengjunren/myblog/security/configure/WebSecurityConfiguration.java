@@ -80,9 +80,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //解决spring security 对 preflight 的放行
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .and()
-                .cors()
-                .and()
-                .csrf().disable();
+                .cors();
+//                .and()
+//                .csrf().disable();
     }
 
     @Bean

@@ -1,4 +1,4 @@
-package cn.zhengjunren.myblog.business.configure;
+package cn.zhengjunren.myblog.system.configure;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;

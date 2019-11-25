@@ -55,11 +55,11 @@ public class UserController {
     @MyLog("获取用户列表")
     @GetMapping("list")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "page", value = "页码", required = true, dataType = DataTypeUtils.INTEGER, paramType = ParamTypeUtils.QUERY),
-            @ApiImplicitParam(name = "limit", value = "笔数", required = true, dataType = DataTypeUtils.INTEGER, paramType = ParamTypeUtils.QUERY),
+            @ApiImplicitParam(name = "page", value = "页码", required = true, dataType = DataTypeUtils.INT, paramType = ParamTypeUtils.QUERY),
+            @ApiImplicitParam(name = "limit", value = "笔数", required = true, dataType = DataTypeUtils.INT, paramType = ParamTypeUtils.QUERY),
     })
     @ApiOperation(value = "获取用户列表", notes="根据页码、笔数查询用户列表")
-    public ResponseResult<UserListInfo> list(Integer page, Integer limit) {
+    public ResponseResult<UserListInfo> list(int page, int limit) {
         PageInfo<TbUser> pageInfo = tbUserService.page(page, limit);
         UserListInfo userListInfo = new UserListInfo();
         userListInfo.setItems(pageInfo.getList());
