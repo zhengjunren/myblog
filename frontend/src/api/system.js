@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-const BASE_URL = "http://localhost:8600"
+export const BASE_URL = "http://localhost:8600"
 
 export function fetchLogList(query) {
   return request({

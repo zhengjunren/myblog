@@ -7,7 +7,7 @@
       <el-tab-pane label="系统文档" name="system">
         <System/>
       </el-tab-pane>
-    </el-tabs>/
+    </el-tabs>
   </div>
 </template>
 

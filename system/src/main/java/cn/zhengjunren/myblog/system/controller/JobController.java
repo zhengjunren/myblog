@@ -2,11 +2,17 @@ package cn.zhengjunren.myblog.system.controller;
 
 import cn.zhengjunren.myblog.commons.dto.ResponseResult;
 import cn.zhengjunren.myblog.commons.log.annotation.MyLog;
+import cn.zhengjunren.myblog.commons.utils.DataTypeUtils;
+import cn.zhengjunren.myblog.commons.utils.ParamTypeUtils;
 import cn.zhengjunren.myblog.system.domain.JobAndTrigger;
 import cn.zhengjunren.myblog.system.dto.JobForm;
 import cn.zhengjunren.myblog.system.dto.JobInfo;
 import cn.zhengjunren.myblog.system.service.JobService;
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +37,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/job")
 @Slf4j
 @CrossOrigin(origins = "*", maxAge = 3600L)
+@Api(tags = "定时任务")
 public class JobController {
 
     @Autowired
@@ -38,6 +45,11 @@ public class JobController {
 
     @MyLog("获取任务列表")
     @GetMapping
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "页码", required = true, dataType = DataTypeUtils.INT, paramType = ParamTypeUtils.QUERY),
+            @ApiImplicitParam(name = "limit", value = "笔数", required = true, dataType = DataTypeUtils.INT, paramType = ParamTypeUtils.QUERY),
+    })
+    @ApiOperation(value = "获取任务列表", notes="根据页码、笔数查询任务列表")
     public ResponseResult<JobInfo> jobList(Integer page, Integer limit) {
 
         PageInfo<JobAndTrigger> all = jobService.list(page, limit);
@@ -49,6 +61,8 @@ public class JobController {
 
     @MyLog("删除任务")
     @DeleteMapping
+    @ApiOperation(value = "删除任务")
+    @ApiImplicitParam(name = "jobForm", value = "任务信息", required = true, dataType = "JobForm", paramType = ParamTypeUtils.BODY)
     public ResponseResult<Void> delete(@RequestBody JobForm jobForm) throws SchedulerException {
         jobService.deleteJob(jobForm);
         return new ResponseResult<>(ResponseResult.CodeStatus.FAIL, "删除任务失败");
@@ -56,6 +70,8 @@ public class JobController {
 
     @MyLog("创建任务")
     @PostMapping
+    @ApiOperation(value = "创建任务")
+    @ApiImplicitParam(name = "jobForm", value = "任务信息", required = true, dataType = "JobForm", paramType = ParamTypeUtils.BODY)
     public ResponseResult<Void> create(@RequestBody JobForm jobForm) {
         try {
             jobService.addJob(jobForm);
@@ -70,9 +86,11 @@ public class JobController {
      */
     @MyLog("暂停任务")
     @PutMapping("pause")
-    public ResponseResult<Void> pauseJob(@RequestBody JobForm form) {
+    @ApiOperation(value = "暂停任务")
+    @ApiImplicitParam(name = "jobForm", value = "任务信息", required = true, dataType = "JobForm", paramType = ParamTypeUtils.BODY)
+    public ResponseResult<Void> pauseJob(@RequestBody JobForm jobForm) {
         try {
-            jobService.pauseJob(form);
+            jobService.pauseJob(jobForm);
         } catch (SchedulerException e) {
             return new ResponseResult<>(ResponseResult.CodeStatus.OK, "暂停任务失败");
         }
@@ -84,9 +102,11 @@ public class JobController {
      */
     @MyLog("恢复任务")
     @PutMapping("resume")
-    public ResponseResult<Void> resumeJob(@RequestBody JobForm form) {
+    @ApiOperation(value = "恢复任务")
+    @ApiImplicitParam(name = "jobForm", value = "任务信息", required = true, dataType = "JobForm", paramType = ParamTypeUtils.BODY)
+    public ResponseResult<Void> resumeJob(@RequestBody JobForm jobForm) {
         try {
-            jobService.resumeJob(form);
+            jobService.resumeJob(jobForm);
         } catch (SchedulerException e) {
             return new ResponseResult<>(ResponseResult.CodeStatus.OK, "恢复任务失败");
         }
@@ -99,9 +119,11 @@ public class JobController {
      */
     @MyLog("修改任务")
     @PutMapping("cron")
-    public ResponseResult<Void> cronJob(@RequestBody JobForm form) {
+    @ApiOperation(value = "修改任务")
+    @ApiImplicitParam(name = "jobForm", value = "任务信息", required = true, dataType = "JobForm", paramType = ParamTypeUtils.BODY)
+    public ResponseResult<Void> cronJob(@RequestBody JobForm jobForm) {
         try {
-            jobService.cronJob(form);
+            jobService.cronJob(jobForm);
         } catch (Exception e) {
             return new ResponseResult<>(ResponseResult.CodeStatus.OK, "修改任务失败");
         }

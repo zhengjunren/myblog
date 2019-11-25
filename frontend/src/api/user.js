@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export const SECURITY_URL = "http://localhost:8000"
+export const SECURITY_URL = "http://119.3.222.119:8000"
 export const SEARCH_URL = "http://119.3.222.119:8500"
 
 export function login(data) {

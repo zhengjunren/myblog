@@ -4,6 +4,7 @@ import cn.zhengjunren.myblog.business.domain.TbUser;
 import cn.zhengjunren.myblog.business.service.TbUserService;
 import cn.zhengjunren.myblog.commons.log.annotation.MyLog;
 import com.alibaba.excel.EasyExcel;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -26,6 +27,7 @@ import java.net.URLEncoder;
 @RequestMapping("excel")
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600L)
+@Api(tags = "excel导出")
 public class ExcelController {
 
     @Autowired

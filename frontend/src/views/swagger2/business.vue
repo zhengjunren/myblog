@@ -13,7 +13,7 @@
         },
         data() {
             return {
-                swagger:"http://localhost:9000/swagger-ui.html"
+                swagger: process.env.VUE_APP_BASE_API + "/swagger-ui.html"
             }
         }
     }

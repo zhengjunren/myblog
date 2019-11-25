@@ -6,6 +6,7 @@
 
 <script>
     import Iframe from "@/components/Iframe";
+    import {BASE_URL} from "@/api/system"
     export default {
         name: "system",
         components: {
@@ -13,7 +14,7 @@
         },
         data() {
             return {
-                swagger:"http://localhost:8600/swagger-ui.html"
+                swagger: BASE_URL + "/swagger-ui.html"
             }
         }
     }

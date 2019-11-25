@@ -1,10 +1,16 @@
 package cn.zhengjunren.myblog.system.controller;
 
 import cn.zhengjunren.myblog.commons.dto.ResponseResult;
+import cn.zhengjunren.myblog.commons.utils.DataTypeUtils;
+import cn.zhengjunren.myblog.commons.utils.ParamTypeUtils;
 import cn.zhengjunren.myblog.system.domain.TbLog;
 import cn.zhengjunren.myblog.system.dto.LogListInfo;
 import cn.zhengjunren.myblog.system.service.TbLogSystemService;
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,13 +28,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("log")
 @CrossOrigin(origins = "*", maxAge = 3600L)
+@Api(tags = "日志管理")
 public class LogController {
 
     @Autowired
     TbLogSystemService tbLogSystemService;
 
     @GetMapping("list")
-    public ResponseResult<LogListInfo> page(Integer page, Integer limit) {
+    @ApiOperation(value = "获取日志列表", notes="根据页码、笔数查询日志列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "页码", required = true, dataType = DataTypeUtils.INT, paramType = ParamTypeUtils.QUERY),
+            @ApiImplicitParam(name = "limit", value = "笔数", required = true, dataType = DataTypeUtils.INT, paramType = ParamTypeUtils.QUERY),
+    })
+    public ResponseResult<LogListInfo> page(int page, int limit) {
         PageInfo<TbLog> pageInfo = tbLogSystemService.page(page, limit);
         LogListInfo logListInfo = new LogListInfo();
         logListInfo.setItems(pageInfo.getList());

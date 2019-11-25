@@ -4,6 +4,10 @@ import cn.zhengjunren.myblog.business.domain.TbUser;
 import cn.zhengjunren.myblog.business.service.TbUserService;
 import cn.zhengjunren.myblog.commons.dto.ResponseResult;
 import cn.zhengjunren.myblog.commons.log.annotation.MyLog;
+import cn.zhengjunren.myblog.commons.utils.ParamTypeUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("reg")
+@Api(tags = "用户注册")
 public class RegController {
 
     @Autowired
@@ -28,6 +33,8 @@ public class RegController {
 
     @MyLog("用户注册")
     @PostMapping()
+    @ApiOperation(value = "用户注册", notes="email、username、password不能为空")
+    @ApiImplicitParam(name = "tbUser", value = "用户信息", required = true, dataType = "TbUser", paramType = ParamTypeUtils.BODY)
     public ResponseResult<TbUser> reg(@RequestBody TbUser tbUser) {
         String validateRegResult = validateReg(tbUser);
         //验证通过

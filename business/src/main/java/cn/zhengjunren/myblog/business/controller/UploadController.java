@@ -6,6 +6,7 @@ import cn.zhengjunren.myblog.commons.log.annotation.MyLog;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.model.PutObjectRequest;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -29,6 +30,7 @@ import java.util.UUID;
 @CrossOrigin(origins = "*", maxAge = 3600L)
 @RestController
 @RequestMapping(value = "upload")
+@Api(tags = "文件上传")
 public class UploadController {
     private static final String ENDPOINT = "oss-cn-hangzhou.aliyuncs.com";
     private static final String ACCESS_KEY_ID = "LTAIdQL25lDzsU6l";
