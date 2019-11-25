@@ -105,7 +105,7 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/user/list',
     name: 'User',
-    meta: { title: '用户管理', icon: 'user' },
+    meta: { title: '用户管理', icon: 'peoples' },
     children: [
       {
         path: 'list',
@@ -127,7 +127,7 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/profile/',
     name: 'Profile',
-    meta: { title: '个人信息', icon: 'example' },
+    meta: { title: '个人信息', icon: 'user' },
     children: [
       {
         path: '',
