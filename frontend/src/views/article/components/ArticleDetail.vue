@@ -118,7 +118,10 @@
     },
     computed: {
       summaryShortLength() {
-        return this.postForm.summary.length
+        if (this.postForm.summary != null){
+          return this.postForm.summary.length
+        }
+        return 0
       },
       displayTime: {
         // set and get is useful when the data

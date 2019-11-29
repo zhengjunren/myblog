@@ -9,6 +9,18 @@
       highlight-current-row
       style="width: 100%;"
     >
+      <el-table-column type="expand">
+        <template slot-scope="props">
+          <el-form label-position="left" inline class="demo-table-expand">
+            <el-form-item label="请求方法">
+              <span>{{ props.row.method }}</span>
+            </el-form-item>
+            <el-form-item label="请求参数">
+              <span>{{ props.row.params }}</span>
+            </el-form-item>
+          </el-form>
+        </template>
+      </el-table-column>
       <el-table-column label="序号" prop="id" align="center" width="70">
         <template slot-scope="scope">
           <span>{{ scope.$index + (listQuery.page-1) * (listQuery.limit) + 1 }}</span>
@@ -52,18 +64,6 @@
         </template>
       </el-table-column>
 
-      <el-table-column type="expand">
-        <template slot-scope="props">
-          <el-form label-position="left" inline class="demo-table-expand">
-            <el-form-item label="请求方法">
-              <span>{{ props.row.method }}</span>
-            </el-form-item>
-            <el-form-item label="请求参数">
-              <span>{{ props.row.params }}</span>
-            </el-form-item>
-          </el-form>
-        </template>
-      </el-table-column>
     </el-table>
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit"
                 @pagination="getList"/>
@@ -130,12 +130,16 @@
     font-size: 0;
   }
   .demo-table-expand label {
-    width: 90px;
+    width: 70px;
     color: #99a9bf;
   }
   .demo-table-expand .el-form-item {
     margin-right: 0;
     margin-bottom: 0;
-    width: 50%;
+    width: 100%;
+  }
+  .demo-table-expand .el-form-item__content {
+    font-size: 15px;
+
   }
 </style>
