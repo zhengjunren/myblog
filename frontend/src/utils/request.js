@@ -41,43 +41,54 @@ service.interceptors.response.use(
    * You can also judge the status by HTTP Status Code
    */
   response => {
-    const res = response.data
-
-    // if the custom code is not 20000, it is judged as an error.
-    if (res.code !== 20000) {
-      Message({
-        message: res.message || '错误',
-        type: 'error',
-        duration: 5 * 1000
+    const status = response.status
+    if (status < 200 || status > 300) {
+      Notification.error({
+        title: response.message
       })
-
-      if (res.code === 30000) {
-        this.$alert(res.message, '警告', {
-          confirmButtonText: '确定',
-          callback: action => {
-            this.$message({
-              type: 'warning ',
-              message: `action: ${ action }`
-            });
-          }
-        });
-      }
-      // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
-      if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
-        // to re-login
-        MessageBox.confirm('你已经退出当前登录, 你可以取消留在当前界面或者再次登录', '确认注销', {
-          confirmButtonText: 'Re-Login',
-          cancelButtonText: 'Cancel',
-          type: 'warning'
-        }).then(() => {
-          store.dispatch('user/resetToken').then(() => {
-            location.reload()
-          })
-        })
-      }
-      return Promise.reject(new Error(res.message || 'Error'))
+      return Promise.reject('error')
     } else {
-      return res
+      const res = response.data
+      if(res.code == null){
+        return res
+      }
+      else if (res.code !== 20000) {
+        Message({
+          message: res.message || '错误',
+          type: 'error',
+          duration: 5 * 1000
+        })
+
+        if (res.code === 30000) {
+          this.$alert(res.message, '警告', {
+            confirmButtonText: '确定',
+            callback: action => {
+              this.$message({
+                type: 'warning ',
+                message: `action: ${ action }`
+              });
+            }
+          });
+        }
+        // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
+        if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
+          // to re-login
+          MessageBox.confirm('你已经退出当前登录, 你可以取消留在当前界面或者再次登录', '确认注销', {
+            confirmButtonText: 'Re-Login',
+            cancelButtonText: 'Cancel',
+            type: 'warning'
+          }).then(() => {
+            store.dispatch('user/resetToken').then(() => {
+              location.reload()
+            })
+          })
+        }
+        return Promise.reject(new Error(res.message || 'Error'))
+      }
+      else {
+        return res
+      }
+
     }
   },
   error => {

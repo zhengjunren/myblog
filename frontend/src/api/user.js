@@ -83,8 +83,8 @@ export function updateAvatar(data) {
 
 export function getExcel() {
     return request({
-        // responseType: 'blob',
-        url: '/excel/download',
-        method: 'get'
+      responseType: 'blob',
+      url: '/excel/user',
+      method: 'get'
     })
 }

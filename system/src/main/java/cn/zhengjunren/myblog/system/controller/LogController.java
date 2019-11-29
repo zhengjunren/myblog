@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.Timestamp;
+
 /**
  * <p>ClassName: LogController</p>
  * <p>Description: </p>
@@ -40,8 +42,8 @@ public class LogController {
             @ApiImplicitParam(name = "page", value = "页码", required = true, dataType = DataTypeUtils.INT, paramType = ParamTypeUtils.QUERY),
             @ApiImplicitParam(name = "limit", value = "笔数", required = true, dataType = DataTypeUtils.INT, paramType = ParamTypeUtils.QUERY),
     })
-    public ResponseResult<LogListInfo> page(int page, int limit) {
-        PageInfo<TbLog> pageInfo = tbLogSystemService.page(page, limit);
+    public ResponseResult<LogListInfo> page(int page, int limit, Timestamp start, Timestamp end) {
+        PageInfo<TbLog> pageInfo = tbLogSystemService.page(page, limit, start, end);
         LogListInfo logListInfo = new LogListInfo();
         logListInfo.setItems(pageInfo.getList());
         logListInfo.setTotal(pageInfo.getTotal());

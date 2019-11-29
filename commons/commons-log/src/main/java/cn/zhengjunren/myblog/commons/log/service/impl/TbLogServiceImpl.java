@@ -10,10 +10,13 @@ import cn.zhengjunren.myblog.commons.utils.UserAgentUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
 import java.lang.reflect.Method;
+import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>ClassName: TbLogServiceImpl</p>
@@ -81,5 +84,12 @@ public class TbLogServiceImpl implements TbLogService {
         log.setBrowser(browser);
         log.setCreateTime(new Date());
         return save(log);
+    }
+
+    @Override
+    public List<TbLog> selectAll(Timestamp start, Timestamp end) {
+        Example example = new Example(TbLog.class);
+        example.createCriteria().andBetween("createTime", start,end);
+        return tbLogMapper.selectByExample(example);
     }
 }

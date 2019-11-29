@@ -130,11 +130,11 @@
 </template>
 
 <script>
-    import {fetchList, modifyStatus, search, updateUser} from "@/api/user";
+    import {fetchList, modifyStatus, search, updateUser, getExcel} from "@/api/user";
     import waves from '@/directive/waves'
     import Pagination from '@/components/Pagination'
     import Link from "../../layout/components/Sidebar/Link";
-    import axios from 'axios'
+    import {downloadFile} from '@/utils/index'
     import {getToken} from '../../utils/auth'
     export default {
         name: "UserListTable",
@@ -286,20 +286,10 @@
                 }
               },
             handleDownload(){
-                axios.get(process.env.VUE_APP_BASE_API + '/excel/user', {
-                    responseType: 'blob',
-                    params:{access_token: getToken()}
-                }).then(res => {
-                    let blob = new Blob([res.data], { type: 'application/ms-excel;charset=utf-8' });
-                    let downloadElement = document.createElement('a');
-                    let href = window.URL.createObjectURL(blob); //创建下载的链接
-                    downloadElement.href = href;
-                    downloadElement.download = '用户列表.xlsx'; //下载后文件名
-                    document.body.appendChild(downloadElement);
-                    downloadElement.click(); //点击下载
-                    document.body.removeChild(downloadElement); //下载完成移除元素
-                    window.URL.revokeObjectURL(href); //释放掉blob对象
-                })
+              getExcel().then(result => {
+                downloadFile(result, '用户列表', 'xlsx')
+                this.downloadLoading = false
+              })
             }
         }
     }

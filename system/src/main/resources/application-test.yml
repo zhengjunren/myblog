@@ -45,10 +45,10 @@ security:
     resource:
       token-info-uri: http://119.3.222.119:8000/oauth/check_token
 
-#logging:
-#  level:
-#    cn.zhengjunren: info
-#    cn.zhengjunren.myblog.system.mapper: trace
+logging:
+  level:
+    cn.zhengjunren: info
+    cn.zhengjunren.myblog.system.mapper: trace
 
 mybatis:
   type-aliases-package: cn.zhengjunren.myblog.business.domain

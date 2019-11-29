@@ -6,8 +6,10 @@ import cn.zhengjunren.myblog.system.service.TbLogSystemService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -18,14 +20,22 @@ public class TbLogSystemServiceImpl implements TbLogSystemService {
 
 
     @Override
-    public PageInfo<TbLog> page(Integer pageNum, Integer pageSize) {
+    public PageInfo<TbLog> page(Integer pageNum, Integer pageSize, Timestamp start, Timestamp end) {
         PageHelper.startPage(pageNum, pageSize);
-        List<TbLog> logList = tbLogSystemMapper.selectAll();
+        Example example = new Example(TbLog.class);
+        example.createCriteria().andBetween("createTime", start, end);
+        List<TbLog> logList = tbLogSystemMapper.selectByExample(example);
         return new PageInfo<>(logList);
     }
 
     @Override
     public Integer count() {
         return tbLogSystemMapper.selectCount(null);
+    }
+
+    @Override
+    public List<TbLog> selectAll(Timestamp start, Timestamp end) {
+
+        return null;
     }
 }

@@ -1,5 +1,22 @@
 <template>
   <div class="app-container">
+    <div class="my-search-container">
+      <el-date-picker
+        v-model="date"
+        type="daterange"
+        range-separator=":"
+        class="el-range-editor--small filter-item"
+        style="height: 30.5px;width: 220px"
+        value-format="yyyy-MM-dd HH:mm:ss"
+        start-placeholder="开始日期"
+        end-placeholder="结束日期"/>
+      <el-button v-waves class="my-search-item" type="primary" icon="el-icon-search" @click="search">
+        搜索
+      </el-button>
+      <el-button v-waves :loading="downloadLoading" class="my-search-item" type="primary" icon="el-icon-download" @click="handleDownload">
+        导出
+      </el-button>
+    </div>
     <el-table
       :key="tableKey"
       v-loading="listLoading"
@@ -71,57 +88,91 @@
 </template>
 
 <script>
-    import {fetchLogList} from "@/api/system";
+    import {fetchLogList, getLogExcel} from "@/api/system";
+    import waves from '@/directive/waves'
+    import {downloadFile} from '@/utils/index'
     import Pagination from '@/components/Pagination'
     export default {
-        name: "LogList",
-        components: {Pagination},
-        filters: {
-            statusFilter(time) {
-                return time+"ms"
-            },
-            statusFilter2(time) {
-                if (time < 500){
-                    return "success"
-                }
-                else if (time<1000&&time>500) {
-                    return "warning"
-                }
-                else {
-                    return "danger"
-                }
-            }
+      name: "LogList",
+      components: {Pagination},
+      directives: { waves },
+      filters: {
+        statusFilter(time) {
+          return time+"ms"
         },
-        data() {
-            return {
-                tableKey: 0,
-                list: null,
-                total: 0,
-                listLoading: true,
-                listQuery: {
-                    page: 1,
-                    limit: 10,
-                },
-                downloadLoading: false,
-
-            }
-        },
-        created() {
-            this.getList()
-        },
-        methods: {
-            getList() {
-                this.listLoading = true
-                fetchLogList(this.listQuery).then(response => {
-                    this.list = response.data.items
-                    this.total = response.data.total
-                    // 模拟请求时间
-                    setTimeout(() => {
-                        this.listLoading = false
-                    }, 500)
-                })
-            }
+        statusFilter2(time) {
+          if (time < 500){
+            return "success"
+          }
+          else if (time<1000&&time>500) {
+            return "warning"
+          }
+          else {
+            return "danger"
+          }
         }
+      },
+      data() {
+        return {
+          tableKey: 0,
+          list: null,
+          total: 0,
+          listLoading: true,
+          listQuery: {
+            page: 1,
+            limit: 10,
+            start: undefined,
+            end: undefined
+          },
+          date: undefined,
+          downloadLoading: false,
+        }
+      },
+      created() {
+        this.getList()
+      },
+      methods: {
+        getList() {
+          this.listLoading = true
+          fetchLogList(this.listQuery).then(response => {
+            this.list = response.data.items
+            this.total = response.data.total
+            // 模拟请求时间
+            setTimeout(() => {
+              this.listLoading = false
+            }, 500)
+          })
+        },
+        handleDownload(){
+          const date = this.date
+          if(date !== undefined && date !== null) {
+            this.listQuery.start = date[0]
+            this.listQuery.end = date[1]
+          }
+          getLogExcel(this.listQuery).then(result => {
+            downloadFile(result, '日志列表', 'xlsx')
+            this.downloadLoading = false
+          })
+        },
+        search(){
+          const date = this.date
+          if(date !== undefined && date !== null) {
+            this.listQuery.start = date[0]
+            this.listQuery.end = date[1]
+          }
+
+          fetchLogList(this.listQuery).then(response => {
+            this.list = response.data.items
+            this.total = response.data.total
+            this.listQuery.start = undefined
+            this.listQuery.end = undefined
+            // 模拟请求时间
+            setTimeout(() => {
+              this.listLoading = false
+            }, 500)
+          })
+        }
+      }
     }
 </script>
 

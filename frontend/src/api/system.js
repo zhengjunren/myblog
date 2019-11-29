@@ -19,6 +19,14 @@ export function countLog() {
   })
 }
 
+export function getLogExcel(query) {
+  return request({
+    responseType: 'blob',
+    url: '/excel/log',
+    method: 'get',
+    params: query
+  })
+}
 
 export function getTaskList(query) {
   return request({
