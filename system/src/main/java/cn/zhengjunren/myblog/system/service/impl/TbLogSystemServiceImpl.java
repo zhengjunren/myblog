@@ -23,4 +23,9 @@ public class TbLogSystemServiceImpl implements TbLogSystemService {
         List<TbLog> logList = tbLogSystemMapper.selectAll();
         return new PageInfo<>(logList);
     }
+
+    @Override
+    public Integer count() {
+        return tbLogSystemMapper.selectCount(null);
+    }
 }

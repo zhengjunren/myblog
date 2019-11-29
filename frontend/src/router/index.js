@@ -49,8 +49,14 @@ export const constantRoutes = [
   },
 
   {
+    path: '/401',
+    component: () => import('@/views/error-page/401'),
+    hidden: true
+  },
+
+  {
     path: '/404',
-    component: () => import('@/views/404'),
+    component: () => import('@/views/error-page/404'),
     hidden: true
   },
 
@@ -101,6 +107,35 @@ export const constantRoutes = [
   },
 
   {
+    path: '/article',
+    component: Layout,
+    redirect: '/article/list',
+    name: 'Article',
+    meta: { title: '文章管理', icon: 'peoples' },
+    children: [
+      {
+        path: 'list',
+        name: 'ArticleList',
+        component: () => import('@/views/article/list'),
+        meta: { title: '文章列表', icon: 'list' }
+      },
+      {
+        path: 'edit/:id(\\d+)',
+        component: () => import('@/views/article/edit'),
+        name: 'EditArticle',
+        meta: { title: '编辑文章', noCache: true, activeMenu: '/article/list' },
+        hidden: true
+      },
+      {
+        path: 'create',
+        component: () => import('@/views/article/create'),
+        name: 'CreateArticle',
+        meta: { title: '创建文章', icon: 'edit' }
+      }
+    ]
+  },
+
+  {
     path: '/user',
     component: Layout,
     redirect: '/user/list',
@@ -114,36 +149,26 @@ export const constantRoutes = [
         meta: { title: '用户列表', icon: 'list' }
       },
       {
-        path: 'tree',
-        name: 'tTree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
-      }
-    ]
-  },
-
-  {
-    path: '/profile',
-    component: Layout,
-    redirect: '/profile/',
-    name: 'Profile',
-    meta: { title: '个人信息', icon: 'user' },
-    children: [
-      {
-        path: '',
-        name: 'UserProfile',
+        path: '/profile',
         component: () => import('@/views/user/profile'),
-        meta: { title: '修改信息', icon: 'table' }
-      },
-      {
-        path: 'avatar',
-        name: 'UserAvatar',
-        component: () => import('@/views/user/avatar'),
-        meta: { title: '修改头像', icon: 'table' }
+        meta: { title: '个人信息', icon: 'user' },
+        children: [
+          {
+            path: '',
+            name: 'UserProfile',
+            component: () => import('@/views/user/profile'),
+            meta: { title: '修改信息', icon: 'table' }
+          },
+          {
+            path: 'avatar',
+            name: 'UserAvatar',
+            component: () => import('@/views/user/avatar'),
+            meta: { title: '修改头像', icon: 'table' }
+          }
+        ]
       }
     ]
   },
-
   {
     path: '/nested',
     component: Layout,

@@ -15,4 +15,10 @@ public interface TbLogSystemService{
      */
     PageInfo<TbLog> page(Integer pageNum, Integer pageSize);
 
+    /**
+     * 获取操作日志次数
+     * @return {@link Integer}
+     */
+    Integer count();
+
 }

@@ -11,6 +11,13 @@ export function fetchLogList(query) {
   })
 }
 
+export function countLog() {
+  return request({
+    url: '/log/count',
+    method: 'get',
+    baseURL: BASE_URL
+  })
+}
 
 
 export function getTaskList(query) {

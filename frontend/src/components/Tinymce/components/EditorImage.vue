@@ -15,7 +15,7 @@
         :url=url
         :params="params"
         :headers="headers"
-        img-format="png"></image-cropper>
+        img-format="png"/>
   </div>
 </template>
 
@@ -36,7 +36,7 @@ export default {
   data() {
     return {
       show: false,
-      url: process.env.VUE_APP_BASE_API + 'upload',
+      url: process.env.VUE_APP_BASE_API + '/upload',
       dialogVisible: false,
       listObj: {},
       fileList: [],
@@ -49,22 +49,21 @@ export default {
     }
   },
   methods: {
-      toggleShow() {
-          this.show = !this.show;
-      },
-      cropSuccess(image, field){
-          console.log('-------- crop success --------');
-          this.image = image;
-      },
+    toggleShow() {
+      this.show = !this.show
+    },
+    cropSuccess(image, field) {
+      console.log('-------- crop success --------')
+      this.image = image
+    },
       cropUploadSuccess(jsonData, field){
           this.$emit('successCBK', jsonData.data.path)
       },
-      cropUploadFail(status, field){
-          this.$message({
-              message: response.message,
-              type: 'warning'
-          })
-      },
+    cropUploadFail(status, field){
+      console.log('-------- upload fail --------')
+      console.log(status)
+      console.log('field: ' + field)
+    },
     handleSubmit() {
       const arr = Object.keys(this.listObj).map(v => this.listObj[v])
       if (!this.checkAllSuccess()) {

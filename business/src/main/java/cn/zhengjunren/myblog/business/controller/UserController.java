@@ -2,9 +2,9 @@ package cn.zhengjunren.myblog.business.controller;
 
 import cn.zhengjunren.myblog.business.domain.TbUser;
 import cn.zhengjunren.myblog.business.dto.AvatarInfo;
+import cn.zhengjunren.myblog.business.dto.ListInfo;
 import cn.zhengjunren.myblog.business.dto.LoginInfo;
 import cn.zhengjunren.myblog.business.dto.StatusInfo;
-import cn.zhengjunren.myblog.business.dto.UserListInfo;
 import cn.zhengjunren.myblog.business.service.TbUserService;
 import cn.zhengjunren.myblog.commons.dto.ResponseResult;
 import cn.zhengjunren.myblog.commons.log.annotation.MyLog;
@@ -61,12 +61,10 @@ public class UserController {
             @ApiImplicitParam(name = "limit", value = "笔数", required = true, dataType = DataTypeUtils.INT, paramType = ParamTypeUtils.QUERY),
     })
     @ApiOperation(value = "获取用户列表", notes="根据页码、笔数查询用户列表")
-    public ResponseResult<UserListInfo> list(int page, int limit) {
+    public ResponseResult<ListInfo<TbUser>> list(int page, int limit) {
         PageInfo<TbUser> pageInfo = tbUserService.page(page, limit);
-        UserListInfo userListInfo = new UserListInfo();
-        userListInfo.setItems(pageInfo.getList());
-        userListInfo.setTotal(pageInfo.getTotal());
-        return new ResponseResult<>(ResponseResult.CodeStatus.OK,"分页获取用户列表", userListInfo);
+        ListInfo<TbUser> listInfo = new ListInfo<>(pageInfo.getList(), pageInfo.getTotal());
+        return new ResponseResult<>(ResponseResult.CodeStatus.OK,"分页获取用户列表", listInfo);
     }
 
     @MyLog("修改用户信息")

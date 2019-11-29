@@ -47,4 +47,11 @@ public class LogController {
         logListInfo.setTotal(pageInfo.getTotal());
         return new ResponseResult<>(ResponseResult.CodeStatus.OK,"分页获取用户列表", logListInfo);
     }
+
+    @GetMapping("count")
+    @ApiOperation(value = "获取操作日志次数")
+    public ResponseResult<Integer> count() {
+        Integer count = tbLogSystemService.count();
+        return new ResponseResult<>(ResponseResult.CodeStatus.OK, "获取操作日志次数", count);
+    }
 }

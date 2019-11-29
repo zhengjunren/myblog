@@ -35,14 +35,14 @@ public interface TbUserService{
      * @param pageSize 每页显示的数量
      * @return {@link List <TbUser>}
      */
-    public PageInfo<TbUser> page(Integer pageNum, Integer pageSize);
+    PageInfo<TbUser> page(Integer pageNum, Integer pageSize);
 
     /**
      * 管理员更新用户信息
      * @param tbUser {@link TbUser}
      * @return 是否更新成功
      */
-    public int update(TbUser tbUser);
+    int update(TbUser tbUser);
 
     /**
      * 更新个人信息
@@ -50,7 +50,7 @@ public interface TbUserService{
      * @param newTbUser 用户修改后的信息
      * @return 是否更新成功
      */
-    public int modifyProfile(TbUser oldTbUser, TbUser newTbUser);
+    int modifyProfile(TbUser oldTbUser, TbUser newTbUser);
 
     /**
      * 修改头像
@@ -58,7 +58,7 @@ public interface TbUserService{
      * @param path 头像路径
      * @return 是否更新成功
      */
-    public int modifyAvatar(String username, String path);
+    int modifyAvatar(String username, String path);
 
     /**
      * 获取所有用户信息
