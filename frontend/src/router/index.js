@@ -111,7 +111,7 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/article/list',
     name: 'Article',
-    meta: { title: '文章管理', icon: 'peoples' },
+    meta: { title: '文章管理', icon: 'documentation' },
     children: [
       {
         path: 'list',
@@ -120,7 +120,7 @@ export const constantRoutes = [
         meta: { title: '文章列表', icon: 'list' }
       },
       {
-        path: 'edit/:id(\\d+)',
+        path: 'edit/:id(\\d+)/:nickname',
         component: () => import('@/views/article/edit'),
         name: 'EditArticle',
         meta: { title: '编辑文章', noCache: true, activeMenu: '/article/list' },
@@ -151,7 +151,7 @@ export const constantRoutes = [
       {
         path: '/profile',
         component: () => import('@/views/user/profile'),
-        meta: { title: '个人信息', icon: 'user' },
+        meta: { title: '个人管理', icon: 'user' },
         children: [
           {
             path: '',

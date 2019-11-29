@@ -30,7 +30,7 @@
       </el-table-column>
       <el-table-column min-width="300px" label="标题">
         <template slot-scope="{row}">
-          <router-link :to="'/article/edit/'+row.id" class="link-type">
+          <router-link :to="'/article/edit/'+row.id+'/'+ row.nickname" class="link-type">
             <span>{{ row.title }}</span>
           </router-link>
         </template>
@@ -42,13 +42,25 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" width="120">
+      <el-table-column align="center" label="操作" width="200" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <router-link :to="'/article/edit/'+scope.row.id">
+          <router-link :to="'/article/edit/'+scope.row.id + '/'+scope.row.nickname">
             <el-button type="primary" size="small" icon="el-icon-edit">
               编辑
             </el-button>
           </router-link>
+          &nbsp;&nbsp;
+          <el-popover
+            :ref="scope.$index"
+            placement="top"
+            width="180">
+            <p>确定删除吗？</p>
+            <div style="text-align: right; margin: 0">
+              <el-button size="mini" type="text" @click="$refs[scope.$index].doClose()">取消</el-button>
+              <el-button type="primary" size="mini" @click="">确定</el-button>
+            </div>
+            <el-button slot="reference" size="small" type="danger" icon="el-icon-delete">删除</el-button>
+          </el-popover>
         </template>
       </el-table-column>
     </el-table>
@@ -98,6 +110,7 @@
     },
     data() {
       return {
+        visible:false,
         list: null,
         total: 0,
         listLoading: true,

@@ -37,4 +37,14 @@ public class TbArticleServiceImpl implements TbArticleService{
     public TbArticle getById(Integer id) {
         return tbArticleMapper.selectByPrimaryKey(id);
     }
+
+    @Override
+    public int insert(TbArticle tbArticle) {
+        return tbArticleMapper.insert(tbArticle);
+    }
+
+    @Override
+    public int update(TbArticle tbArticle) {
+        return tbArticleMapper.updateByPrimaryKey(tbArticle);
+    }
 }

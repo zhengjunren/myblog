@@ -28,4 +28,18 @@ public interface TbArticleService{
      * @return {@link TbArticle}
      */
     TbArticle getById(Integer id);
+
+    /**
+     * 发布文章
+     * @param tbArticle {@link TbArticle}
+     * @return 结果
+     */
+    int insert(TbArticle tbArticle);
+
+    /**
+     * 更新
+     * @param tbArticle {@link TbArticle}
+     * @return 结果
+     */
+    int update(TbArticle tbArticle);
 }

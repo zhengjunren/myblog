@@ -1,10 +1,10 @@
 <template>
   <div class="createPost-container">
-    <el-form ref="postForm" :model="postForm" class="form-container">
+    <el-form ref="postForm" :model="postForm" :rules="rules" class="form-container">
 
       <sticky :z-index="10" :class-name="postForm.status | statusFilter">
-        <CommentDropdown v-model="postForm.isComment" />
-        <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="">
+        <CommentDropdown v-model="isComment" />
+        <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="submitForm">
           发布
         </el-button>
         <el-button v-loading="loading" type="warning" @click="">
@@ -23,9 +23,7 @@
               <el-row>
                 <el-col :span="8">
                   <el-form-item label-width="60px" style="margin-left: -15px" label="作者:" class="postInfo-container-item">
-<!--                    <el-select v-model="postForm.author" :remote-method="getRemoteUserList" filterable default-first-option remote placeholder="Search user">-->
-<!--                      <el-option v-for="(item,index) in userListOptions" :key="item+index" :label="item" :value="item" />-->
-<!--                    </el-select>-->
+                    <el-input v-model="nickname"/>
                   </el-form-item>
                 </el-col>
                 <el-col :span="10">
@@ -54,9 +52,9 @@
   import Tinymce from '@/components/Tinymce'
   import MDinput from '@/components/MDinput'
   import Sticky from '@/components/Sticky' // 粘性header组件
-  import { validURL } from '@/utils/validate'
-  import {fetchArticle} from "@/api/article";
-  import { CommentDropdown, PlatformDropdown, SourceUrlDropdown } from './Dropdown'
+  import { fetchArticle, postArticle, updateArticle } from "@/api/article";
+  import {CommentDropdown, PlatformDropdown, SourceUrlDropdown} from './Dropdown'
+
   const defaultForm = {
     status: 1,
     title: '', // 文章题目
@@ -78,6 +76,13 @@
           3:"deleted"
         }
         return 'sub-navbar '+statusMap[status]
+      },
+      commentFilter(isComment) {
+        const statusMap = {
+          0: false,
+          1: true
+        }
+        return statusMap[isComment]
       }
     },
     props: {
@@ -87,11 +92,28 @@
       }
     },
     data() {
+      const validateRequire = (rule, value, callback) => {
+        if (value === '') {
+          this.$message({
+            message: rule.field + '为必传项',
+            type: 'error'
+          })
+          callback(new Error(rule.field + '为必传项'))
+        } else {
+          callback()
+        }
+      }
       return {
+        rules: {
+          title: [{ validator: validateRequire }],
+          content: [{ validator: validateRequire }],
+        },
+        isComment:true,
         userListOptions: [],
         postForm: Object.assign({}, defaultForm),
         loading: false,
-        tempRoute: {}
+        tempRoute: {},
+        nickname: ""
       }
     },
     computed: {
@@ -114,14 +136,11 @@
     created() {
       if (this.isEdit) {
         const id = this.$route.params && this.$route.params.id
+        this.nickname = this.$route.params && this.$route.params.nickname
         this.fetchData(id)
       } else {
         this.postForm = Object.assign({}, defaultForm)
       }
-
-      // Why need to make a copy of this.$route here?
-      // Because if you enter this page and quickly switch tag, may be in the execution of the setTagsViewTitle function, this.$route is no longer pointing to the current page
-      // https://github.com/PanJiaChen/vue-element-admin/issues/1221
       this.tempRoute = Object.assign({}, this.$route)
     },
     methods: {
@@ -130,9 +149,10 @@
           this.postForm = response.data
 
           // just for test
-          this.postForm.title += `   Article Id:${this.postForm.id}`
-          this.postForm.summary += `   Article Id:${this.postForm.id}`
-          this.postForm.isComment = this.postForm.isComment === 1;
+          // this.postForm.title += `   Article Id:${this.postForm.id}`
+          // this.postForm.summary += `   Article Id:${this.postForm.id}`
+          this.isComment = this.postForm.isComment !== 0;
+
           // set tagsview title
           this.setTagsViewTitle()
 
@@ -151,11 +171,35 @@
         const title = '编辑文章'
         document.title = `${title} - ${this.postForm.id}`
       },
-      getRemoteUserList(query) {
-        // searchUser(query).then(response => {
-        //   if (!response.data.items) return
-        //   this.userListOptions = response.data.items.map(v => v.name)
-        // })
+      submitForm() {
+        this.isComment ? this.postForm.isComment = 1 : this.postForm.isComment = 0
+        console.log(this.postForm)
+        if (this.postForm.id != null) {
+          updateArticle(this.postForm).then(response => {
+            this.loading = true
+            this.$notify({
+              title: '成功',
+              message: response.message,
+              type: 'success',
+              duration: 2000
+            })
+            this.postForm.status = 1
+            this.loading = false
+          })
+        }
+        else {
+          postArticle(this.postForm).then(response => {
+            this.loading = true
+            this.$notify({
+              title: '成功',
+              message: response.message,
+              type: 'success',
+              duration: 2000
+            })
+            this.postForm.status = 1
+            this.loading = false
+          })
+        }
       }
     }
   }

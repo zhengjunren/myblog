@@ -18,4 +18,6 @@ import java.util.List;
 public interface TbArticleMapper extends MyMapper<TbArticle> {
 
     List<TbArticleNoContent> selectAllNoContent();
+
+
 }
