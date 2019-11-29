@@ -2,7 +2,7 @@ package cn.zhengjunren.myblog.business.controller;
 
 import cn.zhengjunren.myblog.business.domain.TbUser;
 import cn.zhengjunren.myblog.business.dto.AvatarInfo;
-import cn.zhengjunren.myblog.business.dto.ListInfo;
+import cn.zhengjunren.myblog.commons.dto.ListInfo;
 import cn.zhengjunren.myblog.business.dto.LoginInfo;
 import cn.zhengjunren.myblog.business.dto.StatusInfo;
 import cn.zhengjunren.myblog.business.service.TbUserService;

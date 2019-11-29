@@ -13,7 +13,7 @@ import java.io.Serializable;
  * @date 2019/11/15 21:18
  */
 @Data
-public class UserSearchParm implements Serializable {
+public class UserSearchParams implements Serializable {
 
     private String username;
     private String nickname;
