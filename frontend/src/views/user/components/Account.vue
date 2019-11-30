@@ -1,5 +1,5 @@
 <template>
-  <el-form>
+  <el-form :label-position="labelPosition" label-width="100px">
     <el-form-item label="用户名">
       <el-input v-model.trim="user.name" :disabled="true" />
     </el-form-item>
@@ -34,6 +34,11 @@
 <script>
   import { updateProfile } from "@/api/user";
 export default {
+  data() {
+    return {
+      labelPosition: 'right'
+    }
+  },
   props: {
     user: {
       type: Object,
