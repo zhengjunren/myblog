@@ -89,6 +89,12 @@ export function formatTime(time, option) {
   }
 }
 
+export function timeToNow(time) {
+  var now = new Date()
+  console.log(time)
+  return Math.floor((now - Date.parse(time))/(24*3600*1000))
+}
+
 /**
  * @param {string} url
  * @returns {Object}

@@ -29,3 +29,10 @@ export function updateArticle(data) {
     data
   })
 }
+
+export function getLatestArticle(number) {
+  return request({
+    url: '/article/latest/' + number,
+    method: 'get',
+  })
+}

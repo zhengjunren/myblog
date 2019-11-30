@@ -149,24 +149,25 @@ export const constantRoutes = [
         meta: { title: '用户列表', icon: 'list' }
       },
       {
-        path: '/profile',
-        component: () => import('@/views/user/profile'),
-        meta: { title: '个人管理', icon: 'user' },
-        children: [
-          {
-            path: '',
-            name: 'UserProfile',
-            component: () => import('@/views/user/profile'),
-            meta: { title: '修改信息', icon: 'table' }
-          },
-          {
-            path: 'avatar',
-            name: 'UserAvatar',
-            component: () => import('@/views/user/avatar'),
-            meta: { title: '修改头像', icon: 'table' }
-          }
-        ]
-      }
+        path: 'index',
+        name: 'UserProfileIndex',
+        component: () => import('@/views/user/profile/index'),
+        meta: { title: '个人信息', icon: 'user'},
+      },
+      {
+        path: 'avatar',
+        name: 'UserProfileAvatar',
+        component: () => import('@/views/user/profile/avatar'),
+        meta: { title: '个人头像', icon: 'user'},
+        hidden: true
+      },
+      {
+        path: 'center',
+        name: 'UserCenter',
+        component: ()=> import('@/views/user/center'),
+        meta: {title: '用户中心'},
+        hidden: true
+      },
     ]
   },
   {

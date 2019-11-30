@@ -81,6 +81,14 @@ export function updateAvatar(data) {
     })
 }
 
+export function updatePassword(data) {
+  return request({
+    url: '/user/password',
+    method: 'put',
+    data
+  })
+}
+
 export function getExcel() {
     return request({
       responseType: 'blob',

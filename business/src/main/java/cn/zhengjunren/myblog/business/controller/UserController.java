@@ -2,10 +2,11 @@ package cn.zhengjunren.myblog.business.controller;
 
 import cn.zhengjunren.myblog.business.domain.TbUser;
 import cn.zhengjunren.myblog.business.dto.AvatarInfo;
-import cn.zhengjunren.myblog.commons.dto.ListInfo;
 import cn.zhengjunren.myblog.business.dto.LoginInfo;
+import cn.zhengjunren.myblog.business.dto.PasswordParams;
 import cn.zhengjunren.myblog.business.dto.StatusInfo;
 import cn.zhengjunren.myblog.business.service.TbUserService;
+import cn.zhengjunren.myblog.commons.dto.ListInfo;
 import cn.zhengjunren.myblog.commons.dto.ResponseResult;
 import cn.zhengjunren.myblog.commons.log.annotation.MyLog;
 import cn.zhengjunren.myblog.commons.utils.DataTypeUtils;
@@ -15,16 +16,20 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
 
 /**
  * <p>ClassName: UserController</p>
@@ -40,8 +45,14 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = "用户管理")
 public class UserController {
 
-    @Autowired
-    TbUserService tbUserService;
+    final TbUserService tbUserService;
+
+    @Resource
+    public BCryptPasswordEncoder passwordEncoder;
+
+    public UserController(TbUserService tbUserService) {
+        this.tbUserService = tbUserService;
+    }
 
     @GetMapping("info")
     @ApiOperation(value = "获取用户信息")
@@ -113,6 +124,28 @@ public class UserController {
     public ResponseResult<Void> modifyAvatar(@RequestBody AvatarInfo avatarInfo) {
         int result = tbUserService.modifyAvatar(avatarInfo.getUsername(), avatarInfo.getPath());
         return commonResponse("头像更新成功", "网络错误，请重新上传", result);
+    }
+
+    /**
+     * 修改密码
+     * @param passwordParams {@link PasswordParams}
+     * @return {@link ResponseResult<Void>}
+     */
+    @PutMapping("password")
+    @ApiOperation(value = "修改密码")
+    @ApiImplicitParam(name = "passwordParams", value = "密码信息", required = true, dataType = "PasswordParams", paramType = ParamTypeUtils.BODY)
+    public ResponseResult<Void> modifyPassword(@RequestBody PasswordParams passwordParams) {
+        if (StringUtils.isNotBlank(passwordParams.getNewPassword()) && StringUtils.isNotBlank(passwordParams.getConfirmPassword()) && passwordParams.getNewPassword().equals(passwordParams.getConfirmPassword())){
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            TbUser oldTbUser = tbUserService.getByUsername(authentication.getName());
+            if (passwordEncoder.matches(passwordParams.getOldPassword(), oldTbUser.getPassword())) {
+                oldTbUser.setPassword(passwordEncoder.encode(passwordParams.getNewPassword()));
+                int result = tbUserService.update(oldTbUser);
+                return commonResponse("密码修改成功，请重新登录", "网络错误，请重试", result);
+            }
+            return new ResponseResult<>(ResponseResult.CodeStatus.OK, "原密码错误");
+        }
+        return new ResponseResult<>(ResponseResult.CodeStatus.OK, "两次密码不匹配");
     }
 
     private ResponseResult<Void> commonResponse(String successMessage, String failMessage, int result) {

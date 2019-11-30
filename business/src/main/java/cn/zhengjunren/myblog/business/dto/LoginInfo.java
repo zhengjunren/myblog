@@ -3,6 +3,7 @@ package cn.zhengjunren.myblog.business.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -14,7 +15,7 @@ import java.util.Date;
  * @date 2019/11/12 13:18
  */
 @Data
-public class LoginInfo {
+public class LoginInfo implements Serializable {
 
     private Integer id;
 

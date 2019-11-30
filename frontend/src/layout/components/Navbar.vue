@@ -17,13 +17,18 @@
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
           <router-link to="/">
-            <el-dropdown-item>
+            <el-dropdown-item style="text-align: center">
               首页
             </el-dropdown-item>
           </router-link>
           <el-dropdown-item divided>
-            <span style="display:block;" @click="logout">退出</span>
+            <span style="display:block; text-align: center" @click="logout">退出</span>
           </el-dropdown-item>
+          <router-link to="/user/center">
+            <el-dropdown-item divided>
+              个人中心
+            </el-dropdown-item>
+          </router-link>
         </el-dropdown-menu>
       </el-dropdown>
     </div>

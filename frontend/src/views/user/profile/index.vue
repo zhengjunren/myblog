@@ -47,7 +47,7 @@
     import PanThumb from '@/components/PanThumb'
     import { getInfo, updateProfile } from "@/api/user";
     export default {
-        name: "profile",
+        name: "ProfileIndex",
         components: {  PanThumb },
         data() {
             return {

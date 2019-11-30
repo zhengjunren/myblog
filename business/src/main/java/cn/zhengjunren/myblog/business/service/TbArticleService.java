@@ -4,6 +4,8 @@ import cn.zhengjunren.myblog.business.domain.TbArticle;
 import cn.zhengjunren.myblog.business.dto.TbArticleNoContent;
 import com.github.pagehelper.PageInfo;
 
+import java.util.List;
+
 /**
  * <p>ClassName: TbArticleService</p>
  * <p>Description: </p>
@@ -42,4 +44,12 @@ public interface TbArticleService{
      * @return 结果
      */
     int update(TbArticle tbArticle);
+
+    /**
+     * 根据用户名获取最新发布的文章
+     * @param number 获取的数量
+     * @param username 用户名
+     * @return {@link List<TbArticleNoContent>}
+     */
+    List<TbArticleNoContent> selectLatestArticle(Integer number, String username);
 }

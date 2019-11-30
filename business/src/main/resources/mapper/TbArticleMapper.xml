@@ -48,4 +48,16 @@
       tb_article AS a
       LEFT JOIN tb_user AS u ON a.user_id = u.id
   </select>
+    <select id="selectLatestArticle" resultMap="BaseResultMap2">
+      SELECT
+        a.*,
+        u.nickname
+      FROM
+        tb_article AS a
+          LEFT JOIN tb_user AS u ON a.user_id = u.id
+      WHERE u.username = #{username}
+      ORDER BY
+        update_time DESC
+      LIMIT #{number}
+    </select>
 </mapper>

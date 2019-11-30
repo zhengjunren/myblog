@@ -47,4 +47,9 @@ public class TbArticleServiceImpl implements TbArticleService{
     public int update(TbArticle tbArticle) {
         return tbArticleMapper.updateByPrimaryKey(tbArticle);
     }
+
+    @Override
+    public List<TbArticleNoContent> selectLatestArticle(Integer number, String username) {
+        return tbArticleMapper.selectLatestArticle(number, username);
+    }
 }

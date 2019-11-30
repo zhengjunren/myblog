@@ -25,7 +25,7 @@
 <script>
   import ImageCropper from 'vue-image-crop-upload'
   import PanThumb from '@/components/PanThumb'
-  import { getToken } from '../../utils/auth'
+  import { getToken } from '@/utils/auth'
   import { updateAvatar } from '@/api/user'
   export default {
     name: 'Avatar',

@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -20,7 +21,7 @@ import java.util.Date;
  */
 @Data
 @Table(name = "tb_article")
-public class TbArticleNoContent {
+public class TbArticleNoContent implements Serializable {
     @Id
     @Column(name = "id")
     @GeneratedValue(generator = "JDBC")
