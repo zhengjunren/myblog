@@ -38,6 +38,8 @@ MyShopPlus | [GitHub](https://github.com/funtl/MyShopPlus)
 eladmin | [GitHub](https://github.com/elunez/eladmin)
 eladmin-web | [GitHub](https://github.com/elunez/eladmin-web)
 ForestBlog | [GitHub](https://github.com/saysky/ForestBlog)
+spring-boot-demo | [GitHub](https://github.com/xkcoding/spring-boot-demo)
+spring-security-oauth2 | [Gitee](https://gitee.com/qq75547276/spring-security-oauth2)
 ## 软件架构
 
 分为`business`、`search`、`security`和`frontend`，其中前端采用的是 [`vue-admin-template`](https://github.com/PanJiaChen/vue-admin-template)模板。
@@ -95,11 +97,15 @@ docker restart elastisearch
 ```
 
 ### 安装项目
+
 **因后端项目为`maven`项目，必须先安装好`maven`**
 
 **安装nodejs**
 
 下面是测试环境的安装
+#### database
+在 mysql 中创建名为 myblog 的数据库，字符集为 utf8 
+
 #### security
 修改`security`模块下的`application.yml`文件：
 + 修改`spring.datasource.jdbc-url`为相应数据库服务器地址
