@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export const BASE_URL = "http://localhost:8600"
+export const BASE_URL = process.env.VUE_APP_SYSTEM_URL
 
 export function fetchLogList(query) {
   return request({

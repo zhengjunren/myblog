@@ -95,11 +95,12 @@ docker restart elastisearch
 + `VUE_APP_BASE_API`值为`business`服务器的地址
 + `VUE_APP_SECURITY_URL`值为`security`服务器的地址
 + `VUE_APP_SEARCH_URL`值为`search`服务器的地址
++ `VUE_APP_SYSTEM_URL`值为`system`服务器的地址
 
 ## 使用说明
 
 ### 部署生产环境
-+ 部署 frontend 时，更改`.env.production`的 `VUE_APP_BASE_API`、`VUE_APP_SECURITY_URL`、`VUE_APP_SEARCH_URL`值
++ 部署 frontend 时，更改`.env.production`的 `VUE_APP_BASE_API`、`VUE_APP_SECURITY_URL`、`VUE_APP_SEARCH_URL`、`VUE_APP_SYSTEM_URL`值
 + 同时删除 `src/main.js`中的
 ```js
 import { mockXHR } from '../mock'
