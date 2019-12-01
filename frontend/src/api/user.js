@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
-export const SECURITY_URL = "http://119.3.222.119:8000"
-export const SEARCH_URL = "http://119.3.222.119:8500"
+export const SECURITY_URL = process.env.VUE_APP_SECURITY_URL
+export const SEARCH_URL = process.env.VUE_APP_SEARCH_URL
 
 export function login(data) {
     return request({

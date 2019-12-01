@@ -63,6 +63,7 @@ docker restart elastisearch
 **因后端项目为`maven`项目，必须先安装好`maven`**
 
 **安装nodejs**
+
 下面是测试环境的安装
 #### security
 修改`security`模块下的`application.yml`文件：
@@ -90,15 +91,15 @@ docker restart elastisearch
 + 修改`security.oauth2`中的 认证服务器地址
 
 #### frontend
-+ 修改`frontend`模块下的`.env.development`文件中的`VUE_APP_BASE_API`值为`business`服务器的地址
-+ 分别修改`frontend`模块下的`src/api`下`user.js`的`SEARCH_URL`、`SECURITY_URL`为`search`和`security`服务器的地址
-+ 修改`frontend`模块下的`src/api`下`system.js`的`BASE_URL`为`system`服务器的地址
+修改`frontend`模块下的`.env.development`文件：
++ `VUE_APP_BASE_API`值为`business`服务器的地址
++ `VUE_APP_SECURITY_URL`值为`security`服务器的地址
++ `VUE_APP_SEARCH_URL`值为`search`服务器的地址
 
 ## 使用说明
 
 ### 部署生产环境
-+ 部署 frontend 时，更改`.env.production`的 `VUE_APP_BASE_API`值、更改`src/api`下`user.js`和`system.js`中的`BASE_URL`
-、`SEARCH_URL`、`SECURITY_URL`
++ 部署 frontend 时，更改`.env.production`的 `VUE_APP_BASE_API`、`VUE_APP_SECURITY_URL`、`VUE_APP_SEARCH_URL`值
 + 同时删除 `src/main.js`中的
 ```js
 import { mockXHR } from '../mock'
