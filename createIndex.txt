@@ -1,5 +1,4 @@
 put http://ip:port/indexName
-
 {
   "settings":{
     "number_of_shards": "6",
