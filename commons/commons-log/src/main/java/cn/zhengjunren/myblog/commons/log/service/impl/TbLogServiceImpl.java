@@ -78,7 +78,7 @@ public class TbLogServiceImpl implements TbLogService {
             }
         }
         IpInfo ipInfo = UserAgentUtils.getIpInfo(ip);
-        log.setAddress(ipInfo.getCountry()+ipInfo.getRegion()+ipInfo.getCity());
+        log.setAddress(String.format("%s|%s|%s|%s", ipInfo.getCountry(),ipInfo.getRegion(), ipInfo.getCity(), ipInfo.getIsp()));
         log.setMethod(methodName);
         log.setUsername(username);
         log.setBrowser(browser);
