@@ -86,4 +86,6 @@ npm run build:prod
 
 cp -fr dist/ ../docker/frontend/wwwroot
 
+cd ../docker/frontend
+
 docker-compose up -d
