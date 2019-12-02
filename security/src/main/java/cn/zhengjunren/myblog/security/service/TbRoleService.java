@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface TbRoleService{
     List<TbRole> getRoleByUsername(String username);
+
+//    List<>
 }

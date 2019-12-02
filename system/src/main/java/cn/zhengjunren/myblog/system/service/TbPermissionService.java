@@ -1,6 +1,7 @@
 package cn.zhengjunren.myblog.system.service;
 
 import cn.zhengjunren.myblog.system.domain.RoleAndUrl;
+import cn.zhengjunren.myblog.system.domain.TbPermission;
 
 import java.util.List;
 
@@ -14,4 +15,6 @@ public interface TbPermissionService {
      * @return {@link List<RoleAndUrl>}
      */
     List<RoleAndUrl> getUrlWithRole();
+
+    List<TbPermission> selectAll();
 }

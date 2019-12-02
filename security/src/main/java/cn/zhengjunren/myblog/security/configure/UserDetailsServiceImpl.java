@@ -1,7 +1,9 @@
 package cn.zhengjunren.myblog.security.configure;
 
+import cn.zhengjunren.myblog.security.domain.TbPermission;
 import cn.zhengjunren.myblog.security.domain.TbRole;
 import cn.zhengjunren.myblog.security.domain.TbUser;
+import cn.zhengjunren.myblog.security.service.TbPermissionService;
 import cn.zhengjunren.myblog.security.service.TbRoleService;
 import cn.zhengjunren.myblog.security.service.TbUserService;
 import org.assertj.core.util.Lists;
@@ -33,6 +35,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private TbRoleService tbRoleService;
 
+    @Autowired
+    private TbPermissionService tbPermissionService;
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
@@ -43,8 +47,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             List<TbRole> roles = tbRoleService.getRoleByUsername(s);
             List<GrantedAuthority> grantedAuthorities = Lists.newArrayList();
             for (TbRole role : roles) {
-                GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(role.getEnname());
-                grantedAuthorities.add(grantedAuthority);
+                List<TbPermission> permissions = tbPermissionService.selectByRole(role.getEnname());
+                for (TbPermission permission : permissions) {
+                    grantedAuthorities.add(new SimpleGrantedAuthority(permission.getName()));
+                }
             }
             return new User(tbUser.getUsername(), tbUser.getPassword(), grantedAuthorities);
         }

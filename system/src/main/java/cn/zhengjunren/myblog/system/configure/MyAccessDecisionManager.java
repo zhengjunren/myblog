@@ -6,7 +6,6 @@ import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.util.CollectionUtils;
 
 import java.util.Collection;
 
@@ -20,21 +19,26 @@ import java.util.Collection;
  */
 public class MyAccessDecisionManager implements AccessDecisionManager {
     @Override
-    public void decide(Authentication authentication, Object o, Collection<ConfigAttribute> collection) throws AccessDeniedException, InsufficientAuthenticationException {
-        if (CollectionUtils.isEmpty(collection)) {
-            throw new AccessDeniedException("not allow");
+    public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> collection) throws AccessDeniedException, InsufficientAuthenticationException {
+
+        //collection为资源授权器提供的，被访问URL所需权限FilterInvocationSecurityMetadataSource
+
+        //判断URL所需的权限集合是否为空，为空则放行
+        if (null == collection || collection.size() <= 0) {
+            return;
         }
-        for (ConfigAttribute ca : collection) {
-            String needRole = ((org.springframework.security.access.SecurityConfig) ca).getAttribute();
+        String needPermission;
+        for (ConfigAttribute c : collection) {
+            //获得所需的权限
+            needPermission = c.getAttribute();
+            //遍历用户拥有的权限进行对比
             for (GrantedAuthority ga : authentication.getAuthorities()) {
-                if (ga.getAuthority().equals(needRole)) {
-                    //匹配到有对应角色,则允许通过
+                if (needPermission.trim().equals(ga.getAuthority())){
                     return;
                 }
             }
         }
-        //该url有配置权限,但是当然登录用户没有匹配到对应权限,则禁止访问
-        throw new AccessDeniedException("not allow");
+        throw new AccessDeniedException("no permission");
     }
 
     @Override

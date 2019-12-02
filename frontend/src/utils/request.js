@@ -2,6 +2,7 @@ import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
+import router from "../router";
 
 // create an axios instance
 const service = axios.create({
@@ -92,13 +93,44 @@ service.interceptors.response.use(
     }
   },
   error => {
-    console.log('err' + error) // for debug
-    Message({
-      message: error.message,
-      type: 'error',
-      duration: 5 * 1000
-    })
-    return Promise.reject(error)
+    let code = 0
+    console.log(error.response)
+    try {
+      code = error.response.status
+    }catch (e) {
+      console.log('err' + error) // for debug
+      Message({
+        message: error.message,
+        type: 'error',
+        duration: 5 * 1000
+      })
+      return Promise.reject(error)
+    }
+    if (code === 401) {
+      MessageBox.confirm(
+        '登录状态已过期，您可以继续留在该页面，或者重新登录',
+        '系统提示',
+        {
+          confirmButtonText: '重新登录',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }
+      ).then(() => {
+        store.dispatch('LogOut').then(() => {
+          location.reload() // 为了重新实例化vue-router对象 避免bug
+        })
+      })
+    } else if (code === 403) {
+      router.push({ path: '/401' })
+    } else {
+      const errorMsg = error.response.data.message
+      if (errorMsg !== undefined) {
+        Notification.error({
+          title: errorMsg,
+          duration: 3000
+        })
+      }
+    }
   }
 )
 
