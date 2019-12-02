@@ -1,0 +1,7 @@
+version: '3.1'
+services:
+  myblog-business:
+    build: .
+    container_name: myblog-business
+    ports:
+      - 9000:9000

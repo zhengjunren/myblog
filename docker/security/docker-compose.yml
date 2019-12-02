@@ -1,0 +1,7 @@
+version: '3.1'
+services:
+  myblog-security:
+    build: .
+    container_name: myblog-security
+    ports:
+      - 8000:8000

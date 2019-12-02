@@ -1,0 +1,7 @@
+version: '3.1'
+services:
+  myblog-search:
+    build: .
+    container_name: myblog-search
+    ports:
+      - 8500:8500

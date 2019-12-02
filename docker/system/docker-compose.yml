@@ -1,0 +1,7 @@
+version: '3.1'
+services:
+  myblog-system:
+    build: .
+    container_name: myblog-system
+    ports:
+      - 8600:8600
