@@ -8,7 +8,7 @@
 GitHub | [https://github.com/zhengjunren/myblog](https://github.com/zhengjunren/myblog)
 Gitee | [https://gitee.com/zhengjunren/myblog](https://gitee.com/zhengjunren/myblog)
 
-预览地址：( [http://47.100.229.198](http://47.100.229.198/) )
+预览地址：[http://test.zhengjunren.cn](http://test.zhengjunren.cn) 、[http://47.100.229.198](http://47.100.229.198/)
 
 ### 后端技术
 技术 | 说明 | 地址
@@ -149,7 +149,23 @@ docker restart elastisearch
 
 ## 使用说明
 
-### 部署生产环境
+### 部署云服务器
++ 创建`/usr/local/docker`目录
++ 执行下面任一条命令
+```shell script
+git clone https://gitee.com/zhengjunren/myblog.git
+# 或者执行
+git clone https://github.com/zhengjunren/myblog.git
+```
++ 进入`myblog`目录，赋予`myblog.sh`可执行的权限
+```shell script
+chmod +x ./myblog.sh
+```
++ 执行`myblog.sh`。
+
+另外，注意开放端口哦！
+
+### 注意
 + 部署 frontend 时，更改`.env.production`的 `VUE_APP_BASE_API`、`VUE_APP_SECURITY_URL`、`VUE_APP_SEARCH_URL`、`VUE_APP_SYSTEM_URL`值
 + 同时删除 `src/main.js`中的
 ```js
