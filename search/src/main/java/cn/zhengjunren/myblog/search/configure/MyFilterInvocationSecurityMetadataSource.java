@@ -1,6 +1,6 @@
 package cn.zhengjunren.myblog.search.configure;
 
-import cn.zhengjunren.myblog.search.domain.RoleAndUrl;
+import cn.zhengjunren.myblog.search.domain.TbPermission;
 import cn.zhengjunren.myblog.search.service.TbPermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
@@ -10,7 +10,10 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -29,17 +32,37 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
 
     private final AntPathMatcher antPathMatcher = new AntPathMatcher();
 
+    private volatile HashMap<String, Collection<ConfigAttribute>> map = null;
+
+    public void loadResourceDefine() {
+        map = new HashMap<>();
+        Collection<ConfigAttribute> array;
+        ConfigAttribute cfg;
+        List<TbPermission> permissions = tbPermissionService.selectAll();
+        for (TbPermission permission : permissions) {
+            array = new ArrayList<>();
+            //此处只添加了用户的名字，其实还可以添加更多权限的信息，
+            //例如请求方法到ConfigAttribute的集合中去。此处添加的信息将会作为MyAccessDecisionManager类的decide的第三个参数。
+            cfg = new SecurityConfig(permission.getEnname());
+            array.add(cfg);
+            //用权限的getUrl() 作为map的key，用ConfigAttribute的集合作为 value
+            map.put(permission.getUrl(), array);
+        }
+    }
+
     @Override
     public Collection<ConfigAttribute> getAttributes(Object o) throws IllegalArgumentException {
-        FilterInvocation fi = (FilterInvocation) o;
-        String uri = fi.getHttpRequest().getRequestURI();
-        List<RoleAndUrl> urlWithRole = tbPermissionService.getUrlWithRole();
-        for (RoleAndUrl roleAndUrl : urlWithRole) {
-            if (antPathMatcher.match(roleAndUrl.getUrl(), uri)){
-                return SecurityConfig.createList(roleAndUrl.getEnname());
+        if(map ==null) {
+            loadResourceDefine();
+        }
+        HttpServletRequest request = ((FilterInvocation) o).getHttpRequest();
+        String uri = request.getRequestURI();
+        for (String url : map.keySet()) {
+            if (antPathMatcher.match(url, uri)){
+                return map.get(url);
             }
         }
-        return SecurityConfig.createList("ROLE_USER");
+        return null;
     }
 
     @Override

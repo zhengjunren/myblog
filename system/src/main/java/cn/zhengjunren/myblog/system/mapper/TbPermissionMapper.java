@@ -16,4 +16,5 @@ public interface TbPermissionMapper extends MyMapper<TbPermission> {
      * @return {@link List<RoleAndUrl>}
      */
     List<RoleAndUrl> getUrlWithRole();
+
 }

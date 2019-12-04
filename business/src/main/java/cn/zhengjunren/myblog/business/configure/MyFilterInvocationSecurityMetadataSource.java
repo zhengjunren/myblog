@@ -43,7 +43,7 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
             array = new ArrayList<>();
             //此处只添加了用户的名字，其实还可以添加更多权限的信息，
             //例如请求方法到ConfigAttribute的集合中去。此处添加的信息将会作为MyAccessDecisionManager类的decide的第三个参数。
-            cfg = new SecurityConfig(permission.getName());
+            cfg = new SecurityConfig(permission.getEnname());
             array.add(cfg);
             //用权限的getUrl() 作为map的key，用ConfigAttribute的集合作为 value
             map.put(permission.getUrl(), array);

@@ -108,3 +108,11 @@ export function sendMail(data) {
     data
   })
 }
+
+export function getPermissionTree() {
+  return request({
+    url: '/permission/',
+    method: 'get',
+    baseURL: BASE_URL
+  })
+}

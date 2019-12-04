@@ -83,7 +83,7 @@ export const constantRoutes = [
         path: 'task',
         name: 'TaskListInline',
         component: () => import('@/views/task/inlineList'),
-        meta: { title: '定时任务', icon: 'tree' }
+        meta: { title: '定时任务', icon: 'task' }
       },
       {
         path: 'email',
@@ -92,10 +92,16 @@ export const constantRoutes = [
         meta: { title: '邮件工具', icon: 'email' }
       },
       {
+        path: 'permission',
+        name: 'Permission',
+        component: () => import('@/views/permission/index'),
+        meta: { title: '角色列表', icon: 'permission' }
+      },
+      {
         path: 'log',
         name: 'SystemLog',
         component: () => import('@/views/log/list'),
-        meta: { title: '操作日志', icon: 'table' }
+        meta: { title: '操作日志', icon: 'log' }
       },
       {
         path: 'swagger2',

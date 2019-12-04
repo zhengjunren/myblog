@@ -49,7 +49,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             for (TbRole role : roles) {
                 List<TbPermission> permissions = tbPermissionService.selectByRole(role.getEnname());
                 for (TbPermission permission : permissions) {
-                    grantedAuthorities.add(new SimpleGrantedAuthority(permission.getName()));
+                    grantedAuthorities.add(new SimpleGrantedAuthority(permission.getEnname()));
                 }
             }
             return new User(tbUser.getUsername(), tbUser.getPassword(), grantedAuthorities);
