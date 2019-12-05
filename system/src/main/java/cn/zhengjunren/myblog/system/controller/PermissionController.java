@@ -5,6 +5,7 @@ import cn.zhengjunren.myblog.system.domain.TbPermission;
 import cn.zhengjunren.myblog.system.service.TbPermissionService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,6 +37,12 @@ public class PermissionController {
         List<TbPermission> tbPermissions = tbPermissionService.selectByParentId(0L);
         Object permissionTree = tbPermissionService.getPermissionTree(tbPermissions);
         return new ResponseResult<>(ResponseResult.CodeStatus.OK, "获取树形权限", permissionTree);
+    }
+
+    @GetMapping("{roleId}")
+    public ResponseResult<List<TbPermission>> getByRoleId(@PathVariable long roleId){
+        List<TbPermission> tbPermissions = tbPermissionService.selectByRoleId(roleId);
+        return new ResponseResult<>(ResponseResult.CodeStatus.OK, "根据角色获取权限", tbPermissions);
     }
 
 }

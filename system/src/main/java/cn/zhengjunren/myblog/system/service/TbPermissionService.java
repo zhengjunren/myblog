@@ -36,4 +36,11 @@ public interface TbPermissionService {
      * @return {@link List<TbPermission>}
      */
     List<TbPermission> selectByParentId(long parentId);
+
+    /**
+     * 根据角色 id 获取角色所有的权限
+     * @param roleId 角色 id
+     * @return {@link List<TbPermission>}
+     */
+    List<TbPermission> selectByRoleId(long roleId);
 }

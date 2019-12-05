@@ -2,6 +2,7 @@ package cn.zhengjunren.myblog.system.mapper;
 
 import cn.zhengjunren.myblog.system.domain.RoleAndUrl;
 import cn.zhengjunren.myblog.system.domain.TbPermission;
+import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.MyMapper;
 
 import java.util.List;
@@ -16,5 +17,12 @@ public interface TbPermissionMapper extends MyMapper<TbPermission> {
      * @return {@link List<RoleAndUrl>}
      */
     List<RoleAndUrl> getUrlWithRole();
+
+    /**
+     * 根据角色 id 获取角色所有的权限
+     * @param roleId 角色 id
+     * @return {@link List<TbPermission>}
+     */
+    List<TbPermission> selectByRoleId(@Param("roleId") Long roleId);
 
 }

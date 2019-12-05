@@ -3,6 +3,8 @@ package cn.zhengjunren.myblog.system.service.impl;
 import cn.zhengjunren.myblog.system.domain.TbRole;
 import cn.zhengjunren.myblog.system.mapper.TbRoleMapper;
 import cn.zhengjunren.myblog.system.service.TbRoleService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -17,5 +19,12 @@ public class TbRoleServiceImpl implements TbRoleService{
     @Override
     public List<TbRole> selectAll() {
         return tbRoleMapper.selectAll();
+    }
+
+    @Override
+    public PageInfo<TbRole> page(Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<TbRole> tbRoles = tbRoleMapper.selectAll();
+        return new PageInfo<>(tbRoles);
     }
 }

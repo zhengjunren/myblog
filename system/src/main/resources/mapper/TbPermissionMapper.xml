@@ -31,4 +31,14 @@
         LEFT JOIN tb_role_permission AS rp ON rp.permission_id = p.id
         LEFT JOIN tb_role AS r ON r.id = rp.role_id
   </select>
+
+  <select id="selectByRoleId" resultMap="BaseResultMap">
+    SELECT
+    p.*
+    FROM
+    tb_permission AS p
+    LEFT JOIN tb_role_permission AS rp ON p.id = rp.permission_id
+    WHERE
+    rp.role_id = #{roleId}
+  </select>
 </mapper>

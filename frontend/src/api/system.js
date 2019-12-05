@@ -116,3 +116,20 @@ export function getPermissionTree() {
     baseURL: BASE_URL
   })
 }
+
+export function getPermissionByRoleId(roleId) {
+  return request({
+    url: '/permission/' + roleId,
+    method: 'get',
+    baseURL: BASE_URL
+  })
+}
+
+export function getRoleList(query) {
+  return request({
+    url: '/role/',
+    method: 'get',
+    params: query,
+    baseURL: BASE_URL
+  })
+}

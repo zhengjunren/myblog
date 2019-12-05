@@ -57,5 +57,10 @@ public class TbPermissionServiceImpl implements TbPermissionService {
         return tbPermissionMapper.selectByExample(example);
     }
 
+    @Override
+    public List<TbPermission> selectByRoleId(long roleId) {
+        return tbPermissionMapper.selectByRoleId(roleId);
+    }
+
 
 }
