@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhengjunren.myblog.system.mapper.TbRolePermissionMapper">
+  <resultMap id="BaseResultMap" type="cn.zhengjunren.myblog.system.domain.TbRolePermission">
+    <!--@mbg.generated generated on Thu Dec 05 17:41:10 CST 2019.-->
+    <!--@Table tb_role_permission-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="role_id" jdbcType="BIGINT" property="roleId" />
+    <result column="permission_id" jdbcType="BIGINT" property="permissionId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Thu Dec 05 17:41:10 CST 2019.-->
+    id, role_id, permission_id
+  </sql>
+
+  <select id="selectPermissionIdsByRoleId" resultType="long">
+    SELECT
+      rp.permission_id
+    FROM
+      `tb_role_permission` AS rp
+    WHERE
+      role_id = #{roleId}
+  </select>
+
+  <delete id="deleteBatch">
+    DELETE FROM
+    `tb_role_permission`
+    WHERE permission_id IN
+    <foreach collection="permissionIds" open="(" close=")" separator="," item="permissionId">
+      #{permissionId}
+    </foreach>
+    AND role_id = #{roleId}
+  </delete>
+
+  <insert id="insertBatch">
+    INSERT INTO tb_role_permission(ename,gender,email,did)
+    VALUES
+    <foreach collection="emps" item="emp" separator=",">
+      (#{emp.eName},#{emp.gender},#{emp.email},#{emp.dept.id})
+    </foreach>
+  </insert>
+</mapper>
