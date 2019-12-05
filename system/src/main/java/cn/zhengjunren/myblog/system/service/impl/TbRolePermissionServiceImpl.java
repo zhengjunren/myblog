@@ -40,6 +40,9 @@ public class TbRolePermissionServiceImpl implements TbRolePermissionService{
         else {
             newPermission.removeAll(oldPermission);
             List<TbRolePermission> tbRolePermissions = new ArrayList<>();
+            if (newPermission.isEmpty()) {
+                return 2;
+            }
             for (Long aLong : newPermission) {
                 tbRolePermissions.add(new TbRolePermission(roleId, aLong));
             }

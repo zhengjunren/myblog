@@ -121,7 +121,11 @@ service.interceptors.response.use(
         })
       })
     } else if (code === 403) {
-      router.push({ path: '/401' })
+      this.$notify.error({
+        title: '操作失败',
+        message: '你没有权限进行该操作或浏览该页！如有不满请联系你领导哈'
+      });
+      // router.push({ path: '/401' })
     } else {
       const errorMsg = error.response.data.message
       if (errorMsg !== undefined) {

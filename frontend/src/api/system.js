@@ -127,7 +127,7 @@ export function getPermissionByRoleId(roleId) {
 
 export function getRoleList(query) {
   return request({
-    url: '/role/',
+    url: '/role/list',
     method: 'get',
     params: query,
     baseURL: BASE_URL

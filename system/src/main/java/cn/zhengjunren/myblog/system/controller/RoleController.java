@@ -44,7 +44,7 @@ public class RoleController {
         this.tbRolePermissionService = tbRolePermissionService;
     }
 
-    @GetMapping
+    @GetMapping("list")
     @ApiOperation(value = "获取角色列表", notes="根据页码、笔数查询角色列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "页码", required = true, dataType = DataTypeUtils.INT, paramType = ParamTypeUtils.QUERY),
@@ -65,6 +65,9 @@ public class RoleController {
     @ApiImplicitParam(name = "permissionParams", value = "携带的权限ids和角色id", required = true, dataType = "PermissionParams", paramType = ParamTypeUtils.BODY)
     public ResponseResult<Void> updatePermission(@RequestBody PermissionParams permissionParams){
         int result = tbRolePermissionService.update(permissionParams.getPermissionIds(), permissionParams.getCurrentRoleId());
+        if (result == 2){
+            return new ResponseResult<>(ResponseResult.CodeStatus.OK, "请您做出权限的修改好吗，不然不要乱点，查数据库很烦！");
+        }
         return new ResponseResult<>(ResponseResult.CodeStatus.OK, "更新权限成功，拥有该角色的用户重新登录后生效");
     }
 
