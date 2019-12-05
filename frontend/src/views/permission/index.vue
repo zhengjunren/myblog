@@ -5,6 +5,13 @@
         <el-card style="margin-bottom:20px;">
           <div slot="header" class="clearfix">
             <span>权限分配</span>
+            <el-button
+              :disabled="!showButton"
+              icon="el-icon-check"
+              size="mini"
+              style="float: right; padding: 6px 9px"
+              type="primary"
+              @click="savePermission">保存</el-button>
           </div>
           <el-tree
             ref="permission"
@@ -79,13 +86,14 @@
 </template>
 
 <script>
-  import { getPermissionTree, getRoleList, getPermissionByRoleId } from '@/api/system'
+  import { getPermissionTree, getRoleList, getPermissionByRoleId, updateRolePermission } from '@/api/system'
   import Pagination from '@/components/Pagination'
   export default {
     name: "index",
     components: { Pagination},
     data() {
       return {
+        showButton: false,
         defaultProps: {
           children: 'children',
           label: 'label'
@@ -100,14 +108,7 @@
           page: 1,
           limit: 10
         },
-        temp: {
-          id: 0,
-          parentId: 0,
-          name: '',
-          enname: '',
-          created: undefined,
-          updated: undefined,
-        }
+        currentRoleId: 0
       }
     },
     created() {
@@ -137,14 +138,37 @@
           // _this.permissionIds = []
           this.$refs.permission.setCheckedKeys([])
           const ids = []
+          this.currentRoleId = val.id
           getPermissionByRoleId(val.id).then(response => {
             this.permissionsByRole = response.data
             this.permissionsByRole.forEach(function(data, index) {
               ids.push(data.id)
             })
+            this.showButton = true
             _this.permissionIds = ids
           })
         }
+      },
+      savePermission() {
+        const permissionIds = []
+        this.$refs.permission.getCheckedNodes().forEach(function(data, index) {
+          if(data.children === undefined){
+            permissionIds.push(data.id)
+          }
+        })
+        console.log(this.permissions)
+        console.log(permissionIds)
+        updateRolePermission({
+          currentRoleId: this.currentRoleId,
+          permissionIds: permissionIds
+        }).then(response => {
+          this.$notify({
+            title: '成功',
+            message: response.message,
+            type: 'success',
+            duration: 2000
+          })
+        })
       }
     }
   }

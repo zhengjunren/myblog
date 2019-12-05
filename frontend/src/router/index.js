@@ -95,7 +95,7 @@ export const constantRoutes = [
         path: 'permission',
         name: 'Permission',
         component: () => import('@/views/permission/index'),
-        meta: { title: '角色列表', icon: 'permission' }
+        meta: { title: '角色列表', icon: 'role' }
       },
       {
         path: 'log',

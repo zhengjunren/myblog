@@ -133,3 +133,13 @@ export function getRoleList(query) {
     baseURL: BASE_URL
   })
 }
+
+
+export function updateRolePermission(data) {
+  return request({
+    url: '/role/permission',
+    method: 'put',
+    data,
+    baseURL: BASE_URL
+  })
+}

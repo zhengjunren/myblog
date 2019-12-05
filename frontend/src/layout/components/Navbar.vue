@@ -6,10 +6,12 @@
 
     <div class="right-menu">
       <template v-if="device!=='mobile'">
-
+        <div class="right-menu-item hover-effect">
+          <svg-icon icon-class="github" />
+        </div>
         <Screenfull id="screenfull" class="right-menu-item hover-effect" />
-
       </template>
+
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">

@@ -27,4 +27,10 @@ public class TbRoleServiceImpl implements TbRoleService{
         List<TbRole> tbRoles = tbRoleMapper.selectAll();
         return new PageInfo<>(tbRoles);
     }
+
+    @Override
+    public int updatePermission(List<Long> permissionIds) {
+
+        return 0;
+    }
 }

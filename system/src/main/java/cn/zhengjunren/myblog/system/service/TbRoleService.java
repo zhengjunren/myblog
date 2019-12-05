@@ -20,4 +20,11 @@ public interface TbRoleService{
      * @return {@link TbRole}
      */
     PageInfo<TbRole> page(Integer pageNum, Integer pageSize);
+
+    /**
+     * 更新权限角色表
+     * @param permissionIds 权限id
+     * @return 结果大于 0 成功，否则失败
+     */
+    int updatePermission(List<Long> permissionIds);
 }
