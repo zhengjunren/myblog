@@ -49,6 +49,7 @@ MyShopPlus | [GitHub](https://github.com/funtl/MyShopPlus)
 eladmin-web | [GitHub](https://github.com/elunez/eladmin-web)
 spring-boot-demo | [GitHub](https://github.com/xkcoding/spring-boot-demo)
 spring-security-oauth2 | [Gitee](https://gitee.com/qq75547276/spring-security-oauth2)
+SpringBoot Demo源码 | [Gitee](https://gitee.com/sw008/springbootdemo_source_code)
 ## 软件架构
 
 分为`business`、`search`、`security`和`frontend`，其中前端采用的是 [`vue-admin-template`](https://github.com/PanJiaChen/vue-admin-template)模板。
@@ -166,6 +167,7 @@ chmod +x ./myblog.sh
 另外，注意开放端口哦！
 
 ### 注意
+**如果你不用 `myblog.sh` 脚本部署的话，注意下面！**
 + 部署 frontend 时，更改`.env.production`的 `VUE_APP_BASE_API`、`VUE_APP_SECURITY_URL`、`VUE_APP_SEARCH_URL`、`VUE_APP_SYSTEM_URL`值
 + 同时删除 `src/main.js`中的
 ```js
