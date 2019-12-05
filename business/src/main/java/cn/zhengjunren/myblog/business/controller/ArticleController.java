@@ -7,6 +7,7 @@ import cn.zhengjunren.myblog.business.service.TbArticleService;
 import cn.zhengjunren.myblog.business.service.TbUserService;
 import cn.zhengjunren.myblog.commons.dto.ListInfo;
 import cn.zhengjunren.myblog.commons.dto.ResponseResult;
+import cn.zhengjunren.myblog.commons.log.annotation.MyLog;
 import cn.zhengjunren.myblog.commons.utils.DataTypeUtils;
 import cn.zhengjunren.myblog.commons.utils.ParamTypeUtils;
 import com.github.pagehelper.PageInfo;
@@ -58,6 +59,7 @@ public class ArticleController {
             @ApiImplicitParam(name = "limit", value = "笔数", required = true, dataType = DataTypeUtils.INT, paramType = ParamTypeUtils.QUERY),
     })
     @ApiOperation(value = "分页查询", notes="参数必填")
+    @MyLog("获取文章列表")
     public ResponseResult<ListInfo<TbArticleNoContent>> list(int page, int limit) {
         PageInfo<TbArticleNoContent> pageInfo = tbArticleService.page(page, limit);
         ListInfo<TbArticleNoContent> listInfo = new ListInfo<>(pageInfo.getList(), pageInfo.getTotal());
@@ -65,6 +67,7 @@ public class ArticleController {
     }
 
     @GetMapping("{id}")
+    @MyLog("查询文章")
     @ApiOperation(value = "根据 id 查询文章")
     @ApiImplicitParam(name = "id", value = "id", required = true, dataType = DataTypeUtils.INT, paramType = ParamTypeUtils.PATH)
     public ResponseResult<TbArticle> get(@PathVariable Integer id) {
@@ -74,6 +77,7 @@ public class ArticleController {
 
     @PostMapping
     @ApiOperation(value = "发布文章")
+    @MyLog("发布文章")
     @ApiImplicitParam(name = "tbArticle", value = "文章", required = true, dataType = "TbArticle", paramType = ParamTypeUtils.BODY)
     public ResponseResult<Void> post(@RequestBody TbArticle tbArticle) {
         if (tbArticle.getUserId() == null) {
@@ -86,6 +90,7 @@ public class ArticleController {
     }
 
     @PutMapping
+    @MyLog("更新文章")
     @ApiOperation(value = "更新文章")
     @ApiImplicitParam(name = "tbArticle", value = "文章", required = true, dataType = "TbArticle", paramType = ParamTypeUtils.BODY)
     public ResponseResult<Void> update(@RequestBody TbArticle tbArticle) {
@@ -94,6 +99,7 @@ public class ArticleController {
     }
 
     @GetMapping("latest/{number}")
+    @MyLog("获取最新发布的文章")
     @ApiOperation(value = "获取最新发布的文章")
     @ApiImplicitParam(name = "number", value = "数量", required = true, dataType = DataTypeUtils.INT, paramType = ParamTypeUtils.QUERY)
     public ResponseResult<List<TbArticleNoContent>> getLatestArticle(@PathVariable int number) {
