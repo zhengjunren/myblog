@@ -80,7 +80,7 @@
           <el-button v-if="row.triggerState!== 'PAUSED'" size="mini" type="warning" @click="pause(row)">
             暂停
           </el-button>
-          <el-button size="mini" type="danger" @click="">
+          <el-button size="mini" type="danger" @click="deleteTask(row)">
             删除
           </el-button>
         </template>
@@ -173,7 +173,7 @@
                     row.triggerState="PAUSED"
                 })
             },
-            delete() {
+            deleteTask(row) {
                 deleteTask({
                     jobClassName:row.jobClassName,
                     jobGroupName:row.jobGroup,

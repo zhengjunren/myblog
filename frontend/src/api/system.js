@@ -66,7 +66,7 @@ export function updateTask(data) {
 
 export function deleteTask(data) {
   return request({
-    url: '/job/',
+    url: '/job/delete',
     method: 'delete',
     baseURL: BASE_URL,
     data
@@ -84,7 +84,7 @@ export function createTask(data) {
 
 export function fetchEmailConfig() {
   return request({
-    url: '/email/',
+    url: '/email/config',
     baseURL: BASE_URL,
     method: 'get',
   })
@@ -92,7 +92,7 @@ export function fetchEmailConfig() {
 
 export function updateEmailConfig(data) {
   return request({
-    url: '/email/',
+    url: '/email/update/config',
     method: 'put',
     baseURL: BASE_URL,
     data

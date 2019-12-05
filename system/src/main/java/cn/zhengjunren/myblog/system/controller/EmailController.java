@@ -34,14 +34,14 @@ public class EmailController {
     @Autowired
     private TbEmailConfigService tbEmailConfigService;
 
-    @GetMapping
+    @GetMapping("config")
     @ApiOperation(value = "获取邮件配置信息")
     public ResponseResult<TbEmailConfig> get(){
         return new ResponseResult<>(ResponseResult.CodeStatus.OK, "获取邮件配置", tbEmailConfigService.find());
     }
 
 
-    @PutMapping
+    @PutMapping("/update/config")
     @ApiOperation(value = "更新邮件配置信息")
     @ApiImplicitParam(name = "TbEmailConfig", value = "邮件配置", required = true, dataType = "TbEmailConfig", paramType = ParamTypeUtils.BODY)
     public ResponseResult<Void> emailConfig(@RequestBody TbEmailConfig emailConfig){

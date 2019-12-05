@@ -60,7 +60,7 @@ public class JobController {
     }
 
     @MyLog("删除任务")
-    @DeleteMapping
+    @DeleteMapping("delete")
     @ApiOperation(value = "删除任务")
     @ApiImplicitParam(name = "jobForm", value = "任务信息", required = true, dataType = "JobForm", paramType = ParamTypeUtils.BODY)
     public ResponseResult<Void> delete(@RequestBody JobForm jobForm) throws SchedulerException {
