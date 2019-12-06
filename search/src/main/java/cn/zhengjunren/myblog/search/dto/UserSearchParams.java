@@ -15,6 +15,7 @@ import java.io.Serializable;
 @Data
 public class UserSearchParams implements Serializable {
 
+    private static final long serialVersionUID = 6633463968331728227L;
     private String username;
     private String nickname;
     private String status;

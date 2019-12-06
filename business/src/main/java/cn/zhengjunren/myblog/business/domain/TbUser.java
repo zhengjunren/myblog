@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -23,7 +24,8 @@ import java.util.Date;
 
 @Data
 @Table(name = "tb_user")
-public class TbUser {
+public class TbUser implements Serializable {
+    private static final long serialVersionUID = 9079411270587307127L;
     @Id
     @Column(name = "id")
     @ExcelIgnore

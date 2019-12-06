@@ -2,6 +2,7 @@ package cn.zhengjunren.myblog.system.domain;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.math.BigInteger;
 
 /**
@@ -13,7 +14,8 @@ import java.math.BigInteger;
  * @date 2019/11/16 23:29
  */
 @Data
-public class JobAndTrigger {
+public class JobAndTrigger implements Serializable {
+    private static final long serialVersionUID = 6266930704110602973L;
     /**
      * 定时任务名称
      */

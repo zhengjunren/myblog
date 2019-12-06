@@ -14,6 +14,7 @@ import java.io.Serializable;
  */
 @Data
 public class StatusInfo implements Serializable {
+    private static final long serialVersionUID = -8169332307499440417L;
     String value;
     String username;
 }

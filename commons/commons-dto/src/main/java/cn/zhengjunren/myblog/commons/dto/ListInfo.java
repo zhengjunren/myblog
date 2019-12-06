@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -17,7 +18,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ListInfo<T> {
+public class ListInfo<T> implements Serializable {
+    private static final long serialVersionUID = 5062188588707934314L;
     List<T> items;
     long total;
 }

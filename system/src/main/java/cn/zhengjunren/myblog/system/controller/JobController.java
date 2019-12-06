@@ -1,12 +1,12 @@
 package cn.zhengjunren.myblog.system.controller;
 
+import cn.zhengjunren.myblog.commons.dto.ListInfo;
 import cn.zhengjunren.myblog.commons.dto.ResponseResult;
 import cn.zhengjunren.myblog.commons.log.annotation.MyLog;
 import cn.zhengjunren.myblog.commons.utils.DataTypeUtils;
 import cn.zhengjunren.myblog.commons.utils.ParamTypeUtils;
 import cn.zhengjunren.myblog.system.domain.JobAndTrigger;
 import cn.zhengjunren.myblog.system.dto.JobForm;
-import cn.zhengjunren.myblog.system.dto.JobInfo;
 import cn.zhengjunren.myblog.system.service.JobService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
@@ -50,13 +50,10 @@ public class JobController {
             @ApiImplicitParam(name = "limit", value = "笔数", required = true, dataType = DataTypeUtils.INT, paramType = ParamTypeUtils.QUERY),
     })
     @ApiOperation(value = "获取任务列表", notes="根据页码、笔数查询任务列表")
-    public ResponseResult<JobInfo> jobList(Integer page, Integer limit) {
-
+    public ResponseResult<ListInfo<JobAndTrigger>> jobList(Integer page, Integer limit) {
         PageInfo<JobAndTrigger> all = jobService.list(page, limit);
-        JobInfo jobInfo = new JobInfo();
-        jobInfo.setTotal(all.getTotal());
-        jobInfo.setItems(all.getList());
-        return new ResponseResult<JobInfo>(ResponseResult.CodeStatus.OK, "任务列表获取成功", jobInfo);
+        ListInfo<JobAndTrigger> listInfo = new ListInfo<>(all.getList(), all.getTotal());
+        return new ResponseResult<>(ResponseResult.CodeStatus.OK, "任务列表获取成功", listInfo);
     }
 
     @MyLog("删除任务")

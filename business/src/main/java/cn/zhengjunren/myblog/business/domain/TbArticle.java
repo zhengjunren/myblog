@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -20,7 +21,8 @@ import java.util.Date;
  */
 @Data
 @Table(name = "tb_article")
-public class TbArticle {
+public class TbArticle implements Serializable {
+    private static final long serialVersionUID = -1790810213285818545L;
     @Id
     @Column(name = "id")
     @GeneratedValue(generator = "JDBC")

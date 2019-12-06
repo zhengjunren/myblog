@@ -7,11 +7,16 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * @author ZhengJunren
+ */
 @Data
 @Table(name = "tb_log")
-public class TbLog {
+public class TbLog implements Serializable {
+    private static final long serialVersionUID = -3843478305200544636L;
     @Id
     @Column(name = "id")
     @GeneratedValue(generator = "JDBC")

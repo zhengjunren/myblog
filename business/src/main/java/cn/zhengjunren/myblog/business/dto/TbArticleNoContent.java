@@ -22,6 +22,7 @@ import java.util.Date;
 @Data
 @Table(name = "tb_article")
 public class TbArticleNoContent implements Serializable {
+    private static final long serialVersionUID = 5182976334121009597L;
     @Id
     @Column(name = "id")
     @GeneratedValue(generator = "JDBC")

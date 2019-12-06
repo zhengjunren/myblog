@@ -6,11 +6,16 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * @author ZhengJunren
+ */
 @Data
 @Table(name = "tb_user")
-public class TbUser {
+public class TbUser implements Serializable {
+    private static final long serialVersionUID = -6211438561568769708L;
     @Id
     @Column(name = "id")
     @GeneratedValue(generator = "JDBC")

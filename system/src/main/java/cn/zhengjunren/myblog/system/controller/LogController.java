@@ -1,10 +1,10 @@
 package cn.zhengjunren.myblog.system.controller;
 
+import cn.zhengjunren.myblog.commons.dto.ListInfo;
 import cn.zhengjunren.myblog.commons.dto.ResponseResult;
 import cn.zhengjunren.myblog.commons.utils.DataTypeUtils;
 import cn.zhengjunren.myblog.commons.utils.ParamTypeUtils;
 import cn.zhengjunren.myblog.system.domain.TbLog;
-import cn.zhengjunren.myblog.system.dto.LogListInfo;
 import cn.zhengjunren.myblog.system.service.TbLogSystemService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
@@ -44,12 +44,10 @@ public class LogController {
             @ApiImplicitParam(name = "page", value = "页码", required = true, dataType = DataTypeUtils.INT, paramType = ParamTypeUtils.QUERY),
             @ApiImplicitParam(name = "limit", value = "笔数", required = true, dataType = DataTypeUtils.INT, paramType = ParamTypeUtils.QUERY),
     })
-    public ResponseResult<LogListInfo> page(int page, int limit, Timestamp start, Timestamp end) {
+    public ResponseResult<ListInfo<TbLog>> page(int page, int limit, Timestamp start, Timestamp end) {
         PageInfo<TbLog> pageInfo = tbLogSystemService.page(page, limit, start, end);
-        LogListInfo logListInfo = new LogListInfo();
-        logListInfo.setItems(pageInfo.getList());
-        logListInfo.setTotal(pageInfo.getTotal());
-        return new ResponseResult<>(ResponseResult.CodeStatus.OK,"分页获取用户列表", logListInfo);
+        ListInfo<TbLog> listInfo = new ListInfo<>(pageInfo.getList(), pageInfo.getTotal());
+        return new ResponseResult<>(ResponseResult.CodeStatus.OK,"分页获取用户列表", listInfo);
     }
 
     @GetMapping("count")

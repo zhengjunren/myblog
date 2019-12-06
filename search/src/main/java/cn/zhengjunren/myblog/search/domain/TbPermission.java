@@ -6,11 +6,16 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
+/**
+ * @author ZhengJunren
+ */
 @Data
 @Table(name = "tb_permission")
-public class TbPermission {
+public class TbPermission implements Serializable {
+    private static final long serialVersionUID = 7127601210688638780L;
     @Id
     @Column(name = "id")
     @GeneratedValue(generator = "JDBC")

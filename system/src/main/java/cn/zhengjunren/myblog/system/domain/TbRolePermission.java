@@ -6,10 +6,16 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
+/**
+ * @author ZhengJunren
+ */
 @Data
 @Table(name = "tb_role_permission")
-public class TbRolePermission {
+public class TbRolePermission implements Serializable {
+
+    private static final long serialVersionUID = -337143745184171816L;
 
     public TbRolePermission(Long roleId, Long permissionId) {
         this.roleId = roleId;

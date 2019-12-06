@@ -14,6 +14,7 @@ import java.io.Serializable;
  */
 @Data
 public class PasswordParams implements Serializable {
+    private static final long serialVersionUID = 3804661028297251222L;
     String oldPassword;
     String newPassword;
     String confirmPassword;

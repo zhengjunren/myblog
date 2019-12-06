@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -17,8 +18,9 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EmailForm {
+public class EmailForm implements Serializable {
 
+    private static final long serialVersionUID = -5579803327065359219L;
     private List<String> tos;
 
     private String subject;

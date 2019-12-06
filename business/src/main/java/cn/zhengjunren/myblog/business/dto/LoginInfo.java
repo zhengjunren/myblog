@@ -17,6 +17,7 @@ import java.util.Date;
 @Data
 public class LoginInfo implements Serializable {
 
+    private static final long serialVersionUID = -5690688053759246581L;
     private Integer id;
 
     private String name;

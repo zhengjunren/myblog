@@ -18,6 +18,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FileInfo implements Serializable {
+    private static final long serialVersionUID = -1656644123721134509L;
     /**
      * 文件路径
      */

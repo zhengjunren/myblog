@@ -1,12 +1,21 @@
 package cn.zhengjunren.myblog.system.domain;
 
-import java.time.LocalDateTime;
-import javax.persistence.*;
 import lombok.Data;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
+/**
+ * @author ZhengJunren
+ */
 @Data
 @Table(name = "tb_role")
-public class TbRole {
+public class TbRole implements Serializable {
+    private static final long serialVersionUID = 760436251174120407L;
     @Id
     @Column(name = "id")
     @GeneratedValue(generator = "JDBC")

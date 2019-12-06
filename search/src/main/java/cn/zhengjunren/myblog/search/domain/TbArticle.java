@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
  * <p>ClassName: TbArticle</p>
@@ -19,7 +20,8 @@ import javax.persistence.Table;
 @Data
 @Document(indexName = "myblogarticle", type = "TbArticle")
 @Table(name = "tb_article")
-public class TbArticle {
+public class TbArticle implements Serializable {
+    private static final long serialVersionUID = -3442869104272221764L;
     @Id
     @Column(name = "id")
     @GeneratedValue(generator = "JDBC")

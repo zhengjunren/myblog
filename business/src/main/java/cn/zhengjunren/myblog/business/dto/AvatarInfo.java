@@ -14,6 +14,7 @@ import java.io.Serializable;
  */
 @Data
 public class AvatarInfo implements Serializable {
+    private static final long serialVersionUID = -5168203086804836641L;
     String username;
     String path;
 }

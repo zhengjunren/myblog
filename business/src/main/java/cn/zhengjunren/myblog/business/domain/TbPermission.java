@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -13,7 +14,8 @@ import java.time.LocalDateTime;
  */
 @Data
 @Table(name = "tb_permission")
-public class TbPermission {
+public class TbPermission implements Serializable {
+    private static final long serialVersionUID = -6658397414394331122L;
     @Id
     @Column(name = "id")
     @GeneratedValue(generator = "JDBC")

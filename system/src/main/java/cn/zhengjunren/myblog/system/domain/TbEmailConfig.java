@@ -6,10 +6,15 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
+/**
+ * @author ZhengJunren
+ */
 @Data
 @Table(name = "tb_email_config")
-public class TbEmailConfig {
+public class TbEmailConfig implements Serializable {
+    private static final long serialVersionUID = -3121744033894138380L;
     /**
      * ID
      */

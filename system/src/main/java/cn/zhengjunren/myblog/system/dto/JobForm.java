@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 /**
  * <p>ClassName: JobForm</p>
@@ -15,7 +16,8 @@ import javax.validation.constraints.NotBlank;
  */
 @Data
 @Accessors(chain = true)
-public class JobForm {
+public class JobForm implements Serializable {
+    private static final long serialVersionUID = -4661807046567046964L;
     /**
      * 定时任务全类名
      */
