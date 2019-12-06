@@ -73,6 +73,7 @@ public class JobController {
         try {
             jobService.addJob(jobForm);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseResult<>(ResponseResult.CodeStatus.OK, "创建任务失败");
         }
         return new ResponseResult<>(ResponseResult.CodeStatus.OK, "创建任务成功");

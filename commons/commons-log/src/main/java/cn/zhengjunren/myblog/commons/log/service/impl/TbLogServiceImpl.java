@@ -9,6 +9,7 @@ import cn.zhengjunren.myblog.commons.log.service.TbLogService;
 import cn.zhengjunren.myblog.commons.utils.UserAgentUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
@@ -32,8 +33,13 @@ public class TbLogServiceImpl implements TbLogService {
 
     private static final String LOGIN_PATH = "login";
 
+//    public static final String KEY="myblog:log";
+
     @Resource
     private TbLogMapper tbLogMapper;
+
+    @Resource
+    private RedisTemplate<String, TbLog> redisTemplate;
 
     @Override
     public int save(TbLog tbLog) {
@@ -43,7 +49,7 @@ public class TbLogServiceImpl implements TbLogService {
     }
 
     @Override
-    public int save(String username, String browser, String ip, ProceedingJoinPoint joinPoint, TbLog log) {
+    public long save(String username, String browser, String ip, ProceedingJoinPoint joinPoint, TbLog log) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
         MyLog aopLog = method.getAnnotation(MyLog.class);
@@ -83,6 +89,7 @@ public class TbLogServiceImpl implements TbLogService {
         log.setUsername(username);
         log.setBrowser(browser);
         log.setCreateTime(new Date());
+//        Long aLong = redisTemplate.opsForList().rightPush(KEY, log);
         return save(log);
     }
 
@@ -91,5 +98,10 @@ public class TbLogServiceImpl implements TbLogService {
         Example example = new Example(TbLog.class);
         example.createCriteria().andBetween("createTime", start,end);
         return tbLogMapper.selectByExample(example);
+    }
+
+    @Override
+    public int insertBatch(List<TbLog> tbLogs) {
+        return tbLogMapper.insertList(tbLogs);
     }
 }

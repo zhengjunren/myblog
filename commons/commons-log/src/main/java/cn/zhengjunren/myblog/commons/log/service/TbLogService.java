@@ -15,6 +15,7 @@ import java.util.List;
  * @date 2019/11/18 10:15
  */
 public interface TbLogService{
+    String KEY="myblog:log";
 
     /**
      * 保存日志
@@ -32,7 +33,7 @@ public interface TbLogService{
      * @param log {@link TbLog}
      * @return 结果
      */
-    int save(String username, String browser, String ip, ProceedingJoinPoint joinPoint, TbLog log);
+    long save(String username, String browser, String ip, ProceedingJoinPoint joinPoint, TbLog log);
 
     /**
      * 获取日志
@@ -41,4 +42,11 @@ public interface TbLogService{
      * @return {@link List<TbLog>}
      */
     List<TbLog> selectAll(Timestamp start, Timestamp end);
+
+    /**
+     * 批量插入
+     * @param tbLogs 日志列表
+     * @return 结果
+     */
+    int insertBatch(List<TbLog> tbLogs);
 }

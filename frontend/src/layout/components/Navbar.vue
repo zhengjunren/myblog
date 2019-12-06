@@ -42,6 +42,7 @@ import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 import Screenfull from '@/components/Screenfull'
+import { getInfo } from '@/api/user'
 
 export default {
   components: {
@@ -54,15 +55,29 @@ export default {
       'sidebar',
       'avatar',
       'device'
-    ])
+    ]),
   },
+  // mounted() {
+  //   this.getInfo()
+  // },
   methods: {
+    // getInfo() {
+    //   console.log(undefined === this.avatar)
+    //   if (this.avatar === '' || this.avatar === undefined){
+    //     getInfo().then(response => {
+    //       this.avatar = response.data.avatar
+    //     })
+    //   }
+    // },
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
     },
     async logout() {
+      // await this.$store.dispatch('user/removeAvatar')
+      // await this.$store.avatar = ''
       await this.$store.dispatch('user/logout')
-      await this.$store.dispatch('user/removeAvatar')
+      // await this.$store.dispatch('user/setAvatar', '')
+      // await this.$store.dispatch('user/removeAvatar')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     }
   }
