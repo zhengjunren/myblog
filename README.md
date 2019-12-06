@@ -106,6 +106,17 @@ docker restart elastisearch
 }
 ```
 
+### 基于 docker 安装 redis
+```yaml
+version: '3.1'
+services:
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - 6379:6379
+```
+
 ### 安装项目
 
 **因后端项目为`maven`项目，必须先安装好`maven`**
@@ -118,6 +129,7 @@ docker restart elastisearch
 
 #### security
 修改`security`模块下的`application.yml`文件：
++ 修改`spring.redis.host`和`spring.redis.port`为相应`redis`服务器地址和端口
 + 修改`spring.datasource.jdbc-url`为相应数据库服务器地址
 + 修改`spring.datasource.username`和`spring.datasource.password`为相应数据库服务器用户名和密码
 
