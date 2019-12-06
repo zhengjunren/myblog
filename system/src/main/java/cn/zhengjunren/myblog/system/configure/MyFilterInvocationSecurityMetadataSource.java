@@ -2,7 +2,6 @@ package cn.zhengjunren.myblog.system.configure;
 
 import cn.zhengjunren.myblog.system.domain.TbPermission;
 import cn.zhengjunren.myblog.system.service.TbPermissionService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
@@ -10,6 +9,7 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,7 +26,7 @@ import java.util.List;
  */
 @Component
 public class MyFilterInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
-    @Autowired
+    @Resource
     TbPermissionService tbPermissionService;
 
     private final AntPathMatcher antPathMatcher = new AntPathMatcher();

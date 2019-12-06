@@ -8,7 +8,6 @@ import cn.zhengjunren.myblog.search.dto.UserSearchParams;
 import cn.zhengjunren.myblog.search.service.TbUserService;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.query.IndexQuery;
@@ -40,11 +39,14 @@ import static org.elasticsearch.index.query.QueryBuilders.wildcardQuery;
 @RequestMapping("search")
 public class UserSearchController {
 
-    @Autowired
-    ElasticsearchTemplate template;
+    private final ElasticsearchTemplate template;
 
-    @Autowired
-    TbUserService tbUserService;
+    private final TbUserService tbUserService;
+
+    public UserSearchController(ElasticsearchTemplate template, TbUserService tbUserService) {
+        this.template = template;
+        this.tbUserService = tbUserService;
+    }
 
 
     @MyLog("搜索用户")

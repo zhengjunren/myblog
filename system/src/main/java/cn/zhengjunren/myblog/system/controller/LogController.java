@@ -11,7 +11,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,8 +32,11 @@ import java.sql.Timestamp;
 @Api(tags = "日志管理")
 public class LogController {
 
-    @Autowired
-    TbLogSystemService tbLogSystemService;
+    private final TbLogSystemService tbLogSystemService;
+
+    public LogController(TbLogSystemService tbLogSystemService) {
+        this.tbLogSystemService = tbLogSystemService;
+    }
 
     @GetMapping("list")
     @ApiOperation(value = "获取日志列表", notes="根据页码、笔数查询日志列表")

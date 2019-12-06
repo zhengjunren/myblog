@@ -35,9 +35,9 @@ import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 public class ArticleSearchController {
 
 
-    final ElasticsearchTemplate template;
+    private final ElasticsearchTemplate template;
 
-    final TbArticleService tbArticleService;
+    private final TbArticleService tbArticleService;
 
     public ArticleSearchController(ElasticsearchTemplate template, TbArticleService tbArticleService) {
         this.template = template;

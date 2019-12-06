@@ -45,7 +45,7 @@ import javax.annotation.Resource;
 @Api(tags = "用户管理")
 public class UserController {
 
-    final TbUserService tbUserService;
+    private final TbUserService tbUserService;
 
     @Resource
     public BCryptPasswordEncoder passwordEncoder;
