@@ -44,6 +44,8 @@
         </template>
       </el-table-column>
     </el-table>
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit"
+                @pagination="getList"/>
   </div>
 </template>
 
@@ -70,7 +72,7 @@
     methods: {
       getList() {
         this.listLoading = true
-        getOnlineUser().then(response => {
+        getOnlineUser(this.listQuery).then(response => {
           this.list = response.data.items
           this.total = response.data.total
           // 模拟请求时间

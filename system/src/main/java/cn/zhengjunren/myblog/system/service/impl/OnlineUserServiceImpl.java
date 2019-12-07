@@ -3,9 +3,13 @@ package cn.zhengjunren.myblog.system.service.impl;
 import cn.zhengjunren.myblog.commons.domain.OnlineUser;
 import cn.zhengjunren.myblog.commons.utils.EncryptUtils;
 import cn.zhengjunren.myblog.commons.utils.OkHttpClientUtil;
+import cn.zhengjunren.myblog.commons.utils.PageUtil;
 import cn.zhengjunren.myblog.system.service.OnlineUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -56,6 +60,21 @@ public class OnlineUserServiceImpl implements OnlineUserService {
         return onlineUsers;
     }
 
+//    @Override
+//    public List<OnlineUser> page(String filter, Integer pageNum, Integer pageSize) {
+//        List<OnlineUser> onlineUsers = selectAll(filter);
+//        List list = PageUtil.toPage(pageNum, pageSize, onlineUsers);
+//    }
+
+    @Override
+    public Page<OnlineUser> page(String filter, Pageable pageable){
+        List<OnlineUser> onlineUsers = selectAll(filter);
+
+        return new PageImpl<OnlineUser>(
+                PageUtil.toPage(pageable.getPageNumber(),pageable.getPageSize(),onlineUsers),
+                pageable,
+                onlineUsers.size());
+    }
     @Override
     public void kickOut(String val) throws Exception {
         String key = onlineKey + EncryptUtils.desDecrypt(val);

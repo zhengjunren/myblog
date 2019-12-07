@@ -144,10 +144,11 @@ export function updateRolePermission(data) {
   })
 }
 
-export function getOnlineUser() {
+export function getOnlineUser(query) {
   return request({
-    url: '/online',
+    url: '/online/list',
     method: 'get',
+    params: query,
     baseURL: BASE_URL
   })
 }
