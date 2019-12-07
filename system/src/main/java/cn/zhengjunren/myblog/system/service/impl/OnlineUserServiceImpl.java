@@ -1,7 +1,8 @@
 package cn.zhengjunren.myblog.system.service.impl;
 
-import cn.zhengjunren.myblog.commons.utils.MapperUtils;
-import cn.zhengjunren.myblog.system.domain.OnlineUser;
+import cn.zhengjunren.myblog.commons.domain.OnlineUser;
+import cn.zhengjunren.myblog.commons.utils.EncryptUtils;
+import cn.zhengjunren.myblog.commons.utils.OkHttpClientUtil;
 import cn.zhengjunren.myblog.system.service.OnlineUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,6 +29,9 @@ public class OnlineUserServiceImpl implements OnlineUserService {
     @Value("${business.onlineKey}")
     private String onlineKey;
 
+    @Value("${business.securityUrl}")
+    private String securityUrl;
+
     public OnlineUserServiceImpl(RedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
@@ -39,8 +43,7 @@ public class OnlineUserServiceImpl implements OnlineUserService {
         Collections.reverse(keys);
         List<OnlineUser> onlineUsers = new ArrayList<>();
         for (String key : keys) {
-
-            OnlineUser onlineUser = MapperUtils.obj2pojo(redisTemplate.opsForValue().get(key), OnlineUser.class);
+            OnlineUser onlineUser = (OnlineUser)redisTemplate.opsForValue().get(key);
             if(StringUtils.isNotBlank(filter)){
                 if(onlineUser.toString().contains(filter)){
                     onlineUsers.add(onlineUser);
@@ -51,5 +54,13 @@ public class OnlineUserServiceImpl implements OnlineUserService {
         }
         onlineUsers.sort((o1, o2) -> o2.getLoginTime().compareTo(o1.getLoginTime()));
         return onlineUsers;
+    }
+
+    @Override
+    public void kickOut(String val) throws Exception {
+        String key = onlineKey + EncryptUtils.desDecrypt(val);
+        redisTemplate.delete(key);
+        String uri = "/user/logout?access_token=" + EncryptUtils.desDecrypt(val);
+        OkHttpClientUtil.getInstance().postData(securityUrl + uri, null);
     }
 }

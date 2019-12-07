@@ -1,9 +1,8 @@
 package cn.zhengjunren.myblog.system.tests;
 
 import cn.zhengjunren.myblog.commons.log.domain.TbLog;
-import cn.zhengjunren.myblog.commons.utils.MapperUtils;
 import cn.zhengjunren.myblog.system.SystemApplication;
-import cn.zhengjunren.myblog.system.domain.OnlineUser;
+import cn.zhengjunren.myblog.commons.domain.OnlineUser;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -29,8 +29,8 @@ import java.util.List;
 @SpringBootTest(classes = SystemApplication.class)
 public class TestRedis {
 
-    @Resource
-    RedisTemplate<String, OnlineUser> redisTemplate;
+    @Resource(name = "redisTemplate")
+    RedisTemplate redisTemplate;
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
@@ -94,9 +94,11 @@ public class TestRedis {
     @Test
     public void keys(){
         List<String> keys = new ArrayList<>(redisTemplate.keys("online-key*"));
+        System.out.println(Arrays.toString(keys.toArray()));
         for (String key : keys) {
-            Object o = redisTemplate.opsForValue().get(key);
-            System.out.println(MapperUtils.obj2pojo(o, OnlineUser.class).toString());
+            OnlineUser o = (OnlineUser)redisTemplate.opsForValue().get(key);
+            assert o != null;
+            System.out.println(o.toString());
         }
     }
 }

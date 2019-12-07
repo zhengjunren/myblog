@@ -23,7 +23,7 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://119.3.208.196:3306/myblog?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://192.168.0.127:3306/myblog?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
     username: root
     password: 123456
     hikari:
@@ -41,10 +41,10 @@ security:
     client:
       client-id: client
       client-secret: secret
-      access-token-uri: http://119.3.222.119:8000/oauth/token
-      user-authorization-uri: http://119.3.222.119:8000/oauth/authorize
+      access-token-uri: http://192.168.0.45:8000/oauth/token
+      user-authorization-uri: http://192.168.0.45:8000/oauth/authorize
     resource:
-      token-info-uri: http://119.3.222.119:8000/oauth/check_token
+      token-info-uri: http://192.168.0.45:8000/oauth/check_token
 
 mybatis:
   type-aliases-package: cn.zhengjunren.myblog.business.domain

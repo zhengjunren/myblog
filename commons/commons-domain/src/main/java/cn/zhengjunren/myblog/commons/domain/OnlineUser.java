@@ -1,4 +1,4 @@
-package cn.zhengjunren.myblog.system.domain;
+package cn.zhengjunren.myblog.commons.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,8 +19,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OnlineUser implements Serializable {
-
-    private static final long serialVersionUID = 8203827863963908307L;
+    private static final long serialVersionUID = -1077502535189514386L;
     private String username;
 
     private String browser;

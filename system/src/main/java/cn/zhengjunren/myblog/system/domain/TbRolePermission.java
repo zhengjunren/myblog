@@ -1,6 +1,8 @@
 package cn.zhengjunren.myblog.system.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -12,6 +14,8 @@ import java.io.Serializable;
  * @author ZhengJunren
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "tb_role_permission")
 public class TbRolePermission implements Serializable {
 

@@ -86,6 +86,12 @@ export const constantRoutes = [
         meta: { title: '定时任务', icon: 'task' }
       },
       {
+        path: 'online',
+        name: 'online',
+        component: () => import('@/views/user/online'),
+        meta: { title: '在线用户', icon: 'user' }
+      },
+      {
         path: 'email',
         name: 'SystemEmail',
         component: () => import('@/views/email/index'),

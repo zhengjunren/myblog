@@ -217,7 +217,7 @@
                 })
             },
             handleCreate() {
-                this.resetTemp()
+                // this.resetTemp()
                 this.dialogStatus = 'create'
                 this.dialogFormVisible = true
                 this.$nextTick(() => {

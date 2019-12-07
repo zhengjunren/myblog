@@ -1,6 +1,6 @@
 package cn.zhengjunren.myblog.system.service;
 
-import cn.zhengjunren.myblog.system.domain.OnlineUser;
+import cn.zhengjunren.myblog.commons.domain.OnlineUser;
 
 import java.util.List;
 
@@ -19,4 +19,11 @@ public interface OnlineUserService {
      * @return
      */
     List<OnlineUser> selectAll(String filter);
+
+    /**
+     * 踢出用户
+     * @param val 加密后的 token
+     * @throws Exception
+     */
+    public void kickOut(String val) throws Exception;
 }

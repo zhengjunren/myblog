@@ -143,3 +143,19 @@ export function updateRolePermission(data) {
     baseURL: BASE_URL
   })
 }
+
+export function getOnlineUser() {
+  return request({
+    url: '/online',
+    method: 'get',
+    baseURL: BASE_URL
+  })
+}
+
+export function kickOutOnlineUser(token) {
+  return request({
+    url: '/online/'+ token,
+    method: 'delete',
+    baseURL: BASE_URL
+  })
+}

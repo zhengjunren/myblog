@@ -1,18 +1,22 @@
 package cn.zhengjunren.myblog.system.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @author ZhengJunren
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "tb_role")
 public class TbRole implements Serializable {
     private static final long serialVersionUID = 760436251174120407L;
@@ -46,8 +50,8 @@ public class TbRole implements Serializable {
     private String description;
 
     @Column(name = "created")
-    private LocalDateTime created;
+    private Date created;
 
     @Column(name = "updated")
-    private LocalDateTime updated;
+    private Date updated;
 }
