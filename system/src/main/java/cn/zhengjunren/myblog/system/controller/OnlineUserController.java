@@ -31,7 +31,7 @@ public class OnlineUserController {
         this.onlineUserService = onlineUserService;
     }
 
-    @GetMapping("")
+    @GetMapping("list")
     public ResponseResult<ListInfo<OnlineUser>> getAll() {
         List<OnlineUser> onlineUsers = onlineUserService.selectAll("");
         ListInfo<OnlineUser> listInfo = new ListInfo<>(onlineUsers, onlineUsers.size());
