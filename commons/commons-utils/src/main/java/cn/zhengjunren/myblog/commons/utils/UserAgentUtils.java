@@ -89,9 +89,10 @@ public class UserAgentUtils {
                 line = bufferedReader.readLine();
             }
             bufferedReader.close();
-            return MapperUtils.json2pojoByTree(temp.toString(), "data", IpInfo.class);
+            return MapperUtils.json2pojoByTree(temp.toString(),"data", IpInfo.class);
         } catch (Exception e) {
             return new IpInfo();
         }
+
     }
 }

@@ -1,6 +1,8 @@
 package cn.zhengjunren.myblog.system.tests;
 
+import cn.zhengjunren.myblog.commons.dto.IpInfo;
 import cn.zhengjunren.myblog.commons.log.domain.TbLog;
+import cn.zhengjunren.myblog.commons.utils.UserAgentUtils;
 import cn.zhengjunren.myblog.system.SystemApplication;
 import cn.zhengjunren.myblog.commons.domain.OnlineUser;
 import org.junit.Test;
@@ -100,5 +102,12 @@ public class TestRedis {
             assert o != null;
             System.out.println(o.toString());
         }
+    }
+
+    @Test
+    public void testIp() {
+        String ip = "182.106.212.141";
+        IpInfo ipInfo = UserAgentUtils.getIpInfo(ip);
+        System.out.println(ipInfo.toString());
     }
 }
