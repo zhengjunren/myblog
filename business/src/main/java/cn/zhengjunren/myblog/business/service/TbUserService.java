@@ -1,6 +1,6 @@
 package cn.zhengjunren.myblog.business.service;
 
-import cn.zhengjunren.myblog.business.domain.TbUser;
+import cn.zhengjunren.myblog.commons.domain.TbUser;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;

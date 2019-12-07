@@ -4,14 +4,14 @@ import cn.zhengjunren.myblog.commons.dto.ResponseResult;
 import cn.zhengjunren.myblog.commons.log.annotation.MyLog;
 import cn.zhengjunren.myblog.commons.utils.MapperUtils;
 import cn.zhengjunren.myblog.commons.utils.OkHttpClientUtil;
-import cn.zhengjunren.myblog.security.domain.TbUser;
+import cn.zhengjunren.myblog.commons.domain.TbUser;
 import cn.zhengjunren.myblog.security.dto.LoginInfo;
 import cn.zhengjunren.myblog.security.dto.LoginParam;
 import cn.zhengjunren.myblog.security.enums.StatusEnum;
+import cn.zhengjunren.myblog.security.service.OnlineUserService;
 import cn.zhengjunren.myblog.security.service.TbUserService;
 import okhttp3.Response;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -59,8 +59,14 @@ public class LoginController {
     public BCryptPasswordEncoder passwordEncoder;
     @Resource
     public TokenStore tokenStore;
-    @Autowired
-    TbUserService tbUserService;
+    public final TbUserService tbUserService;
+    public final OnlineUserService onlineUserService;
+
+    public LoginController(TbUserService tbUserService, OnlineUserService onlineUserService) {
+        this.tbUserService = tbUserService;
+        this.onlineUserService = onlineUserService;
+    }
+
     /**
      * 登录
      *
@@ -69,7 +75,7 @@ public class LoginController {
      */
     @MyLog("用户登录")
     @PostMapping(value = "/user/login")
-    public ResponseResult<Map<String, Object>> login(@RequestBody LoginParam loginParam) {
+    public ResponseResult<Map<String, Object>> login(@RequestBody LoginParam loginParam, HttpServletRequest request) {
         // 封装返回的结果集
         Map<String, Object> result = new HashMap<>();
         // 验证密码是否正确
@@ -96,6 +102,7 @@ public class LoginController {
             Map<String, Object> jsonMap = MapperUtils.json2map(jsonString);
             String token = String.valueOf(jsonMap.get("access_token"));
             result.put("token", token);
+            onlineUserService.save(tbUser,token, request);
             responseResult = new ResponseResult<>(ResponseResult.CodeStatus.OK, "登录成功", result);
         } catch (Exception e) {
             e.printStackTrace();

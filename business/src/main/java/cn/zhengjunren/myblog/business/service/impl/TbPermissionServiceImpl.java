@@ -1,6 +1,5 @@
 package cn.zhengjunren.myblog.business.service.impl;
 
-import cn.zhengjunren.myblog.business.domain.RoleAndUrl;
 import cn.zhengjunren.myblog.business.domain.TbPermission;
 import cn.zhengjunren.myblog.business.mapper.TbPermissionMapper;
 import cn.zhengjunren.myblog.business.service.TbPermissionService;
@@ -18,10 +17,6 @@ public class TbPermissionServiceImpl implements TbPermissionService{
     @Resource
     private TbPermissionMapper tbPermissionMapper;
 
-    @Override
-    public List<RoleAndUrl> getUrlWithRole() {
-        return tbPermissionMapper.getUrlWithRole();
-    }
 
     @Override
     public List<TbPermission> selectAll() {

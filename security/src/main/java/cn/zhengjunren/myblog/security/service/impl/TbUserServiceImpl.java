@@ -1,6 +1,6 @@
 package cn.zhengjunren.myblog.security.service.impl;
 
-import cn.zhengjunren.myblog.security.domain.TbUser;
+import cn.zhengjunren.myblog.commons.domain.TbUser;
 import cn.zhengjunren.myblog.security.mapper.TbUserMapper;
 import cn.zhengjunren.myblog.security.service.TbUserService;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package cn.zhengjunren.myblog.security.service;
 
-import cn.zhengjunren.myblog.security.domain.TbUser;
+import cn.zhengjunren.myblog.commons.domain.TbUser;
 
 public interface TbUserService{
 

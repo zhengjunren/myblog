@@ -40,7 +40,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
-        
+
         <!-- Spring Security -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -97,6 +97,11 @@
         <dependency>
             <groupId>cn.zhengjunren.myblog</groupId>
             <artifactId>commons-log</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.zhengjunren.myblog</groupId>
+            <artifactId>commons-domain</artifactId>
             <version>${parent.version}</version>
         </dependency>
     </dependencies>

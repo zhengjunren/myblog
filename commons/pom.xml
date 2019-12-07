@@ -31,6 +31,7 @@
         <module>commons-utils</module>
         <module>commons-log</module>
         <module>commons-mapper</module>
+        <module>commons-domain</module>
     </modules>
 
 </project>

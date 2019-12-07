@@ -1,7 +1,9 @@
 package cn.zhengjunren.myblog.system.tests;
 
-import cn.zhengjunren.myblog.system.SystemApplication;
 import cn.zhengjunren.myblog.commons.log.domain.TbLog;
+import cn.zhengjunren.myblog.commons.utils.MapperUtils;
+import cn.zhengjunren.myblog.system.SystemApplication;
+import cn.zhengjunren.myblog.system.domain.OnlineUser;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,7 +30,7 @@ import java.util.List;
 public class TestRedis {
 
     @Resource
-    RedisTemplate<String, TbLog> redisTemplate;
+    RedisTemplate<String, OnlineUser> redisTemplate;
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
@@ -58,17 +61,17 @@ public class TestRedis {
 //        tbLog1.setBrowser("火狐");
 //        tbLog1.setAddress("南昌");
 //        redisTemplate.expire()
-        redisTemplate
-                .opsForList().rightPush(key, tbLog);
+//        redisTemplate
+//                .opsForList().rightPush(key, tbLog);
 
 //        redisTemplate.opsForList().rightPush(key, tbLog1);
         Long size = redisTemplate.opsForList().size(key);
-        List<TbLog> serializable = redisTemplate.opsForList().range(key,0,size == null ? 500 : size );
+//        List<TbLog> serializable = redisTemplate.opsForList().range(key,0,size == null ? 500 : size );
 //        redisTemplate.opsForList().remove()
-        assert serializable != null;
-        for (TbLog log : serializable) {
-            System.out.println(log.toString());
-        }
+//        assert serializable != null;
+//        for (TbLog log : serializable) {
+//            System.out.println(log.toString());
+//        }
 //        redisTemplate.opsForList().g
         // 对应 String（字符串）
 //        User user = (User) redisCacheTemplate.opsForValue().get(key);
@@ -85,7 +88,15 @@ public class TestRedis {
         TbLog tbLog1 = new TbLog();
         tbLog1.setBrowser("火狐");
         tbLog1.setAddress("南昌");
-//        redisTemplate.
-//        redisTemplate.opsForZSet().add()
+
+    }
+
+    @Test
+    public void keys(){
+        List<String> keys = new ArrayList<>(redisTemplate.keys("online-key*"));
+        for (String key : keys) {
+            Object o = redisTemplate.opsForValue().get(key);
+            System.out.println(MapperUtils.obj2pojo(o, OnlineUser.class).toString());
+        }
     }
 }

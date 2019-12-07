@@ -7,7 +7,9 @@
     <div class="right-menu">
       <template v-if="device!=='mobile'">
         <div class="right-menu-item hover-effect">
-          <svg-icon icon-class="github" />
+          <a href="https://github.com/zhengjunren/myblog" target="_blank">
+            <svg-icon icon-class="github" />
+          </a>
         </div>
         <Screenfull id="screenfull" class="right-menu-item hover-effect" />
       </template>

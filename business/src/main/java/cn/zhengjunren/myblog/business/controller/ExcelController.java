@@ -1,7 +1,7 @@
 package cn.zhengjunren.myblog.business.controller;
 
-import cn.zhengjunren.myblog.business.domain.TbUser;
 import cn.zhengjunren.myblog.business.service.TbUserService;
+import cn.zhengjunren.myblog.commons.domain.TbUser;
 import cn.zhengjunren.myblog.commons.log.annotation.MyLog;
 import cn.zhengjunren.myblog.commons.log.domain.TbLog;
 import cn.zhengjunren.myblog.commons.log.service.TbLogService;

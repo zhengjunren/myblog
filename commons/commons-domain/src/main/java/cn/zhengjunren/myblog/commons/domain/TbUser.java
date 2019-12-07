@@ -1,4 +1,4 @@
-package cn.zhengjunren.myblog.business.domain;
+package cn.zhengjunren.myblog.commons.domain;
 
 import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;
@@ -12,20 +12,19 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
-
 /**
  * <p>ClassName: TbUser</p>
  * <p>Description: </p>
  *
  * @author ZhengJunren
  * @version 1.0.0
- * @date 2019/11/12 10:11
+ * @date 2019/12/7 10:18
  */
-
 @Data
 @Table(name = "tb_user")
 public class TbUser implements Serializable {
-    private static final long serialVersionUID = 9079411270587307127L;
+    @ExcelIgnore
+    private static final long serialVersionUID = -6211438561568769708L;
     @Id
     @Column(name = "id")
     @ExcelIgnore

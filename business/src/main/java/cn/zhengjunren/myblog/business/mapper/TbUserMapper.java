@@ -1,6 +1,6 @@
 package cn.zhengjunren.myblog.business.mapper;
 
-import cn.zhengjunren.myblog.business.domain.TbUser;
+import cn.zhengjunren.myblog.commons.domain.TbUser;
 import tk.mybatis.mapper.MyMapper;
 
 /**

@@ -1,10 +1,10 @@
 package cn.zhengjunren.myblog.business.controller;
 
 import cn.zhengjunren.myblog.business.domain.TbArticle;
-import cn.zhengjunren.myblog.business.domain.TbUser;
 import cn.zhengjunren.myblog.business.dto.TbArticleNoContent;
 import cn.zhengjunren.myblog.business.service.TbArticleService;
 import cn.zhengjunren.myblog.business.service.TbUserService;
+import cn.zhengjunren.myblog.commons.domain.TbUser;
 import cn.zhengjunren.myblog.commons.dto.ListInfo;
 import cn.zhengjunren.myblog.commons.dto.ResponseResult;
 import cn.zhengjunren.myblog.commons.log.annotation.MyLog;

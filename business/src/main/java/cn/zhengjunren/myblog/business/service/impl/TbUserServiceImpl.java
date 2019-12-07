@@ -1,6 +1,6 @@
 package cn.zhengjunren.myblog.business.service.impl;
 
-import cn.zhengjunren.myblog.business.domain.TbUser;
+import cn.zhengjunren.myblog.commons.domain.TbUser;
 import cn.zhengjunren.myblog.business.mapper.TbUserMapper;
 import cn.zhengjunren.myblog.business.service.TbUserService;
 import com.github.pagehelper.PageHelper;
