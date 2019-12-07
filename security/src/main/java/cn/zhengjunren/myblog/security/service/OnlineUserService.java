@@ -21,4 +21,10 @@ public interface OnlineUserService {
      * @param token 令牌
      */
     void save(TbUser tbUser, String token,HttpServletRequest request);
+
+    /**
+     * 删除在线用户
+     * @param token 令牌
+     */
+    void delete(String token);
 }

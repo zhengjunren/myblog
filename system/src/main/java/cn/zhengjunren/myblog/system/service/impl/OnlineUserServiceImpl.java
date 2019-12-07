@@ -79,7 +79,7 @@ public class OnlineUserServiceImpl implements OnlineUserService {
     public void kickOut(String val) throws Exception {
         String key = onlineKey + EncryptUtils.desDecrypt(val);
         redisTemplate.delete(key);
-        String uri = "/user/logout?access_token=" + EncryptUtils.desDecrypt(val);
+        String uri = "/user/logout?access_token=" + EncryptUtils.desDecrypt(val) + "&kickOut=yes";
         OkHttpClientUtil.getInstance().postData(securityUrl + uri, null);
     }
 }

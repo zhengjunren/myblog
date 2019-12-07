@@ -57,4 +57,9 @@ public class OnlineUserServiceImpl implements OnlineUserService {
         redisTemplate.opsForValue().set(onlineKey + token, onlineUser);
         redisTemplate.expire(onlineKey + token,expiration, TimeUnit.MILLISECONDS);
     }
+
+    @Override
+    public void delete(String token) {
+        redisTemplate.delete(onlineKey + token);
+    }
 }

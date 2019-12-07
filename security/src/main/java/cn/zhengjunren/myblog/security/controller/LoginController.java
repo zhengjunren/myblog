@@ -1,16 +1,17 @@
 package cn.zhengjunren.myblog.security.controller;
 
+import cn.zhengjunren.myblog.commons.domain.TbUser;
 import cn.zhengjunren.myblog.commons.dto.ResponseResult;
 import cn.zhengjunren.myblog.commons.log.annotation.MyLog;
 import cn.zhengjunren.myblog.commons.utils.MapperUtils;
 import cn.zhengjunren.myblog.commons.utils.OkHttpClientUtil;
-import cn.zhengjunren.myblog.commons.domain.TbUser;
 import cn.zhengjunren.myblog.security.dto.LoginInfo;
 import cn.zhengjunren.myblog.security.dto.LoginParam;
 import cn.zhengjunren.myblog.security.enums.StatusEnum;
 import cn.zhengjunren.myblog.security.service.OnlineUserService;
 import cn.zhengjunren.myblog.security.service.TbUserService;
 import okhttp3.Response;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -114,8 +115,12 @@ public class LoginController {
     @PostMapping("/user/logout")
     public ResponseResult<Void> logout(HttpServletRequest request) {
         String token = request.getParameter("access_token");
+        String kickOut = request.getParameter("kickOut");
         OAuth2AccessToken oAuth2AccessToken = tokenStore.readAccessToken(token);
         tokenStore.removeAccessToken(oAuth2AccessToken);
+        if (StringUtils.isBlank(kickOut)) {
+            onlineUserService.delete(token);
+        }
         return new ResponseResult<>(ResponseResult.CodeStatus.OK, "注销成功", null);
     }
 
