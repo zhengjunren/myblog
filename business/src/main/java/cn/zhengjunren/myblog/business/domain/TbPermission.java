@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @author ZhengJunren
@@ -52,8 +52,8 @@ public class TbPermission implements Serializable {
     private String description;
 
     @Column(name = "created")
-    private LocalDateTime created;
+    private Date created;
 
     @Column(name = "updated")
-    private LocalDateTime updated;
+    private Date updated;
 }
