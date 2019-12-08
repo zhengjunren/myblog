@@ -88,12 +88,21 @@
             <scope>provided</scope>
         </dependency>
 
+<!--        <dependency>-->
+<!--            <groupId>eu.bitwalker</groupId>-->
+<!--            <artifactId>UserAgentUtils</artifactId>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.lionsoul</groupId>-->
+<!--            <artifactId>ip2region</artifactId>-->
+<!--        </dependency>-->
+
         <dependency>
-            <groupId>eu.bitwalker</groupId>
-            <artifactId>UserAgentUtils</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>provided</scope>
         </dependency>
-
-
 
         <dependency>
             <groupId>cn.zhengjunren.myblog</groupId>

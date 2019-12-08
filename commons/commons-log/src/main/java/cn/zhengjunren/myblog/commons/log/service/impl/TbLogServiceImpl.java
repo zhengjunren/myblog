@@ -1,7 +1,6 @@
 package cn.zhengjunren.myblog.commons.log.service.impl;
 
 import cn.hutool.json.JSONObject;
-import cn.zhengjunren.myblog.commons.dto.IpInfo;
 import cn.zhengjunren.myblog.commons.log.annotation.MyLog;
 import cn.zhengjunren.myblog.commons.log.domain.TbLog;
 import cn.zhengjunren.myblog.commons.log.mapper.TbLogMapper;
@@ -49,7 +48,7 @@ public class TbLogServiceImpl implements TbLogService {
     }
 
     @Override
-    public long save(String username, String browser, String ip, ProceedingJoinPoint joinPoint, TbLog log) {
+    public long save(String username, String browser, String ip, ProceedingJoinPoint joinPoint, TbLog log) throws Exception {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
         MyLog aopLog = method.getAnnotation(MyLog.class);
@@ -83,13 +82,11 @@ public class TbLogServiceImpl implements TbLogService {
                 e.printStackTrace();
             }
         }
-        IpInfo ipInfo = UserAgentUtils.getIpInfo(ip);
-        log.setAddress(String.format("%s|%s|%s|%s", ipInfo.getCountry(),ipInfo.getRegion(), ipInfo.getCity(), ipInfo.getIsp()));
+        log.setAddress(UserAgentUtils.ip2Region(ip));
         log.setMethod(methodName);
         log.setUsername(username);
         log.setBrowser(browser);
         log.setCreateTime(new Date());
-//        Long aLong = redisTemplate.opsForList().rightPush(KEY, log);
         return save(log);
     }
 

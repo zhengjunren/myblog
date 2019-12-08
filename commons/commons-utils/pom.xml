@@ -51,9 +51,13 @@
         </dependency>
 
         <dependency>
+            <groupId>org.lionsoul</groupId>
+            <artifactId>ip2region</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>eu.bitwalker</groupId>
             <artifactId>UserAgentUtils</artifactId>
-            <scope>provided</scope>
         </dependency>
 
         <dependency>

@@ -33,7 +33,7 @@ public interface TbLogService{
      * @param log {@link TbLog}
      * @return 结果
      */
-    long save(String username, String browser, String ip, ProceedingJoinPoint joinPoint, TbLog log);
+    long save(String username, String browser, String ip, ProceedingJoinPoint joinPoint, TbLog log) throws Exception;
 
     /**
      * 获取日志

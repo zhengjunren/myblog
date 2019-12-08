@@ -47,7 +47,7 @@ public class OnlineUserServiceImpl implements OnlineUserService {
         try {
             onlineUser.setBrowser(browser);
             onlineUser.setIp(ipAddr);
-            onlineUser.setAddress(String.format("%s|%s|%s|%s", ipInfo.getCountry(),ipInfo.getRegion(), ipInfo.getCity(), ipInfo.getIsp()));
+            onlineUser.setAddress(UserAgentUtils.ip2Region(ipAddr));
             onlineUser.setUsername(tbUser.getUsername());
             onlineUser.setKey(EncryptUtils.desEncrypt(token));
             onlineUser.setLoginTime(new Date());
