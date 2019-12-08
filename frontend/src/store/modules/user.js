@@ -38,7 +38,6 @@ const actions = {
 
   // get user info
   getInfo({ commit, state }) {
-    console.log("获取用户信息")
     return new Promise((resolve, reject) => {
       getInfo().then(response => {
         const { data } = response
