@@ -1,4 +1,4 @@
-package cn.zhengjunren.myblog.system.domain;
+package cn.zhengjunren.myblog.commons.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,7 +19,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Table(name = "tb_permission")
 public class TbPermission implements Serializable {
-    private static final long serialVersionUID = -1300858596632242875L;
+    private static final long serialVersionUID = -5868409841841627309L;
     @Id
     @Column(name = "id")
     @GeneratedValue(generator = "JDBC")

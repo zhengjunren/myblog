@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.zhengjunren.myblog.security.mapper.TbPermissionMapper">
-  <resultMap id="BaseResultMap" type="cn.zhengjunren.myblog.security.domain.TbPermission">
+  <resultMap id="BaseResultMap" type="cn.zhengjunren.myblog.commons.domain.TbPermission">
     <!--@mbg.generated generated on Mon Dec 02 21:35:54 CST 2019.-->
     <!--@Table tb_permission-->
     <id column="id" jdbcType="BIGINT" property="id" />

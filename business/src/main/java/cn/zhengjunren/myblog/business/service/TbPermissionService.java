@@ -1,6 +1,6 @@
 package cn.zhengjunren.myblog.business.service;
 
-import cn.zhengjunren.myblog.business.domain.TbPermission;
+import cn.zhengjunren.myblog.commons.domain.TbPermission;
 
 import java.util.List;
 

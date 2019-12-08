@@ -1,6 +1,6 @@
 package cn.zhengjunren.myblog.business.configure;
 
-import cn.zhengjunren.myblog.business.domain.TbPermission;
+import cn.zhengjunren.myblog.commons.domain.TbPermission;
 import cn.zhengjunren.myblog.business.service.TbPermissionService;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.zhengjunren.myblog.business.mapper.TbPermissionMapper">
-  <resultMap id="BaseResultMap" type="cn.zhengjunren.myblog.business.domain.TbPermission">
+  <resultMap id="BaseResultMap" type="cn.zhengjunren.myblog.commons.domain.TbPermission">
     <!--@mbg.generated generated on Sat Nov 23 11:37:55 CST 2019.-->
     <!--@Table tb_permission-->
     <id column="id" jdbcType="BIGINT" property="id" />
@@ -22,13 +22,4 @@
     <!--@mbg.generated generated on Sat Nov 23 11:37:55 CST 2019.-->
     id, parent_id, `name`, enname, url, description, created, updated
   </sql>
-  <select id="getUrlWithRole" resultMap="BaseResultMap2">
-    SELECT
-      p.url,
-      r.enname
-    FROM
-      tb_permission AS p
-        LEFT JOIN tb_role_permission AS rp ON rp.permission_id = p.id
-        LEFT JOIN tb_role AS r ON r.id = rp.role_id
-  </select>
 </mapper>

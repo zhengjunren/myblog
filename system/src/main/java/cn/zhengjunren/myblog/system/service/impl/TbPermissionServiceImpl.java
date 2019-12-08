@@ -1,6 +1,6 @@
 package cn.zhengjunren.myblog.system.service.impl;
 
-import cn.zhengjunren.myblog.system.domain.TbPermission;
+import cn.zhengjunren.myblog.commons.domain.TbPermission;
 import cn.zhengjunren.myblog.system.mapper.TbPermissionMapper;
 import cn.zhengjunren.myblog.system.service.TbPermissionService;
 import org.springframework.stereotype.Service;

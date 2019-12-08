@@ -1,6 +1,6 @@
 package cn.zhengjunren.myblog.search.configure;
 
-import cn.zhengjunren.myblog.search.domain.TbPermission;
+import cn.zhengjunren.myblog.commons.domain.TbPermission;
 import cn.zhengjunren.myblog.search.service.TbPermissionService;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;

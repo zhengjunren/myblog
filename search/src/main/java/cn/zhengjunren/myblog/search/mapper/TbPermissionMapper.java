@@ -1,11 +1,10 @@
 package cn.zhengjunren.myblog.search.mapper;
 
-import cn.zhengjunren.myblog.search.domain.RoleAndUrl;
-import cn.zhengjunren.myblog.search.domain.TbPermission;
+import cn.zhengjunren.myblog.commons.domain.TbPermission;
 import tk.mybatis.mapper.MyMapper;
 
-import java.util.List;
-
+/**
+ * @author zhengjunren
+ */
 public interface TbPermissionMapper extends MyMapper<TbPermission> {
-    List<RoleAndUrl> getUrlWithRole();
 }

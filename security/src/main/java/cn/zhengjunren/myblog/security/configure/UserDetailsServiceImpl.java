@@ -1,8 +1,8 @@
 package cn.zhengjunren.myblog.security.configure;
 
-import cn.zhengjunren.myblog.security.domain.TbPermission;
-import cn.zhengjunren.myblog.security.domain.TbRole;
+import cn.zhengjunren.myblog.commons.domain.TbPermission;
 import cn.zhengjunren.myblog.commons.domain.TbUser;
+import cn.zhengjunren.myblog.security.domain.TbRole;
 import cn.zhengjunren.myblog.security.service.TbPermissionService;
 import cn.zhengjunren.myblog.security.service.TbRoleService;
 import cn.zhengjunren.myblog.security.service.TbUserService;

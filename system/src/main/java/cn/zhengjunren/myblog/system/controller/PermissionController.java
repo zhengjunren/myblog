@@ -2,7 +2,7 @@ package cn.zhengjunren.myblog.system.controller;
 
 import cn.zhengjunren.myblog.commons.dto.ResponseResult;
 import cn.zhengjunren.myblog.commons.log.annotation.MyLog;
-import cn.zhengjunren.myblog.system.domain.TbPermission;
+import cn.zhengjunren.myblog.commons.domain.TbPermission;
 import cn.zhengjunren.myblog.system.service.TbPermissionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

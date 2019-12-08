@@ -1,12 +1,17 @@
 package cn.zhengjunren.myblog.search.service;
 
-import cn.zhengjunren.myblog.search.domain.RoleAndUrl;
-import cn.zhengjunren.myblog.search.domain.TbPermission;
+import cn.zhengjunren.myblog.commons.domain.TbPermission;
 
 import java.util.List;
 
+/**
+ * @author ZhengJunren
+ */
 public interface TbPermissionService {
-    List<RoleAndUrl> getUrlWithRole();
 
+    /**
+     * 获取所有权限
+     * @return {@link List<TbPermission>}
+     */
     List<TbPermission> selectAll();
 }

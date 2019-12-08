@@ -1,7 +1,7 @@
 package cn.zhengjunren.myblog.security.mapper;
 
 import cn.zhengjunren.myblog.commons.utils.RedisCache;
-import cn.zhengjunren.myblog.security.domain.TbPermission;
+import cn.zhengjunren.myblog.commons.domain.TbPermission;
 import org.apache.ibatis.annotations.CacheNamespace;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.MyMapper;

@@ -112,6 +112,11 @@
             <artifactId>commons-log</artifactId>
             <version>${parent.version}</version>
         </dependency>
+        <dependency>
+            <groupId>cn.zhengjunren.myblog</groupId>
+            <artifactId>commons-domain</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
