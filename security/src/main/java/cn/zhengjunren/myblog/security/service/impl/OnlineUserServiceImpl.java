@@ -54,8 +54,8 @@ public class OnlineUserServiceImpl implements OnlineUserService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        redisTemplate.opsForValue().set(onlineKey + token, onlineUser);
-        redisTemplate.expire(onlineKey + token,expiration, TimeUnit.MILLISECONDS);
+        redisTemplate.opsForValue().set(onlineKey + token, onlineUser, expiration, TimeUnit.SECONDS);
+//        redisTemplate.expire(onlineKey + token);
     }
 
     @Override
