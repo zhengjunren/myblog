@@ -13,11 +13,6 @@
     <result column="created" jdbcType="TIMESTAMP" property="created" />
     <result column="updated" jdbcType="TIMESTAMP" property="updated" />
   </resultMap>
-  <resultMap id="BaseResultMap2" type="cn.zhengjunren.myblog.business.domain.RoleAndUrl">
-    <!--@mbg.generated generated on Sat Nov 23 10:25:34 CST 2019.-->
-    <result column="enname" jdbcType="VARCHAR" property="enname" />
-    <result column="url" jdbcType="VARCHAR" property="url" />
-  </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated generated on Sat Nov 23 11:37:55 CST 2019.-->
     id, parent_id, `name`, enname, url, description, created, updated
