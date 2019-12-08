@@ -2,9 +2,9 @@ package cn.zhengjunren.myblog.system.controller;
 
 import cn.zhengjunren.myblog.commons.dto.ListInfo;
 import cn.zhengjunren.myblog.commons.dto.ResponseResult;
+import cn.zhengjunren.myblog.commons.log.domain.TbLog;
 import cn.zhengjunren.myblog.commons.utils.DataTypeUtils;
 import cn.zhengjunren.myblog.commons.utils.ParamTypeUtils;
-import cn.zhengjunren.myblog.system.domain.TbLog;
 import cn.zhengjunren.myblog.system.service.TbLogSystemService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;

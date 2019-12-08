@@ -1,6 +1,6 @@
 package cn.zhengjunren.myblog.system.service;
 
-import cn.zhengjunren.myblog.system.domain.TbLog;
+import cn.zhengjunren.myblog.commons.log.domain.TbLog;
 import com.github.pagehelper.PageInfo;
 
 import java.sql.Timestamp;

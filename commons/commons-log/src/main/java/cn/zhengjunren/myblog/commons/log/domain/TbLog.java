@@ -3,6 +3,7 @@ package cn.zhengjunren.myblog.commons.log.domain;
 import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.format.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,6 +31,7 @@ public class TbLog implements Serializable {
     private Long id;
 
     @ExcelProperty("操作时间")
+    @JsonFormat(timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat("yyyy-MM-dd HH:mm:ss")
     @Column(name = "create_time")
     private Date createTime;

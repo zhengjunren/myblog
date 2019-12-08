@@ -1,6 +1,6 @@
 package cn.zhengjunren.myblog.system.service.impl;
 
-import cn.zhengjunren.myblog.system.domain.TbLog;
+import cn.zhengjunren.myblog.commons.log.domain.TbLog;
 import cn.zhengjunren.myblog.system.mapper.TbLogSystemMapper;
 import cn.zhengjunren.myblog.system.service.TbLogSystemService;
 import com.github.pagehelper.PageHelper;

@@ -13,24 +13,10 @@
     <result column="created" jdbcType="TIMESTAMP" property="created" />
     <result column="updated" jdbcType="TIMESTAMP" property="updated" />
   </resultMap>
-  <resultMap id="BaseResultMap2" type="cn.zhengjunren.myblog.system.domain.RoleAndUrl">
-    <!--@mbg.generated generated on Sat Nov 23 10:25:34 CST 2019.-->
-    <result column="enname" jdbcType="VARCHAR" property="enname" />
-    <result column="url" jdbcType="VARCHAR" property="url" />
-  </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated generated on Sat Nov 23 11:37:55 CST 2019.-->
     id, parent_id, `name`, enname, url, description, created, updated
   </sql>
-  <select id="getUrlWithRole" resultMap="BaseResultMap2">
-    SELECT
-      p.url,
-      r.enname
-    FROM
-      tb_permission AS p
-        LEFT JOIN tb_role_permission AS rp ON rp.permission_id = p.id
-        LEFT JOIN tb_role AS r ON r.id = rp.role_id
-  </select>
 
   <select id="selectByRoleId" resultMap="BaseResultMap">
     SELECT
