@@ -77,5 +77,5 @@ pagehelper:
 
 business:
   onlineKey: online-key
-  expiration: 21600000
+  expiration: 86400
   securityUrl: http://192.168.0.45:8000
