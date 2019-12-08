@@ -1,5 +1,6 @@
 package cn.zhengjunren.myblog.commons.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -55,9 +56,11 @@ public class TbPermission implements Serializable {
     @Column(name = "description")
     private String description;
 
+    @JsonFormat(timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
     @Column(name = "created")
     private Date created;
 
+    @JsonFormat(timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
     @Column(name = "updated")
     private Date updated;
 }

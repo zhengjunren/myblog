@@ -6,9 +6,11 @@ import cn.zhengjunren.myblog.commons.log.annotation.MyLog;
 import cn.zhengjunren.myblog.commons.utils.DataTypeUtils;
 import cn.zhengjunren.myblog.commons.utils.ParamTypeUtils;
 import cn.zhengjunren.myblog.system.domain.TbRole;
+import cn.zhengjunren.myblog.system.domain.TbUserRole;
 import cn.zhengjunren.myblog.system.dto.PermissionParams;
 import cn.zhengjunren.myblog.system.service.TbRolePermissionService;
 import cn.zhengjunren.myblog.system.service.TbRoleService;
+import cn.zhengjunren.myblog.system.service.TbUserRoleService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -16,10 +18,13 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * <p>ClassName: RoleController</p>
@@ -39,9 +44,12 @@ public class RoleController {
 
     private final TbRolePermissionService tbRolePermissionService;
 
-    public RoleController(TbRoleService tbRoleService, TbRolePermissionService tbRolePermissionService) {
+    private final TbUserRoleService tbUserRoleService;
+
+    public RoleController(TbRoleService tbRoleService, TbRolePermissionService tbRolePermissionService, TbUserRoleService tbUserRoleService) {
         this.tbRoleService = tbRoleService;
         this.tbRolePermissionService = tbRolePermissionService;
+        this.tbUserRoleService = tbUserRoleService;
     }
 
     @GetMapping("list")
@@ -71,4 +79,22 @@ public class RoleController {
         return new ResponseResult<>(ResponseResult.CodeStatus.OK, "更新权限成功，拥有该角色的用户重新登录后生效");
     }
 
+    @GetMapping("all")
+    @ApiOperation(value = "获取所有角色")
+    public ResponseResult<List<TbRole>> getAllRole() {
+        List<TbRole> tbRoles = tbRoleService.selectAll();
+        return new ResponseResult<>(ResponseResult.CodeStatus.OK, "获取所有角色", tbRoles);
+    }
+
+    @PutMapping("user")
+    public ResponseResult<Void> modifyUserRole(@RequestBody TbUserRole tbUserRole) {
+        tbUserRoleService.update(tbUserRole);
+        return new ResponseResult<>(ResponseResult.CodeStatus.OK, "更新用户角色成功");
+    }
+
+    @PostMapping
+    public ResponseResult<Void> add(@RequestBody TbRole tbRole) {
+        tbRoleService.insert(tbRole);
+        return new ResponseResult<>(ResponseResult.CodeStatus.OK, "新增角色成功");
+    }
 }

@@ -134,6 +134,14 @@ export function getRoleList(query) {
   })
 }
 
+export function getAllRole() {
+  return request({
+    url: '/role/all',
+    method: 'get',
+    baseURL: BASE_URL
+  })
+}
+
 
 export function updateRolePermission(data) {
   return request({

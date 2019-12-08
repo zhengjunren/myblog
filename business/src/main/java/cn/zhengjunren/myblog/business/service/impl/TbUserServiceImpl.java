@@ -1,8 +1,9 @@
 package cn.zhengjunren.myblog.business.service.impl;
 
-import cn.zhengjunren.myblog.commons.domain.TbUser;
+import cn.zhengjunren.myblog.business.dto.TbUserWithRole;
 import cn.zhengjunren.myblog.business.mapper.TbUserMapper;
 import cn.zhengjunren.myblog.business.service.TbUserService;
+import cn.zhengjunren.myblog.commons.domain.TbUser;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
@@ -38,9 +39,9 @@ public class TbUserServiceImpl implements TbUserService{
     }
 
     @Override
-    public PageInfo<TbUser> page(Integer pageNum, Integer pageSize) {
+    public PageInfo<TbUserWithRole> page(Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<TbUser> userList = tbUserMapper.selectAll();
+        List<TbUserWithRole> userList = tbUserMapper.selectAllWithRole();
         return new PageInfo<>(userList);
     }
 

@@ -1,5 +1,6 @@
 package cn.zhengjunren.myblog.business.service;
 
+import cn.zhengjunren.myblog.business.dto.TbUserWithRole;
 import cn.zhengjunren.myblog.commons.domain.TbUser;
 import com.github.pagehelper.PageInfo;
 
@@ -35,7 +36,7 @@ public interface TbUserService{
      * @param pageSize 每页显示的数量
      * @return {@link List <TbUser>}
      */
-    PageInfo<TbUser> page(Integer pageNum, Integer pageSize);
+    PageInfo<TbUserWithRole> page(Integer pageNum, Integer pageSize);
 
     /**
      * 管理员更新用户信息

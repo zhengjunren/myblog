@@ -116,6 +116,11 @@
             <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item"/>
           </el-select>
         </el-form-item>
+        <el-form-item label="角色">
+          <el-radio-group v-model="temp.roleId" size="small">
+            <el-radio v-for="item in role" :key="item" :label="item.id" border>{{item.name}}</el-radio>
+          </el-radio-group>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">
@@ -130,169 +135,176 @@
 </template>
 
 <script>
-    import {fetchList, modifyStatus, search, updateUser, getExcel} from "@/api/user";
-    import waves from '@/directive/waves'
-    import Pagination from '@/components/Pagination'
-    import Link from "../../layout/components/Sidebar/Link";
-    import {downloadFile} from '@/utils/index'
-    import {getToken} from '../../utils/auth'
-    export default {
-        name: "UserListTable",
-        components: {Link, Pagination},
-        directives: { waves },
-        filters: {
-            statusFilter1(status) {
-                const statusMap = {
-                    '正常': 'success',
-                    '冻结': 'warning',
-                    '注销': 'danger'
-                }
-                return statusMap[status]
-            },
-            typeFilter(type) {
-                return calendarTypeKeyValue[type]
-            }
-        },
-        data() {
-            return {
-                isSearch:false,
-                tableKey: 0,
-                list: null,
-                total: 0,
-                listLoading: true,
-                listQuery: {
-                    page: 1,
-                    limit: 10,
-                },
-                searchPage:1,
-                searchLimit:10,
-                query:{
-                    username:'',
-                    status:'',
-                    email:'',
-                    nickname:''
-                },
-                statusOptions: ['正常', '冻结', '注销'],
-                importanceOptions: [1, 2, 3],
-                sortOptions: [{label: 'ID Ascending', key: '+id'}, {label: 'ID Descending', key: '-id'}],
-                showReviewer: false,
-                temp: {
-                    id: undefined,
-                    username: '',
-                    nickname: '',
-                    email: '',
-                    url: '',
-                    lastLoginTime: '',
-                    status: undefined
-                },
-                dialogFormVisible: false,
-                dialogPvVisible: false,
-                dialogStatus: '',
-                textMap: {
-                    update: '编辑',
-                    create: 'Create'
-                },
-                rules: {
-                    type: [{required: true, message: 'type is required', trigger: 'change'}],
-                    timestamp: [{type: 'date', required: true, message: 'timestamp is required', trigger: 'change'}],
-                    title: [{required: true, message: 'title is required', trigger: 'blur'}]
-                },
-                downloadLoading: false
-            }
-        },
-
-        created() {
-            this.getList()
-        },
-        methods: {
-            getList() {
-                this.listLoading = true
-                fetchList(this.listQuery).then(response => {
-                    this.list = response.data.items
-                    this.total = response.data.total
-                    // 模拟请求时间
-                    setTimeout(() => {
-                        this.listLoading = false
-                    }, 500)
-                })
-            },
-            handleCreate() {
-                // this.resetTemp()
-                this.dialogStatus = 'create'
-                this.dialogFormVisible = true
-                this.$nextTick(() => {
-                    this.$refs['dataForm'].clearValidate()
-                })
-            },
-            createData() {
-
-            },
-            handleUpdate(row) {
-                this.temp = Object.assign({}, row) // copy obj
-                this.dialogStatus = 'update'
-                this.dialogFormVisible = true
-                this.$nextTick(() => {
-                    this.$refs['dataForm'].clearValidate()
-                })
-            },
-            updateData() {
-                this.$refs['dataForm'].validate((valid) => {
-                    if (valid) {
-                        const tempData = Object.assign({}, this.temp)
-                        updateUser(tempData).then(response => {
-                            for (const v of this.list) {
-                                if (v.id === this.temp.id) {
-                                    const index = this.list.indexOf(v)
-                                    this.list.splice(index, 1, this.temp)
-                                    break
-                                }
-                            }
-                            this.dialogFormVisible = false
-                            this.$notify({
-                                title: '成功',
-                                message: response.message,
-                                type: 'success',
-                                duration: 2000
-                            })
-                        })
-                    }
-                })
-            },
-            handleModifyStatus(row, status) {
-                modifyStatus(row.username, status).then(response => {
-                    this.$message({
-                        message: response.message,
-                        type: 'success'
-                    })
-                    row.status = status
-                })
-            },
-
-            search() {
-                if (this.query.username === "" && this.query.nickname === "" && this.query.status === "" && this.query.email === "") {
-                    this.getList()
-                    this.isSearch = false
-                }
-                else {
-                    search(this.query, this.searchPage, this.searchLimit).then(response => {
-                        this.list = response.data.items
-                        this.total = response.data.total
-                        // 模拟请求时间
-                        setTimeout(() => {
-                            this.listLoading = false
-                        }, 500)
-                    })
-                    this.isSearch = true
-                }
-              },
-            handleDownload(){
-              getExcel().then(result => {
-                downloadFile(result, '用户列表', 'xlsx')
-                this.downloadLoading = false
-              })
-            }
+  import {fetchList, modifyStatus, search, updateUser, getExcel} from "@/api/user";
+  import { getAllRole } from "@/api/system";
+  import waves from '@/directive/waves'
+  import Pagination from '@/components/Pagination'
+  import Link from "../../layout/components/Sidebar/Link";
+  import {downloadFile} from '@/utils/index'
+  import {getToken} from '../../utils/auth'
+  export default {
+    name: "UserListTable",
+    components: {Link, Pagination},
+    directives: { waves },
+    filters: {
+      statusFilter1(status) {
+        const statusMap = {
+          '正常': 'success',
+          '冻结': 'warning',
+          '注销': 'danger'
         }
+        return statusMap[status]
+      },
+      typeFilter(type) {
+        return calendarTypeKeyValue[type]
+      }
+    },
+    data() {
+      return {
+        isSearch:false,
+        tableKey: 0,
+        list: null,
+        total: 0,
+        listLoading: true,
+        listQuery: {
+          page: 1,
+          limit: 10,
+        },
+        searchPage:1,
+        searchLimit:10,
+        query:{
+          username:'',
+          status:'',
+          email:'',
+          nickname:''
+        },
+        role:[],
+        statusOptions: ['正常', '冻结', '注销'],
+        importanceOptions: [1, 2, 3],
+        sortOptions: [{label: 'ID Ascending', key: '+id'}, {label: 'ID Descending', key: '-id'}],
+        showReviewer: false,
+        temp: {
+          id: undefined,
+          username: '',
+          nickname: '',
+          email: '',
+          url: '',
+          lastLoginTime: '',
+          status: undefined,
+          roleId: undefined
+        },
+        dialogFormVisible: false,
+        dialogPvVisible: false,
+        dialogStatus: '',
+        textMap: {
+          update: '编辑',
+          create: 'Create'
+        },
+        rules: {
+          type: [{required: true, message: 'type is required', trigger: 'change'}],
+          timestamp: [{type: 'date', required: true, message: 'timestamp is required', trigger: 'change'}],
+          title: [{required: true, message: 'title is required', trigger: 'blur'}]
+        },
+        downloadLoading: false
+      }
+    },
+
+    created() {
+      this.getList()
+    },
+    methods: {
+      getList() {
+        this.listLoading = true
+        fetchList(this.listQuery).then(response => {
+          this.list = response.data.items
+          this.total = response.data.total
+          // 模拟请求时间
+          setTimeout(() => {
+            this.listLoading = false
+          }, 500)
+        })
+      },
+      handleCreate() {
+        // this.resetTemp()
+        this.dialogStatus = 'create'
+        this.dialogFormVisible = true
+        this.$nextTick(() => {
+          this.$refs['dataForm'].clearValidate()
+        })
+      },
+      createData() {
+      },
+      handleUpdate(row) {
+        this.temp = Object.assign({}, row) // copy obj
+        this.dialogStatus = 'update'
+        this.dialogFormVisible = true
+        this.$nextTick(() => {
+          this.$refs['dataForm'].clearValidate()
+        })
+        this.getAllRole()
+      },
+      updateData() {
+        this.$refs['dataForm'].validate((valid) => {
+          if (valid) {
+            const tempData = Object.assign({}, this.temp)
+            updateUser(tempData).then(response => {
+              for (const v of this.list) {
+                if (v.id === this.temp.id) {
+                  const index = this.list.indexOf(v)
+                  this.list.splice(index, 1, this.temp)
+                  break
+                }
+              }
+              this.dialogFormVisible = false
+              this.$notify({
+                title: '成功',
+                message: response.message,
+                type: 'success',
+                duration: 2000
+              })
+            })
+          }
+        })
+      },
+      handleModifyStatus(row, status) {
+        modifyStatus(row.username, status).then(response => {
+          this.$message({
+            message: response.message,
+            type: 'success'
+          })
+          row.status = status
+        })
+      },
+      search() {
+        if (this.query.username === "" && this.query.nickname === "" && this.query.status === "" && this.query.email === "") {
+          this.getList()
+          this.isSearch = false
+        }
+        else {
+          search(this.query, this.searchPage, this.searchLimit).then(response => {
+            this.list = response.data.items
+            this.total = response.data.total
+            // 模拟请求时间
+            setTimeout(() => {
+              this.listLoading = false
+            }, 500)
+          })
+          this.isSearch = true
+        }
+      },
+      handleDownload(){
+        getExcel().then(result => {
+          downloadFile(result, '用户列表', 'xlsx')
+          this.downloadLoading = false
+        })
+      },
+      getAllRole() {
+        getAllRole().then(response => {
+          this.role = response.data
+        })
+      }
     }
+  }
 </script>
 
 <style lang="scss" scoped>

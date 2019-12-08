@@ -29,8 +29,8 @@ public class TbRoleServiceImpl implements TbRoleService{
     }
 
     @Override
-    public int updatePermission(List<Long> permissionIds) {
-
-        return 0;
+    public int insert(TbRole tbRole) {
+        return tbRoleMapper.insert(tbRole);
     }
+
 }

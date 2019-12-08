@@ -1,9 +1,12 @@
 package cn.zhengjunren.myblog.business.controller;
 
+import cn.zhengjunren.myblog.business.domain.TbUserRole;
 import cn.zhengjunren.myblog.business.dto.AvatarInfo;
 import cn.zhengjunren.myblog.business.dto.LoginInfo;
 import cn.zhengjunren.myblog.business.dto.PasswordParams;
 import cn.zhengjunren.myblog.business.dto.StatusInfo;
+import cn.zhengjunren.myblog.business.dto.TbUserWithRole;
+import cn.zhengjunren.myblog.business.service.TbUserRoleService;
 import cn.zhengjunren.myblog.business.service.TbUserService;
 import cn.zhengjunren.myblog.commons.domain.TbUser;
 import cn.zhengjunren.myblog.commons.dto.ListInfo;
@@ -50,8 +53,11 @@ public class UserController {
     @Resource
     public BCryptPasswordEncoder passwordEncoder;
 
-    public UserController(TbUserService tbUserService) {
+    private final TbUserRoleService tbUserRoleService;
+
+    public UserController(TbUserService tbUserService, TbUserRoleService tbUserRoleService) {
         this.tbUserService = tbUserService;
+        this.tbUserRoleService = tbUserRoleService;
     }
 
     @GetMapping("info")
@@ -72,9 +78,9 @@ public class UserController {
             @ApiImplicitParam(name = "limit", value = "笔数", required = true, dataType = DataTypeUtils.INT, paramType = ParamTypeUtils.QUERY),
     })
     @ApiOperation(value = "获取用户列表", notes="根据页码、笔数查询用户列表")
-    public ResponseResult<ListInfo<TbUser>> list(int page, int limit) {
-        PageInfo<TbUser> pageInfo = tbUserService.page(page, limit);
-        ListInfo<TbUser> listInfo = new ListInfo<>(pageInfo.getList(), pageInfo.getTotal());
+    public ResponseResult<ListInfo<TbUserWithRole>> list(int page, int limit) {
+        PageInfo<TbUserWithRole> pageInfo = tbUserService.page(page, limit);
+        ListInfo<TbUserWithRole> listInfo = new ListInfo<>(pageInfo.getList(), pageInfo.getTotal());
         return new ResponseResult<>(ResponseResult.CodeStatus.OK,"分页获取用户列表", listInfo);
     }
 
@@ -82,7 +88,10 @@ public class UserController {
     @PostMapping("")
     @ApiOperation(value = "修改用户信息", notes="修改除密码外的属性")
     @ApiImplicitParam(name = "tbUser", value = "用户信息", required = true, dataType = "TbUser", paramType = ParamTypeUtils.BODY)
-    public ResponseResult<Void> update(@RequestBody TbUser tbUser) {
+    public ResponseResult<Void> update(@RequestBody TbUserWithRole tbUserWithRole) {
+        TbUser tbUser = new TbUser();
+        BeanUtils.copyProperties(tbUserWithRole, tbUser);
+        tbUserRoleService.update(new TbUserRole((long)tbUserWithRole.getId(), tbUserWithRole.getRoleId()));
         int result = tbUserService.update(tbUser);
         if (result > 0) {
             return new ResponseResult<>(ResponseResult.CodeStatus.OK,"更新用户成功", null);
