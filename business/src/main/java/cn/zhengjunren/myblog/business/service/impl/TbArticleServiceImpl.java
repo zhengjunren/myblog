@@ -7,6 +7,8 @@ import cn.zhengjunren.myblog.business.service.TbArticleService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -21,6 +23,7 @@ import java.util.List;
  */
 
 @Service
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class TbArticleServiceImpl implements TbArticleService{
 
     @Resource
@@ -39,11 +42,13 @@ public class TbArticleServiceImpl implements TbArticleService{
     }
 
     @Override
+    @Transactional(readOnly = false, rollbackFor = Exception.class)
     public int insert(TbArticle tbArticle) {
         return tbArticleMapper.insert(tbArticle);
     }
 
     @Override
+    @Transactional(readOnly = false, rollbackFor = Exception.class)
     public int update(TbArticle tbArticle) {
         return tbArticleMapper.updateByPrimaryKey(tbArticle);
     }

@@ -117,6 +117,7 @@
 
 <script>
   import { getPermissionTree, getRoleList, getPermissionByRoleEnName, updateRolePermission, updateRoleData, createRoleData } from '@/api/system'
+  import {parseTime} from '@/utils/index'
   import Pagination from '@/components/Pagination'
   export default {
     name: "index",
@@ -223,7 +224,7 @@
       },
       createRoleData() {
         createRoleData(this.temp).then(response => {
-          this.temp.created = new Date()
+          this.temp.created = parseTime(new Date(), "yyyy-MM-dd HH:mm:ss")
           this.list.unshift(this.temp)
           this.dialogFormVisible = false
           this.$notify({

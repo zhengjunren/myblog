@@ -6,13 +6,19 @@ import cn.zhengjunren.myblog.system.service.TbLogSystemService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
 import java.sql.Timestamp;
 import java.util.List;
 
+/**
+ * @author ZhengJunren
+ */
 @Service
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class TbLogSystemServiceImpl implements TbLogSystemService {
 
     @Resource
@@ -33,9 +39,4 @@ public class TbLogSystemServiceImpl implements TbLogSystemService {
         return tbLogSystemMapper.selectCount(null);
     }
 
-    @Override
-    public List<TbLog> selectAll(Timestamp start, Timestamp end) {
-
-        return null;
-    }
 }

@@ -6,12 +6,15 @@ import cn.zhengjunren.myblog.system.service.TbRoleService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
 @Service
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class TbRoleServiceImpl implements TbRoleService{
 
     @Resource
@@ -30,6 +33,7 @@ public class TbRoleServiceImpl implements TbRoleService{
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int insert(TbRole tbRole) {
         tbRole.setCreated(new Date());
         tbRole.setUpdated(new Date());
@@ -37,6 +41,7 @@ public class TbRoleServiceImpl implements TbRoleService{
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int update(TbRole tbRole) {
         tbRole.setUpdated(new Date());
         return tbRoleMapper.updateByPrimaryKey(tbRole);

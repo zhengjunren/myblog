@@ -6,6 +6,8 @@ import cn.zhengjunren.myblog.system.mapper.TbRoleMapper;
 import cn.zhengjunren.myblog.system.mapper.TbRolePermissionMapper;
 import cn.zhengjunren.myblog.system.service.TbRolePermissionService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
@@ -13,7 +15,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+/**
+ * @author ZhengJunren
+ */
 @Service
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class TbRolePermissionServiceImpl implements TbRolePermissionService{
 
     @Resource
@@ -29,6 +35,7 @@ public class TbRolePermissionServiceImpl implements TbRolePermissionService{
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int update(List<Long> permissionIds, String roleEnName) {
         List<Long> oldPermissionIds = selectPermissionIdsByRoleEnName(roleEnName);
         //删除权限
@@ -60,6 +67,7 @@ public class TbRolePermissionServiceImpl implements TbRolePermissionService{
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteBatch(List<Long> permissionIds, Long roleId) {
         return tbRolePermissionMapper.deleteBatch(permissionIds, roleId);
     }

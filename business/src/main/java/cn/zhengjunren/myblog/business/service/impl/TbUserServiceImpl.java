@@ -7,6 +7,8 @@ import cn.zhengjunren.myblog.commons.domain.TbUser;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
@@ -21,6 +23,7 @@ import java.util.List;
  * @date 2019/11/12 10:11
  */
 @Service
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class TbUserServiceImpl implements TbUserService{
 
     @Resource
@@ -34,6 +37,7 @@ public class TbUserServiceImpl implements TbUserService{
     }
 
     @Override
+    @Transactional(readOnly = false, rollbackFor = Exception.class)
     public int insert(TbUser tbUser) {
         return tbUserMapper.insert(tbUser);
     }
@@ -46,6 +50,7 @@ public class TbUserServiceImpl implements TbUserService{
     }
 
     @Override
+    @Transactional(readOnly = false, rollbackFor = Exception.class)
     public int update(TbUser tbUser) {
         TbUser user = tbUserMapper.selectByPrimaryKey(tbUser);
         tbUser.setPassword(user.getPassword());
@@ -53,6 +58,7 @@ public class TbUserServiceImpl implements TbUserService{
     }
 
     @Override
+    @Transactional(readOnly = false, rollbackFor = Exception.class)
     public int modifyProfile(TbUser oldTbUser, TbUser newTbUser) {
         oldTbUser.setEmail(newTbUser.getEmail());
         oldTbUser.setAvatar(newTbUser.getAvatar());
@@ -62,6 +68,7 @@ public class TbUserServiceImpl implements TbUserService{
     }
 
     @Override
+    @Transactional(readOnly = false, rollbackFor = Exception.class)
     public int modifyAvatar(String username, String path) {
         TbUser tbUser = getByUsername(username);
         tbUser.setAvatar(path);

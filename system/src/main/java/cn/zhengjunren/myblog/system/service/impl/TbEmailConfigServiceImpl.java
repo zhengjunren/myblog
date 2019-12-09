@@ -8,17 +8,24 @@ import cn.zhengjunren.myblog.system.dto.EmailForm;
 import cn.zhengjunren.myblog.system.mapper.TbEmailConfigMapper;
 import cn.zhengjunren.myblog.system.service.TbEmailConfigService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Optional;
 
+/**
+ * @author ZhengJunren
+ */
 @Service
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class TbEmailConfigServiceImpl implements TbEmailConfigService{
 
     @Resource
     private TbEmailConfigMapper tbEmailConfigMapper;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int update(TbEmailConfig emailConfig, TbEmailConfig old) {
         try {
             if(!emailConfig.getPass().equals(old.getPass())){
@@ -38,6 +45,7 @@ public class TbEmailConfigServiceImpl implements TbEmailConfigService{
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public String send(EmailForm emailVo, TbEmailConfig emailConfig) throws Exception {
         if(emailConfig == null){
             throw new Exception("请先配置，再操作");

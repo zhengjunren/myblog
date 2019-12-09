@@ -4,6 +4,8 @@ import cn.zhengjunren.myblog.commons.domain.TbPermission;
 import cn.zhengjunren.myblog.system.mapper.TbPermissionMapper;
 import cn.zhengjunren.myblog.system.service.TbPermissionService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
@@ -16,6 +18,7 @@ import java.util.Map;
  * @author ZhengJunren
  */
 @Service
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class TbPermissionServiceImpl implements TbPermissionService {
 
     @Resource

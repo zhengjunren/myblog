@@ -22,11 +22,4 @@ public interface TbLogSystemService{
      */
     Integer count();
 
-    /**
-     * 获取日志
-     * @param start 起始时间
-     * @param end 截止时间
-     * @return {@link List< cn.zhengjunren.myblog.commons.log.domain.TbLog >}
-     */
-    List<TbLog> selectAll(Timestamp start, Timestamp end);
 }

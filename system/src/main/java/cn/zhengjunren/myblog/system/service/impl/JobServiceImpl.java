@@ -19,6 +19,8 @@ import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -32,6 +34,7 @@ import java.util.List;
  */
 @Service
 @Slf4j
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class JobServiceImpl implements JobService {
     private final Scheduler scheduler;
     private final JobMapper jobMapper;
@@ -50,6 +53,7 @@ public class JobServiceImpl implements JobService {
      * @throws Exception 异常
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void addJob(JobForm form) throws Exception {
         // 启动调度器
         scheduler.start();
@@ -79,6 +83,7 @@ public class JobServiceImpl implements JobService {
      * @throws SchedulerException 异常
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean deleteJob(JobForm form) throws SchedulerException {
         scheduler.pauseTrigger(TriggerKey.triggerKey(form.getJobClassName(), form.getJobGroupName()));
         scheduler.unscheduleJob(TriggerKey.triggerKey(form.getJobClassName(), form.getJobGroupName()));
@@ -93,6 +98,7 @@ public class JobServiceImpl implements JobService {
      * @throws SchedulerException 异常
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void pauseJob(JobForm form) throws SchedulerException {
         scheduler.pauseJob(JobKey.jobKey(form.getJobClassName(), form.getJobGroupName()));
     }
@@ -104,6 +110,7 @@ public class JobServiceImpl implements JobService {
      * @throws SchedulerException 异常
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void resumeJob(JobForm form) throws SchedulerException {
         scheduler.resumeJob(JobKey.jobKey(form.getJobClassName(), form.getJobGroupName()));
     }
@@ -115,6 +122,7 @@ public class JobServiceImpl implements JobService {
      * @throws Exception 异常
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void cronJob(JobForm form) throws Exception {
         try {
             TriggerKey triggerKey = TriggerKey.triggerKey(form.getJobClassName(), form.getJobGroupName());
