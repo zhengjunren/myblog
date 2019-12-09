@@ -71,7 +71,7 @@ public class RoleController {
     @PutMapping("permission")
     @ApiOperation(value = "更新权限")
     @MyLog("更新权限")
-    @ApiImplicitParam(name = "permissionParams", value = "携带的权限ids和角色id", required = true, dataType = "PermissionParams", paramType = ParamTypeUtils.BODY)
+    @ApiImplicitParam(name = "permissionParams", value = "携带的权限ids和角色名", required = true, dataType = "PermissionParams", paramType = ParamTypeUtils.BODY)
     public ResponseResult<Void> updatePermission(@RequestBody PermissionParams permissionParams){
         int result = tbRolePermissionService.update(permissionParams.getPermissionIds(), permissionParams.getCurrentRoleEnName());
         if (result == 2){
@@ -88,26 +88,37 @@ public class RoleController {
     }
 
     @PutMapping("user")
+    @ApiOperation(value = "更新用户角色")
+    @ApiImplicitParam(name = "tbUserRole", value = "用户和角色的信息", required = true, dataType = "TbUserRole", paramType = ParamTypeUtils.BODY)
     public ResponseResult<Void> modifyUserRole(@RequestBody TbUserRole tbUserRole) {
         tbUserRoleService.update(tbUserRole);
         return new ResponseResult<>(ResponseResult.CodeStatus.OK, "更新用户角色成功");
     }
 
     @PostMapping
+    @ApiOperation(value = "增加角色")
+    @ApiImplicitParam(name = "tbUserRole", value = "用户和角色的信息", required = true, dataType = "TbUserRole", paramType = ParamTypeUtils.BODY)
     public ResponseResult<Void> add(@RequestBody TbRole tbRole) {
         tbRoleService.insert(tbRole);
         return new ResponseResult<>(ResponseResult.CodeStatus.OK, "新增角色成功");
     }
 
     @PutMapping
+    @ApiOperation(value = "更新角色")
+    @ApiImplicitParam(name = "tbUserRole", value = "用户和角色的信息", required = true, dataType = "TbUserRole", paramType = ParamTypeUtils.BODY)
     public ResponseResult<Void> update(@RequestBody TbRole tbRole) {
         tbRoleService.update(tbRole);
         return new ResponseResult<>(ResponseResult.CodeStatus.OK, "更新角色成功");
     }
 
     @DeleteMapping
+    @ApiOperation(value = "删除用户角色")
+    @ApiImplicitParam(name = "tbUserRole", value = "用户和角色的信息", required = true, dataType = "TbUserRole", paramType = ParamTypeUtils.BODY)
     public ResponseResult<Void> delete(@RequestBody TbRole tbRole) {
-        tbRoleService.delete(tbRole);
+        int result = tbRoleService.delete(tbRole);
+        if (result == 0) {
+            return new ResponseResult<>(ResponseResult.CodeStatus.OK, "该角色与用户有关联，更新角色失败");
+        }
         return new ResponseResult<>(ResponseResult.CodeStatus.OK, "更新角色成功");
     }
 }

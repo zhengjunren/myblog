@@ -3,7 +3,14 @@ package cn.zhengjunren.myblog.system.controller;
 import cn.zhengjunren.myblog.commons.domain.OnlineUser;
 import cn.zhengjunren.myblog.commons.dto.ListInfo;
 import cn.zhengjunren.myblog.commons.dto.ResponseResult;
+import cn.zhengjunren.myblog.commons.log.annotation.MyLog;
+import cn.zhengjunren.myblog.commons.utils.DataTypeUtils;
+import cn.zhengjunren.myblog.commons.utils.ParamTypeUtils;
 import cn.zhengjunren.myblog.system.service.OnlineUserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600L)
 @RequestMapping("online")
+@Api(tags = "在线用户管理")
 public class OnlineUserController {
     public final OnlineUserService onlineUserService;
 
@@ -33,7 +41,13 @@ public class OnlineUserController {
     }
 
     @GetMapping("list")
-    public ResponseResult<ListInfo<OnlineUser>> getAll(String filter, Integer page, Integer limit) {
+    @MyLog("获取在线用户")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "filter", value = "过滤条件", required = true, dataType = DataTypeUtils.STRING, paramType = ParamTypeUtils.QUERY),
+            @ApiImplicitParam(name = "page", value = "页码", required = true, dataType = DataTypeUtils.INT, paramType = ParamTypeUtils.QUERY),
+            @ApiImplicitParam(name = "limit", value = "笔数", required = true, dataType = DataTypeUtils.INT, paramType = ParamTypeUtils.QUERY),
+    })
+    public ResponseResult<ListInfo<OnlineUser>> getAll(String filter, int page, int limit) {
         Pageable pageable = PageRequest.of(page-1, limit);
         Page<OnlineUser> pageInfo = onlineUserService.page(filter, pageable);
         ListInfo<OnlineUser> listInfo = new ListInfo<>(pageInfo.getContent(), pageInfo.getTotalElements());
@@ -41,6 +55,8 @@ public class OnlineUserController {
     }
 
     @DeleteMapping(value = "/{token}")
+    @ApiOperation(value = "踢出用户")
+    @ApiImplicitParam(name = "token", value = "加密后的 token", required = true, dataType = DataTypeUtils.STRING, paramType = ParamTypeUtils.PATH)
     public ResponseResult<Void> kickOut(@PathVariable("token") String token){
         try {
             onlineUserService.kickOut(token);

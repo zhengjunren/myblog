@@ -1,10 +1,13 @@
 package cn.zhengjunren.myblog.system.controller;
 
+import cn.zhengjunren.myblog.commons.domain.TbPermission;
 import cn.zhengjunren.myblog.commons.dto.ResponseResult;
 import cn.zhengjunren.myblog.commons.log.annotation.MyLog;
-import cn.zhengjunren.myblog.commons.domain.TbPermission;
+import cn.zhengjunren.myblog.commons.utils.DataTypeUtils;
+import cn.zhengjunren.myblog.commons.utils.ParamTypeUtils;
 import cn.zhengjunren.myblog.system.service.TbPermissionService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,8 +50,9 @@ public class PermissionController {
 
     @GetMapping("{roleEnName}")
     @MyLog("通过角色获取权限")
-    @ApiOperation(value = "根据角色Id获取权限")
-    public ResponseResult<List<TbPermission>> getByRoleId(@PathVariable String roleEnName){
+    @ApiOperation(value = "根据角色名获取权限")
+    @ApiImplicitParam(name = "roleEnName", value = "角色英文名", required = true, dataType = DataTypeUtils.STRING, paramType = ParamTypeUtils.PATH)
+    public ResponseResult<List<TbPermission>> getByRoleEnName(@PathVariable String roleEnName){
         List<TbPermission> tbPermissions = tbPermissionService.selectByRoleEnName(roleEnName);
         return new ResponseResult<>(ResponseResult.CodeStatus.OK, "根据角色获取权限", tbPermissions);
     }
