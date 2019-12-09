@@ -95,7 +95,7 @@ public class RoleController {
         return new ResponseResult<>(ResponseResult.CodeStatus.OK, "更新用户角色成功");
     }
 
-    @PostMapping
+    @PostMapping("add")
     @ApiOperation(value = "增加角色")
     @ApiImplicitParam(name = "tbUserRole", value = "用户和角色的信息", required = true, dataType = "TbUserRole", paramType = ParamTypeUtils.BODY)
     public ResponseResult<Void> add(@RequestBody TbRole tbRole) {
@@ -106,7 +106,7 @@ public class RoleController {
         return new ResponseResult<>(ResponseResult.CodeStatus.OK, "新增角色成功");
     }
 
-    @PutMapping
+    @PutMapping("update")
     @ApiOperation(value = "更新角色")
     @ApiImplicitParam(name = "tbUserRole", value = "用户和角色的信息", required = true, dataType = "TbUserRole", paramType = ParamTypeUtils.BODY)
     public ResponseResult<Void> update(@RequestBody TbRole tbRole) {
@@ -114,7 +114,7 @@ public class RoleController {
         return new ResponseResult<>(ResponseResult.CodeStatus.OK, "更新角色成功");
     }
 
-    @DeleteMapping
+    @DeleteMapping("delete")
     @ApiOperation(value = "删除用户角色")
     @ApiImplicitParam(name = "tbUserRole", value = "用户和角色的信息", required = true, dataType = "TbUserRole", paramType = ParamTypeUtils.BODY)
     public ResponseResult<Void> delete(@RequestBody TbRole tbRole) {

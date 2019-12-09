@@ -154,7 +154,7 @@ export function updateRolePermission(data) {
 
 export function updateRoleData(data) {
   return request({
-    url: '/role',
+    url: '/role/update',
     method: 'put',
     data,
     baseURL: BASE_URL
@@ -163,7 +163,7 @@ export function updateRoleData(data) {
 
 export function createRoleData(data) {
   return request({
-    url: '/role',
+    url: '/role/add',
     method: 'post',
     data,
     baseURL: BASE_URL
@@ -172,7 +172,7 @@ export function createRoleData(data) {
 
 export function deleteRole(data) {
   return request({
-    url: '/role',
+    url: '/role/delete',
     method: 'delete',
     data,
     baseURL: BASE_URL
