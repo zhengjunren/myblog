@@ -116,7 +116,7 @@
 </template>
 
 <script>
-  import { getPermissionTree, getRoleList, getPermissionByRoleId, updateRolePermission, updateRoleData, createRoleData } from '@/api/system'
+  import { getPermissionTree, getRoleList, getPermissionByRoleEnName, updateRolePermission, updateRoleData, createRoleData } from '@/api/system'
   import Pagination from '@/components/Pagination'
   export default {
     name: "index",
@@ -144,7 +144,7 @@
           page: 1,
           limit: 10
         },
-        currentRoleId: 0,
+        currentRoleEnName: '',
         temp: {
           id: undefined,
           parentId: 0,
@@ -182,8 +182,8 @@
           // _this.permissionIds = []
           this.$refs.permission.setCheckedKeys([])
           const ids = []
-          this.currentRoleId = val.id
-          getPermissionByRoleId(val.id).then(response => {
+          this.currentRoleEnName = val.enname
+          getPermissionByRoleEnName(val.enname).then(response => {
             this.permissionsByRole = response.data
             this.permissionsByRole.forEach(function(data, index) {
               ids.push(data.id)
@@ -251,10 +251,10 @@
             permissionIds.push(data.id)
           }
         })
-        console.log(this.permissions)
-        console.log(permissionIds)
+        // console.log(this.permissions)
+        // console.log(permissionIds)
         updateRolePermission({
-          currentRoleId: this.currentRoleId,
+          currentRoleEnName: this.currentRoleEnName,
           permissionIds: permissionIds
         }).then(response => {
           this.$notify({

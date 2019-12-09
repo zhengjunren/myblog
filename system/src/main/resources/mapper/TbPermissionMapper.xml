@@ -18,13 +18,13 @@
     id, parent_id, `name`, enname, url, description, created, updated
   </sql>
 
-  <select id="selectByRoleId" resultMap="BaseResultMap">
+  <select id="selectByRoleEnName" resultMap="BaseResultMap">
     SELECT
-    p.*
+      p.*
     FROM
-    tb_permission AS p
-    LEFT JOIN tb_role_permission AS rp ON p.id = rp.permission_id
-    WHERE
-    rp.role_id = #{roleId}
+      `tb_role_permission` AS rp
+        LEFT JOIN tb_role AS r ON r.id = rp.role_id
+        LEFT JOIN	tb_permission AS p ON p.id = rp.permission_id
+    WHERE r.enname = #{roleEnName}
   </select>
 </mapper>

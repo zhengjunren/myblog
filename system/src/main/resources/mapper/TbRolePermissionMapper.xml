@@ -13,13 +13,13 @@
     id, role_id, permission_id
   </sql>
 
-  <select id="selectPermissionIdsByRoleId" resultType="long">
+  <select id="selectPermissionIdsByRoleEnName" resultType="long">
     SELECT
       rp.permission_id
     FROM
       `tb_role_permission` AS rp
-    WHERE
-      role_id = #{roleId}
+        LEFT JOIN tb_role AS r ON r.id = rp.role_id
+    WHERE r.enname = #{roleEnName}
   </select>
 
   <delete id="deleteBatch">

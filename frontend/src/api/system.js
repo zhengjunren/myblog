@@ -117,9 +117,9 @@ export function getPermissionTree() {
   })
 }
 
-export function getPermissionByRoleId(roleId) {
+export function getPermissionByRoleEnName(roleEnName) {
   return request({
-    url: '/permission/' + roleId,
+    url: '/permission/' + roleEnName,
     method: 'get',
     baseURL: BASE_URL
   })

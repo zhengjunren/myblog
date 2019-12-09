@@ -15,10 +15,10 @@ import java.util.List;
 public interface TbPermissionMapper extends MyMapper<TbPermission> {
 
     /**
-     * 根据角色 id 获取角色所有的权限
-     * @param roleId 角色 id
+     * 根据角色名获取角色所有的权限
+     * @param roleEnName 角色名
      * @return {@link List<TbPermission>}
      */
-    List<TbPermission> selectByRoleId(@Param("roleId") Long roleId);
+    List<TbPermission> selectByRoleEnName(@Param("roleEnName") String roleEnName);
 
 }

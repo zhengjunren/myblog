@@ -31,9 +31,9 @@ public interface TbPermissionService {
     List<TbPermission> selectByParentId(long parentId);
 
     /**
-     * 根据角色 id 获取角色所有的权限
-     * @param roleId 角色 id
+     * 根据角色名获取角色所有的权限
+     * @param roleEnName 角色名
      * @return {@link List<TbPermission>}
      */
-    List<TbPermission> selectByRoleId(long roleId);
+    List<TbPermission> selectByRoleEnName(String roleEnName);
 }

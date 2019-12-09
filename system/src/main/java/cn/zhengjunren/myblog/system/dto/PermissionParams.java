@@ -16,6 +16,6 @@ import java.util.List;
 @Data
 public class PermissionParams implements Serializable {
     private static final long serialVersionUID = -797725274920034909L;
-    Long currentRoleId;
+    String currentRoleEnName;
     List<Long> permissionIds;
 }

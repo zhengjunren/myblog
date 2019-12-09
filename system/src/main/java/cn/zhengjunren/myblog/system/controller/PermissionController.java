@@ -45,11 +45,11 @@ public class PermissionController {
         return new ResponseResult<>(ResponseResult.CodeStatus.OK, "获取树形权限", permissionTree);
     }
 
-    @GetMapping("{roleId}")
+    @GetMapping("{roleEnName}")
     @MyLog("通过角色获取权限")
     @ApiOperation(value = "根据角色Id获取权限")
-    public ResponseResult<List<TbPermission>> getByRoleId(@PathVariable long roleId){
-        List<TbPermission> tbPermissions = tbPermissionService.selectByRoleId(roleId);
+    public ResponseResult<List<TbPermission>> getByRoleId(@PathVariable String roleEnName){
+        List<TbPermission> tbPermissions = tbPermissionService.selectByRoleEnName(roleEnName);
         return new ResponseResult<>(ResponseResult.CodeStatus.OK, "根据角色获取权限", tbPermissions);
     }
 

@@ -1,9 +1,12 @@
 package cn.zhengjunren.myblog.system.service.impl;
 
+import cn.zhengjunren.myblog.system.domain.TbRole;
 import cn.zhengjunren.myblog.system.domain.TbRolePermission;
+import cn.zhengjunren.myblog.system.mapper.TbRoleMapper;
 import cn.zhengjunren.myblog.system.mapper.TbRolePermissionMapper;
 import cn.zhengjunren.myblog.system.service.TbRolePermissionService;
 import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -16,25 +19,29 @@ public class TbRolePermissionServiceImpl implements TbRolePermissionService{
     @Resource
     private TbRolePermissionMapper tbRolePermissionMapper;
 
-
+    @Resource
+    private TbRoleMapper tbRoleMapper;
 
 
     @Override
-    public List<Long> selectPermissionIdsByRoleId(Long roleId) {
-        return tbRolePermissionMapper.selectPermissionIdsByRoleId(roleId);
+    public List<Long> selectPermissionIdsByRoleEnName(String roleEnName) {
+        return tbRolePermissionMapper.selectPermissionIdsByRoleEnName(roleEnName);
     }
 
     @Override
-    public int update(List<Long> permissionIds, Long roleId) {
-        List<Long> oldPermissionIds = selectPermissionIdsByRoleId(roleId);
+    public int update(List<Long> permissionIds, String roleEnName) {
+        List<Long> oldPermissionIds = selectPermissionIdsByRoleEnName(roleEnName);
         //删除权限
         HashSet<Long> oldPermission = new HashSet<>(oldPermissionIds);
         HashSet<Long> newPermission = new HashSet<>(permissionIds);
         int result = 0;
+        Example example = new Example(TbRole.class);
+        example.createCriteria().andEqualTo("enname", roleEnName);
+        TbRole tbRole = tbRoleMapper.selectOneByExample(example);
         if (permissionIds.size() < oldPermissionIds.size()){
             oldPermission.removeAll(newPermission);
             List<Long> list = new ArrayList<>(oldPermission);
-            result = deleteBatch(list, roleId);
+            result = deleteBatch(list, tbRole.getId());
         }
         //增加权限
         else {
@@ -44,7 +51,7 @@ public class TbRolePermissionServiceImpl implements TbRolePermissionService{
                 return 2;
             }
             for (Long aLong : newPermission) {
-                tbRolePermissions.add(new TbRolePermission(roleId, aLong));
+                tbRolePermissions.add(new TbRolePermission(tbRole.getId(), aLong));
             }
             result = tbRolePermissionMapper.insertList(tbRolePermissions);
         }

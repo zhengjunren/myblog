@@ -72,7 +72,7 @@ public class RoleController {
     @MyLog("更新权限")
     @ApiImplicitParam(name = "permissionParams", value = "携带的权限ids和角色id", required = true, dataType = "PermissionParams", paramType = ParamTypeUtils.BODY)
     public ResponseResult<Void> updatePermission(@RequestBody PermissionParams permissionParams){
-        int result = tbRolePermissionService.update(permissionParams.getPermissionIds(), permissionParams.getCurrentRoleId());
+        int result = tbRolePermissionService.update(permissionParams.getPermissionIds(), permissionParams.getCurrentRoleEnName());
         if (result == 2){
             return new ResponseResult<>(ResponseResult.CodeStatus.OK, "请您做出权限的修改好吗，不然不要乱点，查数据库很烦！");
         }
