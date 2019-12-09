@@ -74,7 +74,7 @@
                   <p>确定删除吗？</p>
                   <div style="text-align: right; margin: 0">
                     <el-button size="mini" type="text" @click="$refs[scope.$index].doClose()">取消</el-button>
-                    <el-button type="primary" size="mini" @click="">确定</el-button>
+                    <el-button type="primary" size="mini" @click="deleteRole(scope.row)">确定</el-button>
                   </div>
                   <el-button slot="reference" size="small" type="danger" icon="el-icon-delete">删除</el-button>
                 </el-popover>

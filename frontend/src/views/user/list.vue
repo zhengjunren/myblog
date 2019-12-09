@@ -118,7 +118,7 @@
         </el-form-item>
         <el-form-item label="角色">
           <el-radio-group v-model="temp.roleId" size="mini">
-            <el-radio v-for="item in role" :key="item.id" :label="item.id" border>{{item.name}}</el-radio>
+            <el-radio v-for="item in role" :key="item.id" :label="item.id">{{item.name}}</el-radio>
           </el-radio-group>
         </el-form-item>
       </el-form>
