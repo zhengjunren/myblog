@@ -116,7 +116,7 @@
 </template>
 
 <script>
-  import { getPermissionTree, getRoleList, getPermissionByRoleEnName, updateRolePermission, updateRoleData, createRoleData } from '@/api/system'
+  import { getPermissionTree, getRoleList, getPermissionByRoleEnName, updateRolePermission, updateRoleData, createRoleData, deleteRole } from '@/api/system'
   import {parseTime} from '@/utils/index'
   import Pagination from '@/components/Pagination'
   export default {
@@ -227,6 +227,18 @@
           this.temp.created = parseTime(new Date().toDateString(), "yyyy-MM-dd HH:mm:ss")
           this.list.unshift(this.temp)
           this.dialogFormVisible = false
+          this.$notify({
+            title: '成功',
+            message: response.message,
+            type: 'success',
+            duration: 2000
+          })
+        })
+      },
+      deleteRole(row) {
+        deleteRole(this.temp).then(response => {
+          const index = this.list.indexOf(row)
+          this.list.splice(index, 1)
           this.$notify({
             title: '成功',
             message: response.message,

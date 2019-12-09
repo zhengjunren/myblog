@@ -170,6 +170,15 @@ export function createRoleData(data) {
   })
 }
 
+export function deleteRole(data) {
+  return request({
+    url: '/role',
+    method: 'delete',
+    data,
+    baseURL: BASE_URL
+  })
+}
+
 export function getOnlineUser(query) {
   return request({
     url: '/online/list',
