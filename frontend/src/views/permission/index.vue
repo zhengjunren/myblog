@@ -224,7 +224,7 @@
       },
       createRoleData() {
         createRoleData(this.temp).then(response => {
-          this.temp.created = parseTime(new Date(), "yyyy-MM-dd HH:mm:ss")
+          this.temp.created = parseTime(new Date().toDateString(), "yyyy-MM-dd HH:mm:ss")
           this.list.unshift(this.temp)
           this.dialogFormVisible = false
           this.$notify({

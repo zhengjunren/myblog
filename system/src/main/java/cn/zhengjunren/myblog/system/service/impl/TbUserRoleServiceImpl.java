@@ -35,4 +35,12 @@ public class TbUserRoleServiceImpl implements TbUserRoleService{
     public int insert(TbUserRole tbUserRole) {
         return tbUserRoleMapper.insert(tbUserRole);
     }
+
+    @Override
+    public boolean isExisted(Long roleId) {
+        int result = tbUserRoleMapper.isExisted(roleId);
+        return result != 0;
+    }
+
+
 }

@@ -25,4 +25,11 @@ public interface TbUserRoleService{
      * @return 结果大于 0 成功，否则失败
      */
     int insert(TbUserRole tbUserRole);
+
+    /**
+     * 根据角色 id 查询是否有关联的用户
+     * @param roleId 角色 id
+     * @return true 存在
+     */
+    boolean isExisted(Long roleId);
 }

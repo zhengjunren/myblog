@@ -17,6 +17,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -101,6 +102,12 @@ public class RoleController {
     @PutMapping
     public ResponseResult<Void> update(@RequestBody TbRole tbRole) {
         tbRoleService.update(tbRole);
+        return new ResponseResult<>(ResponseResult.CodeStatus.OK, "更新角色成功");
+    }
+
+    @DeleteMapping
+    public ResponseResult<Void> delete(@RequestBody TbRole tbRole) {
+        tbRoleService.delete(tbRole);
         return new ResponseResult<>(ResponseResult.CodeStatus.OK, "更新角色成功");
     }
 }

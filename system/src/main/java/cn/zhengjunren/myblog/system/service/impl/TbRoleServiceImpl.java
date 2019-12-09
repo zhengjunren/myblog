@@ -3,6 +3,7 @@ package cn.zhengjunren.myblog.system.service.impl;
 import cn.zhengjunren.myblog.system.domain.TbRole;
 import cn.zhengjunren.myblog.system.mapper.TbRoleMapper;
 import cn.zhengjunren.myblog.system.service.TbRoleService;
+import cn.zhengjunren.myblog.system.service.TbUserRoleService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,12 @@ public class TbRoleServiceImpl implements TbRoleService{
 
     @Resource
     private TbRoleMapper tbRoleMapper;
+
+    private final TbUserRoleService tbUserRoleService;
+
+    public TbRoleServiceImpl(TbUserRoleService tbUserRoleService) {
+        this.tbUserRoleService = tbUserRoleService;
+    }
 
     @Override
     public List<TbRole> selectAll() {
@@ -45,6 +52,16 @@ public class TbRoleServiceImpl implements TbRoleService{
     public int update(TbRole tbRole) {
         tbRole.setUpdated(new Date());
         return tbRoleMapper.updateByPrimaryKey(tbRole);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int delete(TbRole tbRole) {
+        boolean result = tbUserRoleService.isExisted(tbRole.getId());
+        if (result) {
+            return 0;
+        }
+        return tbRoleMapper.delete(tbRole);
     }
 
 }
