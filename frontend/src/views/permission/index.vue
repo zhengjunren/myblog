@@ -63,18 +63,18 @@
               </template>
             </el-table-column>
             <el-table-column min-width="180px" align="center" label="操作">
-              <template slot-scope="scope">
-                <el-button type="primary" size="small" icon="el-icon-edit" @click="handleUpdate(scope.row)">
+              <template slot-scope="{row}">
+                <el-button type="primary" size="small" icon="el-icon-edit" @click="handleUpdate(row)">
                   编辑
                 </el-button>
                 <el-popover
-                  :ref="scope.$index"
+                  :ref="row.enname"
                   placement="top"
                   width="180">
                   <p>确定删除吗？</p>
                   <div style="text-align: right; margin: 0">
-                    <el-button size="mini" type="text" @click="$refs[scope.$index].doClose()">取消</el-button>
-                    <el-button type="primary" size="mini" @click="deleteRole(scope.row)">确定</el-button>
+                    <el-button size="mini" type="text" @click="$refs[row.enname].doClose()">取消</el-button>
+                    <el-button type="primary" size="mini" @click="deleteRole(row)">确定</el-button>
                   </div>
                   <el-button slot="reference" size="small" type="danger" icon="el-icon-delete">删除</el-button>
                 </el-popover>
@@ -224,27 +224,48 @@
       },
       createRoleData() {
         createRoleData(this.temp).then(response => {
-          this.temp.created = parseTime(new Date().toDateString(), "yyyy-MM-dd HH:mm:ss")
-          this.list.unshift(this.temp)
+          if("新增角色成功" === response.message){
+            this.temp.created = parseTime(new Date().toString())
+            this.list.unshift(this.temp)
+            this.$notify({
+              title: '成功',
+              message: response.message,
+              type: 'success',
+              duration: 2000
+            })
+          }
+          else {
+            this.$notify({
+              title: '失败',
+              message: response.message,
+              type: 'warning',
+              duration: 2000
+            })
+          }
           this.dialogFormVisible = false
-          this.$notify({
-            title: '成功',
-            message: response.message,
-            type: 'success',
-            duration: 2000
-          })
         })
       },
       deleteRole(row) {
-        deleteRole(this.temp).then(response => {
-          const index = this.list.indexOf(row)
-          this.list.splice(index, 1)
-          this.$notify({
-            title: '成功',
-            message: response.message,
-            type: 'success',
-            duration: 2000
-          })
+        deleteRole(row).then(response => {
+          if("删除角色成功" === response.message){
+            const index = this.list.indexOf(row)
+            this.list.splice(index, 1)
+            this.$notify({
+              title: '成功',
+              message: response.message,
+              type: 'success',
+              duration: 2000
+            })
+          }
+          else {
+            this.$notify({
+              title: '失败',
+              message: response.message,
+              type: 'warning',
+              duration: 2000
+            })
+          }
+          this.$refs[row.enname].doClose()
         })
       },
       resetTemp() {

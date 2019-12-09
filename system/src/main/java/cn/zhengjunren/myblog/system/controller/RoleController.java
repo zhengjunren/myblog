@@ -99,7 +99,10 @@ public class RoleController {
     @ApiOperation(value = "增加角色")
     @ApiImplicitParam(name = "tbUserRole", value = "用户和角色的信息", required = true, dataType = "TbUserRole", paramType = ParamTypeUtils.BODY)
     public ResponseResult<Void> add(@RequestBody TbRole tbRole) {
-        tbRoleService.insert(tbRole);
+        int result = tbRoleService.insert(tbRole);
+        if (result == 0) {
+            return new ResponseResult<>(ResponseResult.CodeStatus.OK, "角色名重复，新增角色失败");
+        }
         return new ResponseResult<>(ResponseResult.CodeStatus.OK, "新增角色成功");
     }
 
@@ -119,6 +122,6 @@ public class RoleController {
         if (result == 0) {
             return new ResponseResult<>(ResponseResult.CodeStatus.OK, "该角色与用户有关联，更新角色失败");
         }
-        return new ResponseResult<>(ResponseResult.CodeStatus.OK, "更新角色成功");
+        return new ResponseResult<>(ResponseResult.CodeStatus.OK, "删除角色成功");
     }
 }

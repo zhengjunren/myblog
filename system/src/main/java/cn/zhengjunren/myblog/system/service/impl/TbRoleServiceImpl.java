@@ -9,6 +9,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -42,9 +43,15 @@ public class TbRoleServiceImpl implements TbRoleService{
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int insert(TbRole tbRole) {
-        tbRole.setCreated(new Date());
-        tbRole.setUpdated(new Date());
-        return tbRoleMapper.insert(tbRole);
+        Example example = new Example(TbRole.class);
+        example.createCriteria().andEqualTo("enname", tbRole.getEnname());
+        TbRole tbRole1 = tbRoleMapper.selectOneByExample(example);
+        if (tbRole1 == null) {
+            tbRole.setCreated(new Date());
+            tbRole.setUpdated(new Date());
+            return tbRoleMapper.insert(tbRole);
+        }
+        return 0;
     }
 
     @Override
@@ -57,6 +64,11 @@ public class TbRoleServiceImpl implements TbRoleService{
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int delete(TbRole tbRole) {
+        if (tbRole.getId() == null) {
+            Example example = new Example(TbRole.class);
+            example.createCriteria().andEqualTo("enname", tbRole.getEnname());
+            tbRole = tbRoleMapper.selectOneByExample(example);
+        }
         boolean result = tbUserRoleService.isExisted(tbRole.getId());
         if (result) {
             return 0;
