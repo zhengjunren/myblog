@@ -8,6 +8,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -30,7 +31,15 @@ public class TbRoleServiceImpl implements TbRoleService{
 
     @Override
     public int insert(TbRole tbRole) {
+        tbRole.setCreated(new Date());
+        tbRole.setUpdated(new Date());
         return tbRoleMapper.insert(tbRole);
+    }
+
+    @Override
+    public int update(TbRole tbRole) {
+        tbRole.setUpdated(new Date());
+        return tbRoleMapper.updateByPrimaryKey(tbRole);
     }
 
 }

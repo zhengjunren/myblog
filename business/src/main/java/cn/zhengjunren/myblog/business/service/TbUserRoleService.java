@@ -9,5 +9,5 @@ public interface TbUserRoleService{
      * @param tbUserRole {@link TbUserRole}
      * @return 结果
      */
-    int update(TbUserRole tbUserRole);
+    int update(TbUserRole tbUserRole, long oldRoleId);
 }

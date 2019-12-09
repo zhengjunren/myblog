@@ -31,6 +31,9 @@
           <div slot="header" class="clearfix">
             <span>角色列表</span>
           </div>
+          <div class="my-search-container">
+            <el-button type="primary" size="small" icon="el-icon-plus" @click="handleCreate">新增</el-button>
+          </div>
           <el-table
             v-loading="listLoading"
             :data="list"
@@ -61,7 +64,7 @@
             </el-table-column>
             <el-table-column min-width="180px" align="center" label="操作">
               <template slot-scope="scope">
-                <el-button type="primary" size="small" icon="el-icon-edit">
+                <el-button type="primary" size="small" icon="el-icon-edit" @click="handleUpdate(scope.row)">
                   编辑
                 </el-button>
                 <el-popover
@@ -82,11 +85,38 @@
         </el-card>
       </el-col>
     </el-row>
+    <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
+      <el-form ref="dataForm" :model="temp" label-position="left" label-width="70px"
+               style="width: 400px; margin-left:50px;">
+        <el-form-item label="名称">
+          <el-input v-model=temp.name />
+        </el-form-item>
+        <el-form-item label="英文">
+          <el-input v-model=temp.enname />
+        </el-form-item>
+        <el-form-item label="描述">
+          <el-input v-model=temp.description />
+        </el-form-item>
+        <div v-if="this.dialogStatus==='update'">
+          <el-form-item label="创建时间">
+            <el-input v-model=temp.created disabled />
+          </el-form-item>
+        </div>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">
+          取消
+        </el-button>
+        <el-button type="primary" @click="dialogStatus==='create'?createRoleData():updateRoleData()">
+          确定
+        </el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-  import { getPermissionTree, getRoleList, getPermissionByRoleId, updateRolePermission } from '@/api/system'
+  import { getPermissionTree, getRoleList, getPermissionByRoleId, updateRolePermission, updateRoleData, createRoleData } from '@/api/system'
   import Pagination from '@/components/Pagination'
   export default {
     name: "index",
@@ -101,6 +131,12 @@
         list: [],
         listLoading: true,
         total: 0,
+        dialogStatus: '',
+        dialogFormVisible: false,
+        textMap: {
+          update: '编辑',
+          create: '创建'
+        },
         permissions: [],
         permissionsByRole: [],
         permissionIds: [],
@@ -108,7 +144,15 @@
           page: 1,
           limit: 10
         },
-        currentRoleId: 0
+        currentRoleId: 0,
+        temp: {
+          id: undefined,
+          parentId: 0,
+          name: '',
+          enname: '',
+          description: '',
+          created: ''
+        }
       }
     },
     created() {
@@ -147,6 +191,57 @@
             this.showButton = true
             _this.permissionIds = ids
           })
+        }
+      },
+      handleUpdate(row) {
+        this.temp = Object.assign({}, row) // copy obj
+        this.dialogStatus = 'update'
+        this.dialogFormVisible = true
+      },
+      updateRoleData() {
+        updateRoleData(this.temp).then(response => {
+          for (const v of this.list) {
+            if (v.id === this.temp.id) {
+              const index = this.list.indexOf(v)
+              this.list.splice(index, 1, this.temp)
+              break
+            }
+          }
+          this.dialogFormVisible = false
+          this.$notify({
+            title: '成功',
+            message: response.message,
+            type: 'success',
+            duration: 2000
+          })
+        })
+      },
+      handleCreate() {
+        this.resetTemp()
+        this.dialogStatus = 'create'
+        this.dialogFormVisible = true
+      },
+      createRoleData() {
+        createRoleData(this.temp).then(response => {
+          this.temp.created = new Date()
+          this.list.unshift(this.temp)
+          this.dialogFormVisible = false
+          this.$notify({
+            title: '成功',
+            message: response.message,
+            type: 'success',
+            duration: 2000
+          })
+        })
+      },
+      resetTemp() {
+        this.temp = {
+          id: undefined,
+          parentId: 0,
+          name: '',
+          enname: '',
+          description: '',
+          created: ''
         }
       },
       savePermission() {

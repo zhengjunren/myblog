@@ -27,4 +27,11 @@ public interface TbRoleService{
      * @return 结果大于 0 成功，否则失败
      */
     int insert(TbRole tbRole);
+
+    /**
+     * 更新角色
+     * @param tbRole {@link TbRole}
+     * @return 结果大于 0 成功，否则失败
+     */
+    int update(TbRole tbRole);
 }

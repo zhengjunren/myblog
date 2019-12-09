@@ -97,4 +97,10 @@ public class RoleController {
         tbRoleService.insert(tbRole);
         return new ResponseResult<>(ResponseResult.CodeStatus.OK, "新增角色成功");
     }
+
+    @PutMapping
+    public ResponseResult<Void> update(@RequestBody TbRole tbRole) {
+        tbRoleService.update(tbRole);
+        return new ResponseResult<>(ResponseResult.CodeStatus.OK, "更新角色成功");
+    }
 }

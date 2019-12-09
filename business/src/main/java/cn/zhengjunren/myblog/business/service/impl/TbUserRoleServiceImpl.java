@@ -14,11 +14,11 @@ public class TbUserRoleServiceImpl implements TbUserRoleService{
     private TbUserRoleMapper tbUserRoleMapper;
 
     @Override
-    public int update(TbUserRole tbUserRole) {
+    public int update(TbUserRole tbUserRole, long oldRoleId) {
         Example example = new Example(TbUserRole.class);
         example.createCriteria()
                 .andEqualTo("userId", tbUserRole.getUserId())
-                .andEqualTo("roleId", tbUserRole.getRoleId());
+                .andEqualTo("roleId", oldRoleId);
         return tbUserRoleMapper.updateByExample(tbUserRole, example);
     }
 }

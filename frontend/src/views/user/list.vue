@@ -60,9 +60,9 @@
           <el-link v-bind:href="row.url" target="_blank" type="primary">{{row.url}}</el-link>
         </template>
       </el-table-column>
-      <el-table-column label="上次登录时间" prop="lastLoginTime" align="center" min-width="180">
+      <el-table-column label="注册时间" prop="registerTime" align="center" min-width="180">
         <template slot-scope="scope">
-          <span>{{ scope.row.lastLoginTime }}</span>
+          <span>{{ scope.row.registerTime }}</span>
         </template>
       </el-table-column>
       <el-table-column label="用户状态" class-name="status-col" align="center" width="80">
@@ -118,7 +118,7 @@
         </el-form-item>
         <el-form-item label="角色">
           <el-radio-group v-model="temp.roleId" size="small">
-            <el-radio v-for="item in role" :key="item" :label="item.id" border>{{item.name}}</el-radio>
+            <el-radio v-for="item in role" :key="item.id" :label="item.id" border>{{item.name}}</el-radio>
           </el-radio-group>
         </el-form-item>
       </el-form>
@@ -189,10 +189,11 @@
           nickname: '',
           email: '',
           url: '',
-          lastLoginTime: '',
+          registerTime: '',
           status: undefined,
           roleId: undefined
         },
+        oldRoleId: undefined,
         dialogFormVisible: false,
         dialogPvVisible: false,
         dialogStatus: '',
@@ -236,6 +237,7 @@
       },
       handleUpdate(row) {
         this.temp = Object.assign({}, row) // copy obj
+        this.oldRoleId = this.temp.roleId
         this.dialogStatus = 'update'
         this.dialogFormVisible = true
         this.$nextTick(() => {
@@ -247,7 +249,7 @@
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
             const tempData = Object.assign({}, this.temp)
-            updateUser(tempData).then(response => {
+            updateUser(tempData, this.oldRoleId).then(response => {
               for (const v of this.list) {
                 if (v.id === this.temp.id) {
                   const index = this.list.indexOf(v)

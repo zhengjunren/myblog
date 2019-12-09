@@ -88,10 +88,10 @@ public class UserController {
     @PostMapping("")
     @ApiOperation(value = "修改用户信息", notes="修改除密码外的属性")
     @ApiImplicitParam(name = "tbUser", value = "用户信息", required = true, dataType = "TbUser", paramType = ParamTypeUtils.BODY)
-    public ResponseResult<Void> update(@RequestBody TbUserWithRole tbUserWithRole) {
+    public ResponseResult<Void> update(@RequestBody TbUserWithRole tbUserWithRole, long oldRoleId) {
         TbUser tbUser = new TbUser();
         BeanUtils.copyProperties(tbUserWithRole, tbUser);
-        tbUserRoleService.update(new TbUserRole((long)tbUserWithRole.getId(), tbUserWithRole.getRoleId()));
+        tbUserRoleService.update(new TbUserRole((long)tbUserWithRole.getId(), tbUserWithRole.getRoleId()), oldRoleId);
         int result = tbUserService.update(tbUser);
         if (result > 0) {
             return new ResponseResult<>(ResponseResult.CodeStatus.OK,"更新用户成功", null);

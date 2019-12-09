@@ -152,6 +152,24 @@ export function updateRolePermission(data) {
   })
 }
 
+export function updateRoleData(data) {
+  return request({
+    url: '/role',
+    method: 'put',
+    data,
+    baseURL: BASE_URL
+  })
+}
+
+export function createRoleData(data) {
+  return request({
+    url: '/role',
+    method: 'post',
+    data,
+    baseURL: BASE_URL
+  })
+}
+
 export function getOnlineUser(query) {
   return request({
     url: '/online/list',
