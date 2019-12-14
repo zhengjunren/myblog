@@ -15,6 +15,7 @@
     <url>http://www.zhengjunren.cn</url>
     <modules>
         <module>dependencies</module>
+        <module>security</module>
         <module>commons</module>
     </modules>
     <properties>
