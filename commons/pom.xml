@@ -29,8 +29,6 @@
     <modules>
         <module>commons-dto</module>
         <module>commons-utils</module>
-        <module>commons-log</module>
-        <module>commons-mapper</module>
     </modules>
 
 </project>
