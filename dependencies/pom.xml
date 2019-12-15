@@ -18,6 +18,7 @@
         <jjwt.veersion>0.9.1</jjwt.veersion>
         <mail.version>1.4.7</mail.version>
         <swagger2.version>2.9.2</swagger2.version>
+        <ip2region.version>1.7.2</ip2region.version>
         <!-- Native Cloud -->
         <mybatis-plus.version>3.2.0</mybatis-plus.version>
 
@@ -73,6 +74,11 @@
                 <groupId>io.github.openfeign</groupId>
                 <artifactId>feign-okhttp</artifactId>
                 <version>${feign-okhttp.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.lionsoul</groupId>
+                <artifactId>ip2region</artifactId>
+                <version>${ip2region.version}</version>
             </dependency>
 
             <dependency>

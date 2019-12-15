@@ -16,6 +16,7 @@
     <modules>
         <module>dependencies</module>
         <module>security</module>
+        <module>business</module>
         <module>commons</module>
     </modules>
     <properties>
