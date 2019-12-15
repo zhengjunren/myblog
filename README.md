@@ -6,8 +6,7 @@
 #### 软件架构
 目前仍然是单体
 
-分为`business`、`security`和`frontend`，其中前端采用的是 [`vue-admin-template`](https://github.com/PanJiaChen/vue-admin-template)模板。
-`business`是资源服务器，即业务层；`security`为认证服务器。
+分为`business`、`admin`和`frontend`，其中前端采用的是 [`vue-admin-template`](https://github.com/PanJiaChen/vue-admin-template)模板。
 
 
 #### 安装教程
