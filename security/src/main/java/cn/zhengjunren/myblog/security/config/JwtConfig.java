@@ -1,6 +1,7 @@
 package cn.zhengjunren.myblog.security.config;
 
 import lombok.Data;
+import org.springframework.stereotype.Component;
 
 /**
  * <p>ClassName: JwtConfig</p>
@@ -11,6 +12,7 @@ import lombok.Data;
  * @date 2019/12/15 11:23
  */
 @Data
+@Component
 public class JwtConfig {
     /**
      * jwt 加密 key，默认值：xkcoding.

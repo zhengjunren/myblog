@@ -1,12 +1,12 @@
-package cn.zhengjunren.myblog.commons.utils;
+package cn.zhengjunren.myblog.security.utils;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.zhengjunren.myblog.commons.UserPrincipal;
-import cn.zhengjunren.myblog.commons.config.JwtConfig;
 import cn.zhengjunren.myblog.commons.dto.Consts;
 import cn.zhengjunren.myblog.commons.dto.Status;
 import cn.zhengjunren.myblog.commons.exception.SecurityException;
+import cn.zhengjunren.myblog.security.UserPrincipal;
+import cn.zhengjunren.myblog.security.config.JwtConfig;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtBuilder;

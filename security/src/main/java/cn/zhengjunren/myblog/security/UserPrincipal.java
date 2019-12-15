@@ -1,9 +1,9 @@
-package cn.zhengjunren.myblog.commons;
+package cn.zhengjunren.myblog.security;
 
 import cn.hutool.core.util.StrUtil;
-import cn.zhengjunren.myblog.commons.domain.Permission;
-import cn.zhengjunren.myblog.commons.domain.Role;
-import cn.zhengjunren.myblog.commons.domain.User;
+import cn.zhengjunren.myblog.security.domain.Permission;
+import cn.zhengjunren.myblog.security.domain.Role;
+import cn.zhengjunren.myblog.security.domain.User;
 import cn.zhengjunren.myblog.commons.dto.Consts;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;

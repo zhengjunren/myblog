@@ -1,4 +1,4 @@
-package cn.zhengjunren.myblog.commons.domain;
+package cn.zhengjunren.myblog.security.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
