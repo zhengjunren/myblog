@@ -19,7 +19,7 @@ public class User implements Serializable {
     /**
      * 主键
      */
-    @TableId(value = "id", type = IdType.INPUT)
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     /**
@@ -39,6 +39,12 @@ public class User implements Serializable {
      */
     @TableField(value = "nickname")
     private String nickname;
+
+    /**
+     * 头像
+     */
+    @TableField(value = "avatar")
+    private String avatar;
 
     /**
      * 手机

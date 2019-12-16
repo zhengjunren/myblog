@@ -3,12 +3,14 @@ package cn.zhengjunren.myblog.admin.controller;
 import cn.zhengjunren.myblog.admin.common.ApiResponse;
 import cn.zhengjunren.myblog.admin.common.Status;
 import cn.zhengjunren.myblog.admin.dto.LoginRequest;
+import cn.zhengjunren.myblog.admin.dto.UserInfo;
 import cn.zhengjunren.myblog.admin.exception.SecurityException;
 import cn.zhengjunren.myblog.admin.utils.JwtUtil;
 import cn.zhengjunren.myblog.admin.utils.SecurityUtil;
 import cn.zhengjunren.myblog.admin.vo.JwtResponse;
 import cn.zhengjunren.myblog.admin.vo.UserPrincipal;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -70,7 +72,11 @@ public class AuthController {
     @GetMapping("info")
     public ApiResponse getUserInfo() {
         UserPrincipal currentUser = SecurityUtil.getCurrentUser();
-        return ApiResponse.ofSuccess(currentUser);
+        UserInfo userInfo = new UserInfo();
+        assert currentUser != null;
+        BeanUtils.copyProperties(currentUser, userInfo);
+        userInfo.setName(currentUser.getUsername());
+        return ApiResponse.ofSuccess(userInfo);
     }
 }
 
