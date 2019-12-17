@@ -45,6 +45,6 @@ public class MenuController {
                 .collect(Collectors.toList());
         List<MenuDTO> menuDTOList = menuService.findByRoles(roles);
         List<MenuDTO> menuDTOS = (List<MenuDTO>) menuService.buildTree(menuDTOList).get("content");
-        return ApiResponse.ofSuccess(menuDTOS);
+        return ApiResponse.ofSuccess(menuService.buildMenus(menuDTOS));
     }
 }
