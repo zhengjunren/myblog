@@ -5,7 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.zhengjunren.myblog.admin.config.JwtConfig;
 import cn.zhengjunren.myblog.admin.exception.SecurityException;
 import cn.zhengjunren.myblog.admin.vo.UserPrincipal;
-import cn.zhengjunren.myblog.common.Consts.Consts;
+import cn.zhengjunren.myblog.common.consts.Consts;
 import cn.zhengjunren.myblog.common.staus.Status;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;

@@ -7,7 +7,7 @@ import cn.zhengjunren.myblog.admin.exception.SecurityException;
 import cn.zhengjunren.myblog.admin.mapper.PermissionMapper;
 import cn.zhengjunren.myblog.admin.mapper.RoleMapper;
 import cn.zhengjunren.myblog.admin.vo.UserPrincipal;
-import cn.zhengjunren.myblog.common.Consts.Consts;
+import cn.zhengjunren.myblog.common.consts.Consts;
 import cn.zhengjunren.myblog.common.staus.Status;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
