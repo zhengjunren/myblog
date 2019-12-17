@@ -31,6 +31,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserPrincipal implements UserDetails {
+    private static final long serialVersionUID = -4130209892596263163L;
     /**
      * 主键
      */

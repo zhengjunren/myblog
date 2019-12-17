@@ -8,7 +8,6 @@ import cn.zhengjunren.myblog.admin.mapper.RoleMapper;
 import cn.zhengjunren.myblog.admin.mapper.UserMapper;
 import cn.zhengjunren.myblog.admin.vo.UserPrincipal;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,22 +26,25 @@ import java.util.stream.Collectors;
  */
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
-    @Autowired
-    private UserMapper userDao;
+    private final UserMapper userDao;
 
-    @Autowired
-    private RoleMapper roleDao;
+    private final RoleMapper roleDao;
 
-    @Autowired
-    private PermissionMapper permissionDao;
+    private final PermissionMapper permissionDao;
+
+    public CustomUserDetailsService(UserMapper userDao, RoleMapper roleDao, PermissionMapper permissionDao) {
+        this.userDao = userDao;
+        this.roleDao = roleDao;
+        this.permissionDao = permissionDao;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String usernameOrEmailOrPhone) throws UsernameNotFoundException {
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
         userQueryWrapper
-                .eq("username", usernameOrEmailOrPhone)
-                .or().eq("email", usernameOrEmailOrPhone)
-                .or().eq("phone", usernameOrEmailOrPhone);
+                .eq(User.COL_USERNAME, usernameOrEmailOrPhone)
+                .or().eq(User.COL_EMAIL, usernameOrEmailOrPhone)
+                .or().eq(User.COL_PHONE, usernameOrEmailOrPhone);
         User user = userDao.selectOne(userQueryWrapper);
         if (user == null) {
             throw new UsernameNotFoundException("未找到用户信息 : " + usernameOrEmailOrPhone);

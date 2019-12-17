@@ -11,7 +11,6 @@ import cn.zhengjunren.myblog.admin.mapper.RoleMapper;
 import cn.zhengjunren.myblog.admin.vo.UserPrincipal;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -38,14 +37,17 @@ import java.util.stream.Collectors;
  */
 @Component
 public class RbacAuthorityService {
-    @Autowired
-    private RoleMapper roleDao;
+    private final RoleMapper roleDao;
 
-    @Autowired
-    private PermissionMapper permissionDao;
+    private final PermissionMapper permissionDao;
 
-    @Autowired
-    private RequestMappingHandlerMapping mapping;
+    private final RequestMappingHandlerMapping mapping;
+
+    public RbacAuthorityService(RoleMapper roleDao, PermissionMapper permissionDao, RequestMappingHandlerMapping mapping) {
+        this.roleDao = roleDao;
+        this.permissionDao = permissionDao;
+        this.mapping = mapping;
+    }
 
     public boolean hasPermission(HttpServletRequest request, Authentication authentication) {
         checkRequest(request);

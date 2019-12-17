@@ -19,6 +19,7 @@
         <mail.version>1.4.7</mail.version>
         <swagger2.version>2.9.2</swagger2.version>
         <ip2region.version>1.7.2</ip2region.version>
+        <mapstruct.version>1.2.0.Final</mapstruct.version>
         <!-- Native Cloud -->
         <mybatis-plus.version>3.2.0</mybatis-plus.version>
 
@@ -141,6 +142,19 @@
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger-ui</artifactId>
                 <version>${swagger2.version}</version>
+            </dependency>
+
+            <!--mapStruct依赖-->
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-jdk8</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
+                <version>${mapstruct.version}</version>
+                <scope>provided</scope>
             </dependency>
 
 
