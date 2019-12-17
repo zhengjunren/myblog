@@ -36,6 +36,10 @@ public class MenuController {
         this.roleService = roleService;
     }
 
+    /**
+     * 根据角色生成前端所需的菜单
+     * @return 菜单
+     */
     @GetMapping(value = "/build")
     public ApiResponse build() {
         UserPrincipal userPrincipal = SecurityUtil.getCurrentUser();

@@ -48,6 +48,8 @@ public class AuthController {
 
     /**
      * 登录
+     * @param loginRequest {@link LoginRequest}
+     * @return 返回带 token 的数据
      */
     @PostMapping("/login")
     public ApiResponse login(@Valid @RequestBody LoginRequest loginRequest) {
@@ -60,6 +62,11 @@ public class AuthController {
         return ApiResponse.ofSuccess(new JwtResponse(jwt));
     }
 
+    /**
+     * 退出
+     * @param request 请求头中带有 token
+     * @return 退出成功
+     */
     @PostMapping("/logout")
     public ApiResponse logout(HttpServletRequest request) {
         try {
@@ -71,6 +78,10 @@ public class AuthController {
         return ApiResponse.ofStatus(Status.LOGOUT);
     }
 
+    /**
+     * 根据 token 获取前端存储在 vuex 中的用户信息
+     * @return 用户信息
+     */
     @GetMapping("info")
     public ApiResponse getUserInfo() {
         UserPrincipal currentUser = SecurityUtil.getCurrentUser();

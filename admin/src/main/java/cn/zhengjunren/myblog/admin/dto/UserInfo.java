@@ -17,6 +17,9 @@ import java.util.List;
 public class UserInfo implements Serializable {
     private static final long serialVersionUID = 4188499583571417878L;
 
+    /**
+     * 前端需要存储在 vuex 中的属性名称为 name
+     */
     private String name;
 
     /**

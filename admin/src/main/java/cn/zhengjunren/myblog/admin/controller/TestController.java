@@ -2,7 +2,6 @@ package cn.zhengjunren.myblog.admin.controller;
 
 import cn.zhengjunren.myblog.admin.domain.User;
 import cn.zhengjunren.myblog.admin.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,9 +18,16 @@ import java.util.List;
 @RestController
 public class TestController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
+    public TestController(UserService userService) {
+        this.userService = userService;
+    }
+
+    /**
+     * 测试访问权限放行
+     * @return 哈哈哈
+     */
     @GetMapping("/test/1")
     public List<User> test(){
         return userService.list();

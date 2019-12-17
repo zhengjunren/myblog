@@ -13,9 +13,24 @@ import java.util.Map;
  */
 public interface MenuService extends IService<Menu>{
 
+    /**
+     * 通过角色获取菜单
+     * @param roles 角色
+     * @return {@link List<MenuDTO>}
+     */
     List<MenuDTO> findByRoles(List<Role> roles);
 
+    /**
+     * 构建菜单树
+     * @param menuDTOS {@link List<MenuDTO>}
+     * @return 结果集
+     */
     Map<String,Object> buildTree(List<MenuDTO> menuDTOS);
 
-    Object buildMenus(List<MenuDTO> byRoles);
+    /**
+     * 构建前端所需的菜单
+     * @param menuDTOS {@link List<MenuDTO>}
+     * @return 菜单集
+     */
+    Object buildMenus(List<MenuDTO> menuDTOS);
 }
