@@ -2,11 +2,11 @@ package cn.zhengjunren.myblog.admin.utils;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.zhengjunren.myblog.admin.common.Consts;
-import cn.zhengjunren.myblog.admin.common.Status;
 import cn.zhengjunren.myblog.admin.config.JwtConfig;
 import cn.zhengjunren.myblog.admin.exception.SecurityException;
 import cn.zhengjunren.myblog.admin.vo.UserPrincipal;
+import cn.zhengjunren.myblog.common.Consts.Consts;
+import cn.zhengjunren.myblog.common.staus.Status;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtBuilder;
@@ -16,7 +16,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -42,11 +41,14 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 @Slf4j
 public class JwtUtil {
-    @Autowired
-    private JwtConfig jwtConfig;
+    private final JwtConfig jwtConfig;
 
-    @Autowired
-    private StringRedisTemplate stringRedisTemplate;
+    private final StringRedisTemplate stringRedisTemplate;
+
+    public JwtUtil(JwtConfig jwtConfig, StringRedisTemplate stringRedisTemplate) {
+        this.jwtConfig = jwtConfig;
+        this.stringRedisTemplate = stringRedisTemplate;
+    }
 
     /**
      * 创建JWT

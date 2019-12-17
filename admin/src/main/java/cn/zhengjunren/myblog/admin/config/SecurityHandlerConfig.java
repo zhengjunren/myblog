@@ -1,7 +1,7 @@
 package cn.zhengjunren.myblog.admin.config;
 
-import cn.zhengjunren.myblog.admin.common.Status;
 import cn.zhengjunren.myblog.admin.utils.ResponseUtil;
+import cn.zhengjunren.myblog.common.staus.Status;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.web.access.AccessDeniedHandler;

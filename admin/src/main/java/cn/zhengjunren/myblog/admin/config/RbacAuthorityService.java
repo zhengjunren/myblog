@@ -1,14 +1,14 @@
 package cn.zhengjunren.myblog.admin.config;
 
 import cn.hutool.core.util.StrUtil;
-import cn.zhengjunren.myblog.admin.common.Consts;
-import cn.zhengjunren.myblog.admin.common.Status;
 import cn.zhengjunren.myblog.admin.domain.Permission;
 import cn.zhengjunren.myblog.admin.domain.Role;
 import cn.zhengjunren.myblog.admin.exception.SecurityException;
 import cn.zhengjunren.myblog.admin.mapper.PermissionMapper;
 import cn.zhengjunren.myblog.admin.mapper.RoleMapper;
 import cn.zhengjunren.myblog.admin.vo.UserPrincipal;
+import cn.zhengjunren.myblog.common.Consts.Consts;
+import cn.zhengjunren.myblog.common.staus.Status;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import org.springframework.security.core.Authentication;

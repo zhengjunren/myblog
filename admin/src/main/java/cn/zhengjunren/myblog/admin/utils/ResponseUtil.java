@@ -2,9 +2,9 @@ package cn.zhengjunren.myblog.admin.utils;
 
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import cn.zhengjunren.myblog.admin.common.ApiResponse;
-import cn.zhengjunren.myblog.admin.common.BaseException;
-import cn.zhengjunren.myblog.admin.common.IStatus;
+import cn.zhengjunren.myblog.common.exception.BaseException;
+import cn.zhengjunren.myblog.common.result.ApiResponse;
+import cn.zhengjunren.myblog.common.staus.IStatus;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletResponse;

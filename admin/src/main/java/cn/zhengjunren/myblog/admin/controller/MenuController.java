@@ -1,12 +1,12 @@
 package cn.zhengjunren.myblog.admin.controller;
 
-import cn.zhengjunren.myblog.admin.common.ApiResponse;
 import cn.zhengjunren.myblog.admin.domain.Role;
 import cn.zhengjunren.myblog.admin.dto.MenuDTO;
 import cn.zhengjunren.myblog.admin.service.MenuService;
 import cn.zhengjunren.myblog.admin.service.RoleService;
 import cn.zhengjunren.myblog.admin.utils.SecurityUtil;
 import cn.zhengjunren.myblog.admin.vo.UserPrincipal;
+import cn.zhengjunren.myblog.common.result.ApiResponse;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

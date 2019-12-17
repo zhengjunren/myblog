@@ -1,8 +1,8 @@
 package cn.zhengjunren.myblog.admin.utils;
 
 import cn.hutool.core.util.ObjectUtil;
-import cn.zhengjunren.myblog.admin.common.Consts;
 import cn.zhengjunren.myblog.admin.vo.UserPrincipal;
+import cn.zhengjunren.myblog.common.Consts.Consts;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 

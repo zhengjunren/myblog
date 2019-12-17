@@ -1,5 +1,8 @@
-package cn.zhengjunren.myblog.admin.common;
+package cn.zhengjunren.myblog.common.result;
 
+import cn.zhengjunren.myblog.common.exception.BaseException;
+import cn.zhengjunren.myblog.common.staus.IStatus;
+import cn.zhengjunren.myblog.common.staus.Status;
 import lombok.Data;
 
 import java.io.Serializable;

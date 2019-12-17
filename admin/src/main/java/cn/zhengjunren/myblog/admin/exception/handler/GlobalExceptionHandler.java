@@ -2,9 +2,9 @@ package cn.zhengjunren.myblog.admin.exception.handler;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.json.JSONUtil;
-import cn.zhengjunren.myblog.admin.common.ApiResponse;
-import cn.zhengjunren.myblog.admin.common.BaseException;
-import cn.zhengjunren.myblog.admin.common.Status;
+import cn.zhengjunren.myblog.common.exception.BaseException;
+import cn.zhengjunren.myblog.common.result.ApiResponse;
+import cn.zhengjunren.myblog.common.staus.Status;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;

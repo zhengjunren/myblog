@@ -137,6 +137,12 @@
         </dependency>
 
 
+        <dependency>
+            <groupId>cn.zhengjunren.myblog</groupId>
+            <artifactId>common</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+
     </dependencies>
 
 

@@ -1,10 +1,10 @@
 package cn.zhengjunren.myblog.admin.vo;
 
 import cn.hutool.core.util.StrUtil;
-import cn.zhengjunren.myblog.admin.common.Consts;
 import cn.zhengjunren.myblog.admin.domain.Permission;
 import cn.zhengjunren.myblog.admin.domain.Role;
 import cn.zhengjunren.myblog.admin.domain.User;
+import cn.zhengjunren.myblog.common.Consts.Consts;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;

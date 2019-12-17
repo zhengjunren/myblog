@@ -1,7 +1,6 @@
 package cn.zhengjunren.myblog.admin.controller;
 
-import cn.zhengjunren.myblog.admin.common.ApiResponse;
-import cn.zhengjunren.myblog.admin.common.Status;
+
 import cn.zhengjunren.myblog.admin.dto.LoginRequest;
 import cn.zhengjunren.myblog.admin.dto.UserInfo;
 import cn.zhengjunren.myblog.admin.exception.SecurityException;
@@ -9,6 +8,8 @@ import cn.zhengjunren.myblog.admin.utils.JwtUtil;
 import cn.zhengjunren.myblog.admin.utils.SecurityUtil;
 import cn.zhengjunren.myblog.admin.vo.JwtResponse;
 import cn.zhengjunren.myblog.admin.vo.UserPrincipal;
+import cn.zhengjunren.myblog.common.result.ApiResponse;
+import cn.zhengjunren.myblog.common.staus.Status;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
 
 /**
  * <p>ClassName: AuthController</p>
