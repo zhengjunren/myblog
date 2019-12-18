@@ -9,6 +9,9 @@ import org.springframework.beans.BeanUtils;
 
 import java.util.List;
 
+/**
+ * @author ZhengJunren
+ */
 public interface MenuMapper extends BaseMapper<Menu>, MyMapper<MenuDTO, Menu> {
 
     /**
