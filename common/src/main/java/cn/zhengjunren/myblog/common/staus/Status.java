@@ -54,6 +54,8 @@ public enum Status implements IStatus {
      */
     PARAM_NOT_NULL(400, "参数不能为空！"),
 
+    ENTITY_CANNOT_HAVE_AN_ID(400, "实体不能有ID值！"),
+
     /**
      * 当前用户已被锁定，请联系管理员解锁！
      */

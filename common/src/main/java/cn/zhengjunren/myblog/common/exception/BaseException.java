@@ -31,6 +31,11 @@ public class BaseException extends RuntimeException {
         this.data = data;
     }
 
+    public BaseException(Status status, String message) {
+        this(status);
+        this.message = message;
+    }
+
     public BaseException(Integer code, String message) {
         super(message);
         this.code = code;

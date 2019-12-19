@@ -14,11 +14,37 @@ import java.util.Map;
 public interface MenuService extends IService<Menu>{
 
     /**
+     * 根据父 id 查询
+     * @param parentId 父 id
+     * @return {@link List<Menu>}
+     */
+    List<Menu> findByParentId(Long parentId);
+
+    /**
+     * 更新
+     * @param menu {@link Menu}
+     */
+    int update(Menu menu);
+
+    /**
+     * 获取所有的菜单数据
+     * @return {@link List<MenuDTO>}
+     */
+    List<MenuDTO> getAll();
+
+    /**
      * 通过角色获取菜单
      * @param roles 角色
      * @return {@link List<MenuDTO>}
      */
     List<MenuDTO> findByRoles(List<Role> roles);
+
+    /**
+     * 获取菜单树
+     * @param menus {@link List<Menu>}
+     * @return 结果
+     */
+    Object getMenuTree(List<Menu> menus);
 
     /**
      * 构建菜单树

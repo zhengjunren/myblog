@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.BeanUtils;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author ZhengJunren
@@ -35,5 +36,25 @@ public interface MenuMapper extends BaseMapper<Menu>, MyMapper<MenuDTO, Menu> {
         MenuDTO menuDTO = new MenuDTO();
         BeanUtils.copyProperties(entity, menuDTO);
         return menuDTO;
+    }
+
+    /**
+     *  将 实体list 转化为 DTO list
+     * @param entityList 实体list
+     * @return {@link List<MenuDTO>}
+     */
+    @Override
+    default List<MenuDTO> toDto(List<Menu> entityList) {
+        if ( entityList == null ) {
+            return null;
+        }
+
+//        List<MenuDTO> list = new ArrayList<MenuDTO>( entityList.size() );
+//
+//        for ( Menu menu : entityList ) {
+//            list.add( toDto( menu ) );
+//        }
+
+        return entityList.stream().map(this::toDto).collect(Collectors.toList());
     }
 }

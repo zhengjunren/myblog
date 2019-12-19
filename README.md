@@ -6,7 +6,7 @@
 ## 软件架构
 目前仍然是单体
 
-分为`business`、`admin`和`frontend`，其中前端采用的是 [`vue-admin-template`](https://github.com/PanJiaChen/vue-admin-template)模板。
+分为`common`、`admin`和`frontend`，其中前端采用的是 [`vue-admin-template`](https://github.com/PanJiaChen/vue-admin-template)模板。
 
 
 ## 安装教程

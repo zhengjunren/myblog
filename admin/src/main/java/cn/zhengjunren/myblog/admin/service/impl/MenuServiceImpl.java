@@ -5,11 +5,16 @@ import cn.hutool.core.util.StrUtil;
 import cn.zhengjunren.myblog.admin.domain.Menu;
 import cn.zhengjunren.myblog.admin.domain.Role;
 import cn.zhengjunren.myblog.admin.dto.MenuDTO;
+import cn.zhengjunren.myblog.admin.exception.BadRequestException;
 import cn.zhengjunren.myblog.admin.mapper.MenuMapper;
 import cn.zhengjunren.myblog.admin.service.MenuService;
 import cn.zhengjunren.myblog.admin.vo.MenuMetaVo;
 import cn.zhengjunren.myblog.admin.vo.MenuVo;
+import cn.zhengjunren.myblog.common.exception.EntityExistException;
+import cn.zhengjunren.myblog.common.utils.ValidationUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -33,19 +38,92 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     MenuMapper menuMapper;
 
     @Override
+    public List<Menu> findByParentId(Long parentId) {
+        QueryWrapper<Menu> menuQueryWrapper = new QueryWrapper<>();
+        menuQueryWrapper.eq(Menu.COL_PARENT_ID, parentId);
+        return menuMapper.selectList(menuQueryWrapper);
+    }
+
+    @Override
+    public int update(Menu resources) {
+        if(resources.getId().equals(resources.getParentId())) {
+            throw new BadRequestException(400, "上级不能为自己");
+        }
+        Menu menu = menuMapper.selectById(resources.getId());
+        if (menu == null) {
+            menu = new Menu();
+        }
+        ValidationUtil.isNull(menu.getId(),"Permission","id",resources.getId());
+
+        if(resources.getIFrame()){
+            if (!(resources.getPath().toLowerCase().startsWith("http://")||resources.getPath().toLowerCase().startsWith("https://"))) {
+                throw new BadRequestException(400, "外链必须以http://或者https://开头");
+            }
+        }
+        QueryWrapper<Menu> menuQueryWrapper = new QueryWrapper<>();
+        menuQueryWrapper.eq(Menu.COL_NAME, resources.getName());
+        Menu menu1 = menuMapper.selectOne(menuQueryWrapper);
+
+        if(menu1 != null && !menu1.getId().equals(menu.getId())){
+            throw new EntityExistException(Menu.class,"name",resources.getName());
+        }
+
+        if(StringUtils.isNotBlank(resources.getComponentName())){
+            QueryWrapper<Menu> menuQueryWrapper2 = new QueryWrapper<>();
+            menuQueryWrapper2.eq(Menu.COL_COMPONENT_NAME, resources.getComponentName());
+            menu1 = menuMapper.selectOne(menuQueryWrapper2);
+            if(menu1 != null && !menu1.getId().equals(menu.getId())){
+                throw new EntityExistException(Menu.class,"componentName",resources.getComponentName());
+            }
+        }
+        menu.setName(resources.getName());
+        menu.setComponent(resources.getComponent());
+        menu.setPath(resources.getPath());
+        menu.setIcon(resources.getIcon());
+        menu.setIFrame(resources.getIFrame());
+        menu.setParentId(resources.getParentId());
+        menu.setSort(resources.getSort());
+        menu.setCache(resources.getCache());
+        menu.setHidden(resources.getHidden());
+        menu.setComponentName(resources.getComponentName());
+        menu.setPermission(resources.getPermission());
+        menu.setType(resources.getType());
+        return menuMapper.insert(menu);
+    }
+
+    @Override
+    public List<MenuDTO> getAll() {
+        List<Menu> menus = menuMapper.selectList(null);
+        return menuMapper.toDto(menus);
+    }
+
+    @Override
     public List<MenuDTO> findByRoles(List<Role> roles) {
         Set<Menu> menus = new LinkedHashSet<>();
         for (Role role : roles) {
             List<Menu> menus1 = new ArrayList<>(menuMapper.findByRolesIdAndTypeIsNotInOrderBySortAsc(role.getId(), 2));
             menus.addAll(menus1);
         }
-//        List<MenuDTO> menuDTOS = menus.stream().map(menu -> {
-//            MenuDTO menuDTO = new MenuDTO();
-//            BeanUtils.copyProperties(menu, menuDTO);
-//            return menuDTO;
-//        }).collect(Collectors.toList());
-//        menus.stream().map(menuMapper::toDto).collect(Collectors.toList())
         return menus.stream().map(menuMapper::toDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public Object getMenuTree(List<Menu> menus) {
+        List<Map<String,Object>> list = new LinkedList<>();
+        menus.forEach(menu -> {
+                    if (menu!=null){
+                        List<Menu> menuList = findByParentId(menu.getId());
+                        Map<String,Object> map = new HashMap<>();
+                        map.put("id",menu.getId());
+                        map.put("label",menu.getName());
+                        if(menuList!=null && menuList.size()!=0){
+                            map.put("children",getMenuTree(menuList));
+                        }
+                        list.add(map);
+                    }
+                }
+        );
+        return list;
     }
 
     @Override

@@ -6,3 +6,10 @@ export function buildMenus() {
     method: 'get'
   })
 }
+
+export function getMenus() {
+  return request({
+    url: '/menus',
+    method: 'get'
+  })
+}
