@@ -103,15 +103,20 @@ public class RbacAuthorityService {
             // 可以通过 2 种方式创建 AntPathRequestMatcher
             // 1：new AntPathRequestMatcher(uri,method) 这种方式可以直接判断方法是否匹配，因为这里我们把 方法不匹配 自定义抛出，所以，我们使用第2种方式创建
             // 2：new AntPathRequestMatcher(uri) 这种方式不校验请求方法，只校验请求路径
-            AntPathRequestMatcher antPathMatcher = new AntPathRequestMatcher(uri);
+            AntPathRequestMatcher antPathMatcher = new AntPathRequestMatcher(uri, currentMethod);
             if (antPathMatcher.matches(request)) {
-                if (!urlMapping.get(uri)
-                        .contains(currentMethod)) {
-                    throw new SecurityException(Status.HTTP_BAD_METHOD);
-                } else {
-                    return;
-                }
+                return;
             }
+//            if (antPathMatcher.matches(request)) {
+//                Collection<String> strings = urlMapping.get(uri);
+//                System.out.println(Arrays.toString(strings.toArray()));
+//                if (!urlMapping.get(uri)
+//                        .contains(currentMethod)) {
+//                    throw new SecurityException(Status.HTTP_BAD_METHOD);
+//                } else {
+//                    return;
+//                }
+//            }
         }
         throw new SecurityException(Status.REQUEST_NOT_FOUND);
     }

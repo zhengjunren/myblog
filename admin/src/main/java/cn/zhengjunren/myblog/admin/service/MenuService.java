@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author ZhengJunren
@@ -23,8 +24,17 @@ public interface MenuService extends IService<Menu>{
     /**
      * 更新
      * @param menu {@link Menu}
+     * @return 结果
      */
     int update(Menu menu);
+
+    /**
+     * 递归找出待删除的菜单
+     * @param menuList
+     * @param menuSet
+     * @return
+     */
+    Set<Menu> getDeleteMenus(List<Menu> menuList, Set<Menu> menuSet);
 
     /**
      * 获取所有的菜单数据

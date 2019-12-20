@@ -5,11 +5,11 @@ import cn.hutool.core.util.StrUtil;
 import cn.zhengjunren.myblog.admin.domain.Menu;
 import cn.zhengjunren.myblog.admin.domain.Role;
 import cn.zhengjunren.myblog.admin.dto.MenuDTO;
-import cn.zhengjunren.myblog.admin.exception.BadRequestException;
 import cn.zhengjunren.myblog.admin.mapper.MenuMapper;
 import cn.zhengjunren.myblog.admin.service.MenuService;
 import cn.zhengjunren.myblog.admin.vo.MenuMetaVo;
 import cn.zhengjunren.myblog.admin.vo.MenuVo;
+import cn.zhengjunren.myblog.common.exception.BadRequestException;
 import cn.zhengjunren.myblog.common.exception.EntityExistException;
 import cn.zhengjunren.myblog.common.utils.ValidationUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -89,6 +89,21 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         menu.setPermission(resources.getPermission());
         menu.setType(resources.getType());
         return menuMapper.insert(menu);
+    }
+
+    @Override
+    public Set<Menu> getDeleteMenus(List<Menu> menuList, Set<Menu> menuSet) {
+        QueryWrapper<Menu> menuQueryWrapper = new QueryWrapper<>();
+
+        for (Menu menu1 : menuList) {
+            menuSet.add(menu1);
+            menuQueryWrapper.eq(Menu.COL_PARENT_ID, menu1.getId());
+            List<Menu> menus = menuMapper.selectList(menuQueryWrapper);
+            if(menus!=null && menus.size()!=0){
+                getDeleteMenus(menus, menuSet);
+            }
+        }
+        return menuSet;
     }
 
     @Override

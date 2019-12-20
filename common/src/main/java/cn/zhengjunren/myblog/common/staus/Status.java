@@ -54,6 +54,14 @@ public enum Status implements IStatus {
      */
     PARAM_NOT_NULL(400, "参数不能为空！"),
 
+    /**
+     * 菜单与角色有关联
+     */
+    MENU_IS_ASSOCIATED_WITH_ROLE(400, "菜单与角色有关联，请先清除角色拥有的菜单"),
+
+    /**
+     * 实体不能有ID
+     */
     ENTITY_CANNOT_HAVE_AN_ID(400, "实体不能有ID值！"),
 
     /**

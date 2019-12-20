@@ -1,5 +1,6 @@
 <template>
   <div class="app-container">
+    <eForm ref="form" :is-add="isAdd"/>
     <el-table
       :data="treeData"
       style="width: 100%;margin-bottom: 20px;"
@@ -49,7 +50,7 @@
       </el-table-column>
       <el-table-column label="操作" width="130px" align="center" fixed="right">
         <template slot-scope="scope">
-          <el-button size="mini" type="primary" icon="el-icon-edit" @click=""/>
+          <el-button size="mini" type="primary" icon="el-icon-edit" @click="edit(scope.row)"/>
           <el-popover
             :ref="scope.row.id"
             placement="top"
@@ -57,7 +58,7 @@
             <p>确定删除吗,如果存在下级节点则一并删除，此操作不能撤销！</p>
             <div style="text-align: right; margin: 0">
               <el-button size="mini" type="text" @click="$refs[scope.row.id].doClose()">取消</el-button>
-              <el-button :loading="delLoading" type="primary" size="mini" @click="">确定</el-button>
+              <el-button :loading="delLoading" type="primary" size="mini" @click="subDelete(scope.row.id)">确定</el-button>
             </div>
             <el-button slot="reference" type="danger" icon="el-icon-delete" size="mini"/>
           </el-popover>
@@ -69,11 +70,15 @@
 
 <script>
 import { getMenus } from '@/api/menu'
+import { del } from '@/api/menu'
+import eForm from './form'
 export default {
   name: "index",
+  components: { eForm },
   data() {
     return {
       treeData: [],
+      isAdd: false,
       delLoading: false
     }
   },
@@ -85,7 +90,32 @@ export default {
       getMenus().then(response => {
         this.treeData = response.data.content
       })
-    }
+    },
+    edit(data) {
+
+      this.isAdd = false
+      const _this = this.$refs.form
+      _this.getMenus()
+      _this.form = { id: data.id, component: data.component, componentName: data.componentName, name: data.name, sort: data.sort, parentId: data.parentId, path: data.path, iframe: data.iframe.toString(), roles: [], icon: data.icon, cache: data.cache, hidden: data.hidden, type: data.type, permission: data.permission }
+      _this.dialog = true
+    },
+    subDelete(id) {
+      this.delLoading = true
+      del(id).then(res => {
+        this.delLoading = false
+        this.$refs[id].doClose()
+        this.init()
+        this.$notify({
+          title: '删除成功',
+          type: 'success',
+          duration: 2500
+        })
+      }).catch(err => {
+        this.delLoading = false
+        this.$refs[id].doClose()
+        console.log(err.response.data.message)
+      })
+    },
   }
 
 }
