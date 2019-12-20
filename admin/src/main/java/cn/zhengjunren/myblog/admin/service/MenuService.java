@@ -29,6 +29,12 @@ public interface MenuService extends IService<Menu>{
     int update(Menu menu);
 
     /**
+     * 删除
+     * @param ids
+     */
+    int delete(List<Long> ids);
+
+    /**
      * 递归找出待删除的菜单
      * @param menuList
      * @param menuSet
@@ -48,6 +54,14 @@ public interface MenuService extends IService<Menu>{
      * @return {@link List<MenuDTO>}
      */
     List<MenuDTO> findByRoles(List<Role> roles);
+
+    /**
+     * 根据角色 id 和类型查找菜单
+     * @param id 角色 id
+     * @param type 类型
+     * @return {@link List<Menu>}
+     */
+    List<Menu> findByRolesIdAndTypeIsNotInOrderBySortAsc(Long id, Integer type);
 
     /**
      * 获取菜单树

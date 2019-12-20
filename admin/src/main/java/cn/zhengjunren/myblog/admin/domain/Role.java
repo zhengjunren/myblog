@@ -1,11 +1,11 @@
 package cn.zhengjunren.myblog.admin.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
+import cn.zhengjunren.myblog.admin.common.BaseDomain;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
@@ -14,17 +14,14 @@ import java.util.Date;
 /**
  * @author ZhengJunren
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName(value = "role")
-public class Role implements Serializable {
-    /**
-     * 主键
-     */
-    @TableId(value = "id", type = IdType.INPUT)
-    private Long id;
+public class Role extends BaseDomain implements Serializable {
 
+    private static final long serialVersionUID = -3384570942342646435L;
     /**
      * 角色名
      */
@@ -49,7 +46,6 @@ public class Role implements Serializable {
     @TableField(value = "update_time")
     private Date updateTime;
 
-    private static final long serialVersionUID = 1L;
 
     public static final String COL_ID = "id";
 

@@ -9,12 +9,15 @@ import cn.zhengjunren.myblog.admin.mapper.MenuMapper;
 import cn.zhengjunren.myblog.admin.service.MenuService;
 import cn.zhengjunren.myblog.admin.vo.MenuMetaVo;
 import cn.zhengjunren.myblog.admin.vo.MenuVo;
+import cn.zhengjunren.myblog.common.consts.Consts;
 import cn.zhengjunren.myblog.common.exception.BadRequestException;
 import cn.zhengjunren.myblog.common.exception.EntityExistException;
 import cn.zhengjunren.myblog.common.utils.ValidationUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -32,6 +35,7 @@ import java.util.stream.Collectors;
  * @author ZhengJunren
  */
 @Service
+@CacheConfig(cacheNames = Consts.MENU_CACHE_NAME)
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {
 
     @Resource
@@ -45,6 +49,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     }
 
     @Override
+    @CacheEvict(allEntries = true)
     public int update(Menu resources) {
         if(resources.getId().equals(resources.getParentId())) {
             throw new BadRequestException(400, "上级不能为自己");
@@ -65,7 +70,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         Menu menu1 = menuMapper.selectOne(menuQueryWrapper);
 
         if(menu1 != null && !menu1.getId().equals(menu.getId())){
-            throw new EntityExistException(Menu.class,"name",resources.getName());
+            throw new EntityExistException(Menu.class,"菜单标题",resources.getName());
         }
 
         if(StringUtils.isNotBlank(resources.getComponentName())){
@@ -73,7 +78,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             menuQueryWrapper2.eq(Menu.COL_COMPONENT_NAME, resources.getComponentName());
             menu1 = menuMapper.selectOne(menuQueryWrapper2);
             if(menu1 != null && !menu1.getId().equals(menu.getId())){
-                throw new EntityExistException(Menu.class,"componentName",resources.getComponentName());
+                throw new EntityExistException(Menu.class,"组件名",resources.getComponentName());
             }
         }
         menu.setName(resources.getName());
@@ -88,7 +93,13 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         menu.setComponentName(resources.getComponentName());
         menu.setPermission(resources.getPermission());
         menu.setType(resources.getType());
-        return menuMapper.insert(menu);
+        return menuMapper.updateById(menu);
+    }
+
+    @Override
+    @CacheEvict(allEntries = true)
+    public int delete(List<Long> ids) {
+        return menuMapper.deleteBatchIds(ids);
     }
 
     @Override
@@ -116,10 +127,15 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     public List<MenuDTO> findByRoles(List<Role> roles) {
         Set<Menu> menus = new LinkedHashSet<>();
         for (Role role : roles) {
-            List<Menu> menus1 = new ArrayList<>(menuMapper.findByRolesIdAndTypeIsNotInOrderBySortAsc(role.getId(), 2));
+            List<Menu> menus1 = new ArrayList<>(findByRolesIdAndTypeIsNotInOrderBySortAsc(role.getId(), 2));
             menus.addAll(menus1);
         }
         return menus.stream().map(menuMapper::toDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Menu> findByRolesIdAndTypeIsNotInOrderBySortAsc(Long id, Integer type) {
+        return menuMapper.findByRolesIdAndTypeIsNotInOrderBySortAsc(id, type);
     }
 
     @Override

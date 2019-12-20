@@ -10,7 +10,6 @@ import cn.zhengjunren.myblog.admin.vo.UserPrincipal;
 import cn.zhengjunren.myblog.common.exception.BadRequestException;
 import cn.zhengjunren.myblog.common.result.ApiResponse;
 import cn.zhengjunren.myblog.common.staus.Status;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.validation.annotation.Validated;
@@ -61,8 +60,9 @@ public class MenuController {
         UserPrincipal userPrincipal = SecurityUtil.getCurrentUser();
         assert userPrincipal != null;
         List<String> rolesStrs = userPrincipal.getRoles();
-        List<Role> roles = rolesStrs.stream().map(rolesStr -> roleService.getOne(new QueryWrapper<Role>().eq(Role.COL_NAME, rolesStr)))
-                .collect(Collectors.toList());
+//        List<Role> roles = rolesStrs.stream().map(rolesStr -> roleService.getOne(new QueryWrapper<Role>().eq(Role.COL_NAME, rolesStr)))
+//                .collect(Collectors.toList());
+        List<Role> roles = rolesStrs.stream().map(roleService::selectByName).collect(Collectors.toList());
         List<MenuDTO> menuDTOList = menuService.findByRoles(roles);
         List<MenuDTO> menuDTOS = (List<MenuDTO>) menuService.buildTree(menuDTOList).get("content");
         return ApiResponse.ofSuccess(menuService.buildMenus(menuDTOS));
@@ -105,7 +105,7 @@ public class MenuController {
         menuSet = menuService.getDeleteMenus(menuList, menuSet);
         List<Long> ids = menuSet.stream().map(Menu::getId).collect(Collectors.toList());
         try {
-            menuService.removeByIds(ids);
+            menuService.delete(ids);
         } catch (DataIntegrityViolationException e) {
             log.error("【异常捕获】DataIntegrityViolationException: 错误信息 {}", e.getMessage());
             return ApiResponse.ofStatus(Status.MENU_IS_ASSOCIATED_WITH_ROLE);

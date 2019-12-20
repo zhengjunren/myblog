@@ -18,7 +18,13 @@
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, username, `password`, nickname, phone, email, birthday, sex, `status`, create_time, 
+    id, username, `password`, nickname, phone, email, birthday, sex, `status`, create_time,
     update_time
   </sql>
+
+  <select id="selectOneByUsernameOrEmailOrPhone" resultMap="BaseResultMap">
+    SELECT *
+    FROM user
+    WHERE (username = #{usernameOrEmailOrPhone} OR email = #{usernameOrEmailOrPhone} OR phone = #{usernameOrEmailOrPhone})
+  </select>
 </mapper>

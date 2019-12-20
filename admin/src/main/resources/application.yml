@@ -1,4 +1,6 @@
 spring:
+  cache:
+    type: redis
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
@@ -73,7 +75,7 @@ mybatis-plus:
 jwt:
   config:
     key: xkcoding
-    ttl: 600000
+    ttl: 10800000
     remember: 604800000
 
 custom:

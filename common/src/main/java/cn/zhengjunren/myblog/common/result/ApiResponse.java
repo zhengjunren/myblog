@@ -126,5 +126,7 @@ public class ApiResponse implements Serializable {
     public static <T extends BaseException> ApiResponse ofException(T t) {
         return of(t.getCode(), t.getMessage(), t.getData());
     }
+
+
 }
 

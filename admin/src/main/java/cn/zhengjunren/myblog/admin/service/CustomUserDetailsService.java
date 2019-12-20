@@ -3,11 +3,7 @@ package cn.zhengjunren.myblog.admin.service;
 import cn.zhengjunren.myblog.admin.domain.Permission;
 import cn.zhengjunren.myblog.admin.domain.Role;
 import cn.zhengjunren.myblog.admin.domain.User;
-import cn.zhengjunren.myblog.admin.mapper.PermissionMapper;
-import cn.zhengjunren.myblog.admin.mapper.RoleMapper;
-import cn.zhengjunren.myblog.admin.mapper.UserMapper;
 import cn.zhengjunren.myblog.admin.vo.UserPrincipal;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,13 +22,13 @@ import java.util.stream.Collectors;
  */
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
-    private final UserMapper userDao;
+    private final UserService userDao;
 
-    private final RoleMapper roleDao;
+    private final RoleService roleDao;
 
-    private final PermissionMapper permissionDao;
+    private final PermissionService permissionDao;
 
-    public CustomUserDetailsService(UserMapper userDao, RoleMapper roleDao, PermissionMapper permissionDao) {
+    public CustomUserDetailsService(UserService userDao, RoleService roleDao, PermissionService permissionDao) {
         this.userDao = userDao;
         this.roleDao = roleDao;
         this.permissionDao = permissionDao;
@@ -40,12 +36,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String usernameOrEmailOrPhone) throws UsernameNotFoundException {
-        QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
-        userQueryWrapper
-                .eq(User.COL_USERNAME, usernameOrEmailOrPhone)
-                .or().eq(User.COL_EMAIL, usernameOrEmailOrPhone)
-                .or().eq(User.COL_PHONE, usernameOrEmailOrPhone);
-        User user = userDao.selectOne(userQueryWrapper);
+        User user = userDao.selectOneByUsernameOrEmailOrPhone(usernameOrEmailOrPhone);
         if (user == null) {
             throw new UsernameNotFoundException("未找到用户信息 : " + usernameOrEmailOrPhone);
         }

@@ -8,47 +8,52 @@
       border
       default-expand-all
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
-      <el-table-column label="名称" prop="name" align="center" width="180">
+      <el-table-column label="名称" prop="name" width="150px">
         <template slot-scope="scope">
           <span>{{ scope.row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="icon" label="图标" align="center" width="60px">
+      <el-table-column prop="icon" label="图标" align="center" width="80px">
         <template slot-scope="scope">
           <svg-icon :icon-class="scope.row.icon" />
         </template>
       </el-table-column>
-      <el-table-column prop="sort" align="center" width="75px" label="排序">
+      <el-table-column prop="sort" align="center" width="90px" label="排序">
         <template slot-scope="scope">
           {{ scope.row.sort }}
         </template>
       </el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="path" label="路由地址" />
-      <el-table-column :show-overflow-tooltip="true" prop="component" label="组件路径"/>
-      <el-table-column prop="iframe" label="外链" width="75px">
+      <el-table-column :show-overflow-tooltip="true" width="100px" prop="path" label="路由地址" />
+      <el-table-column :show-overflow-tooltip="true" min-width="150px" prop="component" label="组件路径"/>
+<!--      <el-table-column prop="sort" align="center" width="75px" label="组件名">-->
+<!--        <template slot-scope="scope">-->
+<!--          {{ scope.row.componentName===null? "目录" : scope.row.componentName }}-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+      <el-table-column prop="iframe" align="center" label="外链" width="90px">
         <template slot-scope="scope">
           <span v-if="scope.row.iframe">是</span>
           <span v-else>否</span>
         </template>
       </el-table-column>
-      <el-table-column prop="iframe" label="缓存" width="75px">
+      <el-table-column prop="iframe" align="center" label="缓存" width="90px">
         <template slot-scope="scope">
           <span v-if="scope.row.cache">是</span>
           <span v-else>否</span>
         </template>
       </el-table-column>
-      <el-table-column prop="iframe" label="可见" width="75px">
+      <el-table-column prop="iframe" align="center" label="可见" width="90px">
         <template slot-scope="scope">
           <span v-if="scope.row.hidden">否</span>
           <span v-else>是</span>
         </template>
       </el-table-column>
-      <el-table-column prop="createTime" label="创建日期" width="180px">
+      <el-table-column prop="createTime" align="center" label="创建日期" width="200px">
         <template slot-scope="scope">
           <span>{{ scope.row.createTime }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="130px" align="center" fixed="right">
+      <el-table-column label="操作" width="160px" align="center" fixed="right">
         <template slot-scope="scope">
           <el-button size="mini" type="primary" icon="el-icon-edit" @click="edit(scope.row)"/>
           <el-popover
@@ -113,7 +118,11 @@ export default {
       }).catch(err => {
         this.delLoading = false
         this.$refs[id].doClose()
-        console.log(err.response.data.message)
+        this.$notify({
+          title: '删除失败',
+          type: 'danger',
+          duration: 2500
+        })
       })
     },
   }

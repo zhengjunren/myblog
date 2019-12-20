@@ -57,5 +57,30 @@ public interface Consts {
      * 匿名用户 用户名
      */
     String ANONYMOUS_NAME = "匿名用户";
+
+    /**
+     * 菜单缓存名
+     */
+    String MENU_CACHE_NAME = "menu";
+
+    /**
+     * 权限缓存名
+     */
+    String PERMISSION_CACHE_NAME = "permission";
+
+    /**
+     * 用户缓存名
+     */
+    String USER_CACHE_NAME = "user";
+
+    /**
+     * 角色缓存名
+     */
+    String ROLE_CACHE_NAME = "role";
+
+    /**
+     * redis 存活时间（单位：毫秒）：3小时
+     */
+    long REDIS_TTL = 10800000L;
 }
 

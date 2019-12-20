@@ -12,9 +12,16 @@ import java.util.List;
 public interface PermissionMapper extends BaseMapper<Permission> {
 
     /**
-     *根据角色 id 获取相应的权限
-     * @param ids 角色 id
+     *根据角色 id 列表获取相应的权限
+     * @param ids 角色 id 列表
      * @return {@link List<Permission>}
      */
     List<Permission> selectByRoleIdList(@Param("ids") List<Long> ids);
+
+    /**
+     * 根据角色 id 获取相应的权限
+     * @param roleId 角色 id
+     * @return {@link List<Permission>}
+     */
+    List<Permission> slectByRoleId(@Param("roleId") long roleId);
 }

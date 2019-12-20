@@ -4,8 +4,8 @@ import cn.hutool.core.util.StrUtil;
 import cn.zhengjunren.myblog.admin.domain.Permission;
 import cn.zhengjunren.myblog.admin.domain.Role;
 import cn.zhengjunren.myblog.admin.exception.SecurityException;
-import cn.zhengjunren.myblog.admin.mapper.PermissionMapper;
-import cn.zhengjunren.myblog.admin.mapper.RoleMapper;
+import cn.zhengjunren.myblog.admin.service.PermissionService;
+import cn.zhengjunren.myblog.admin.service.RoleService;
 import cn.zhengjunren.myblog.admin.vo.UserPrincipal;
 import cn.zhengjunren.myblog.common.consts.Consts;
 import cn.zhengjunren.myblog.common.staus.Status;
@@ -37,13 +37,13 @@ import java.util.stream.Collectors;
  */
 @Component
 public class RbacAuthorityService {
-    private final RoleMapper roleDao;
+    private final RoleService roleDao;
 
-    private final PermissionMapper permissionDao;
+    private final PermissionService permissionDao;
 
     private final RequestMappingHandlerMapping mapping;
 
-    public RbacAuthorityService(RoleMapper roleDao, PermissionMapper permissionDao, RequestMappingHandlerMapping mapping) {
+    public RbacAuthorityService(RoleService roleDao, PermissionService permissionDao, RequestMappingHandlerMapping mapping) {
         this.roleDao = roleDao;
         this.permissionDao = permissionDao;
         this.mapping = mapping;

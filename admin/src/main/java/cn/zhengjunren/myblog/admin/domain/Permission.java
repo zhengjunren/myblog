@@ -1,11 +1,11 @@
 package cn.zhengjunren.myblog.admin.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
+import cn.zhengjunren.myblog.admin.common.BaseDomain;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
@@ -13,16 +13,12 @@ import java.io.Serializable;
 /**
  * @author ZhengJunren
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName(value = "permission")
-public class Permission implements Serializable {
-    /**
-     * 主键
-     */
-    @TableId(value = "id", type = IdType.INPUT)
-    private Long id;
+public class Permission extends BaseDomain implements Serializable {
 
     /**
      * 权限名

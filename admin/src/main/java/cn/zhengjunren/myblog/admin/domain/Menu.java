@@ -1,11 +1,11 @@
 package cn.zhengjunren.myblog.admin.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
+import cn.zhengjunren.myblog.admin.common.BaseDomain;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
@@ -14,17 +14,12 @@ import java.util.Date;
 /**
  * @author ZhengJunren
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName(value = "menu")
-public class Menu implements Serializable {
-    /**
-     * ID
-     */
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
-
+public class Menu extends BaseDomain implements Serializable {
     /**
      * 是否外链
      */

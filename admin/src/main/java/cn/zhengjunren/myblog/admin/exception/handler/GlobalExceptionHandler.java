@@ -63,7 +63,7 @@ public class GlobalExceptionHandler {
             log.error("【全局异常拦截】BadCredentialsException: 错误信息 {}", e.getMessage());
             return ApiResponse.ofStatus(Status.USER_DISABLED);
         } else if (e instanceof BaseException) {
-            log.error("【全局异常拦截】DataManagerException: 状态码 {}, 异常信息 {}", ((BaseException) e).getCode(), e.getMessage());
+            log.error("【全局异常拦截】BaseException: 状态码 {}, 异常信息 {}", ((BaseException) e).getCode(), e.getMessage());
             return ApiResponse.ofException((BaseException) e);
         }
 

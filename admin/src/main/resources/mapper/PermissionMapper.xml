@@ -34,4 +34,14 @@
     </foreach>
   </select>
 
+  <select id="slectByRoleId" resultMap="BaseResultMap">
+    SELECT
+      p.*
+    FROM
+      permission AS p
+        LEFT JOIN role_permission AS rp ON p.id = rp.permission_id
+    WHERE
+      rp.role_id = #{roleId}
+  </select>
+
 </mapper>
