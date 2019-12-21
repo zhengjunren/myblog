@@ -96,4 +96,4 @@ custom:
       options:
         - "/**"
 server:
-  port:
+  port: 8000
