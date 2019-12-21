@@ -59,10 +59,7 @@ public class MenuController {
     public ApiResponse build() {
         UserPrincipal userPrincipal = SecurityUtil.getCurrentUser();
         assert userPrincipal != null;
-        List<String> rolesStrs = userPrincipal.getRoles();
-//        List<Role> roles = rolesStrs.stream().map(rolesStr -> roleService.getOne(new QueryWrapper<Role>().eq(Role.COL_NAME, rolesStr)))
-//                .collect(Collectors.toList());
-        List<Role> roles = rolesStrs.stream().map(roleService::selectByName).collect(Collectors.toList());
+        List<Role> roles = userPrincipal.getRoles().stream().map(roleService::selectByName).collect(Collectors.toList());
         List<MenuDTO> menuDTOList = menuService.findByRoles(roles);
         List<MenuDTO> menuDTOS = (List<MenuDTO>) menuService.buildTree(menuDTOList).get("content");
         return ApiResponse.ofSuccess(menuService.buildMenus(menuDTOS));
@@ -113,19 +110,23 @@ public class MenuController {
         return ApiResponse.ofSuccess();
     }
 
+    /**
+     * 菜单树
+     * @return 菜单树结果
+     */
     @GetMapping(value = "/tree")
     public ApiResponse getMenuTree() {
         return ApiResponse.ofSuccess(menuService.getMenuTree(menuService.findByParentId(0L)));
     }
 
+    /**
+     * 更新菜单
+     * @param resources 需要更新的菜单
+     * @return 成功
+     */
     @PutMapping
     public ApiResponse update(@Validated @RequestBody Menu resources){
         menuService.update(resources);
         return ApiResponse.ofSuccess();
-    }
-
-    @PostMapping("/build")
-    public ApiResponse test() {
-        return ApiResponse.ofSuccess("test");
     }
 }

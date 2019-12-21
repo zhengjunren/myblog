@@ -127,16 +127,12 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     public List<MenuDTO> findByRoles(List<Role> roles) {
         Set<Menu> menus = new LinkedHashSet<>();
         for (Role role : roles) {
-            List<Menu> menus1 = new ArrayList<>(findByRolesIdAndTypeIsNotInOrderBySortAsc(role.getId(), 2));
+            List<Menu> menus1 = new ArrayList<>(menuMapper.findByRolesIdAndTypeIsNotInOrderBySortAsc(role.getId(), 2));
             menus.addAll(menus1);
         }
         return menus.stream().map(menuMapper::toDto).collect(Collectors.toList());
     }
 
-    @Override
-    public List<Menu> findByRolesIdAndTypeIsNotInOrderBySortAsc(Long id, Integer type) {
-        return menuMapper.findByRolesIdAndTypeIsNotInOrderBySortAsc(id, type);
-    }
 
     @Override
     public Object getMenuTree(List<Menu> menus) {

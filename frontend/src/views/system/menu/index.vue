@@ -1,6 +1,14 @@
 <template>
   <div class="app-container">
-    <eForm ref="form" :is-add="isAdd"/>
+    <div class="filter-container">
+      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="add">
+        新增
+      </el-button>
+      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="">
+        导出
+      </el-button>
+
+    </div>
     <el-table
       :data="treeData"
       style="width: 100%;margin-bottom: 20px;"
@@ -24,7 +32,12 @@
         </template>
       </el-table-column>
       <el-table-column :show-overflow-tooltip="true" width="100px" prop="path" label="路由地址" />
-      <el-table-column :show-overflow-tooltip="true" min-width="150px" prop="component" label="组件路径"/>
+<!--      <el-table-column :show-overflow-tooltip="true" min-width="150px" prop="component" label="组件路径"/>-->
+      <el-table-column :show-overflow-tooltip="true" min-width="150px" label="组件路径">
+        <template slot-scope="scope">
+          {{ scope.row.component == null ? "目录" : scope.row.component }}
+        </template>
+      </el-table-column>
 <!--      <el-table-column prop="sort" align="center" width="75px" label="组件名">-->
 <!--        <template slot-scope="scope">-->
 <!--          {{ scope.row.componentName===null? "目录" : scope.row.componentName }}-->
@@ -70,21 +83,25 @@
         </template>
       </el-table-column>
     </el-table>
+    <eForm ref="form" :is-add="isAdd"/>
   </div>
 </template>
 
 <script>
 import { getMenus } from '@/api/menu'
 import { del } from '@/api/menu'
+import waves from '@/directive/waves'
 import eForm from './form'
 export default {
   name: "index",
+  directives: { waves },
   components: { eForm },
   data() {
     return {
       treeData: [],
       isAdd: false,
-      delLoading: false
+      delLoading: false,
+      downloadLoading: false
     }
   },
   created() {
@@ -104,18 +121,24 @@ export default {
       _this.form = { id: data.id, component: data.component, componentName: data.componentName, name: data.name, sort: data.sort, parentId: data.parentId, path: data.path, iframe: data.iframe.toString(), roles: [], icon: data.icon, cache: data.cache, hidden: data.hidden, type: data.type, permission: data.permission }
       _this.dialog = true
     },
+    add() {
+      this.isAdd = true
+      this.$refs.form.getMenus()
+      this.$refs.form.dialog = true
+    },
     subDelete(id) {
       this.delLoading = true
       del(id).then(res => {
         this.delLoading = false
         this.$refs[id].doClose()
-        this.init()
+        this.fetchData()
         this.$notify({
           title: '删除成功',
           type: 'success',
           duration: 2500
         })
       }).catch(err => {
+        console.log(err)
         this.delLoading = false
         this.$refs[id].doClose()
         this.$notify({

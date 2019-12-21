@@ -23,5 +23,5 @@ public interface PermissionMapper extends BaseMapper<Permission> {
      * @param roleId 角色 id
      * @return {@link List<Permission>}
      */
-    List<Permission> slectByRoleId(@Param("roleId") long roleId);
+    List<Permission> selectByRoleId(@Param("roleId") long roleId);
 }

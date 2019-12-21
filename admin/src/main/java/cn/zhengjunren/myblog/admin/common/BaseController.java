@@ -1,5 +1,6 @@
 package cn.zhengjunren.myblog.admin.common;
 
+import cn.zhengjunren.myblog.admin.dto.ListInfo;
 import cn.zhengjunren.myblog.common.exception.BadRequestException;
 import cn.zhengjunren.myblog.common.result.ApiResponse;
 import cn.zhengjunren.myblog.common.staus.Status;
@@ -45,12 +46,9 @@ public abstract class BaseController<T extends BaseDomain, S extends IService<T>
     }
 
     @GetMapping
-    public ApiResponse page(long current, long size) {
-        Page<T> page = new Page<>();
-        page.setCurrent(current);
-        page.setSize(size);
-        IPage<T> iPage = service.page(page);
-        return ApiResponse.ofSuccess(iPage);
+    public ApiResponse page(long page, long limit) {
+        IPage<T> iPage = service.page(new Page<>(page, limit));
+        return ApiResponse.ofSuccess(new ListInfo(iPage.getRecords(), iPage.getTotal()));
     }
 
 }

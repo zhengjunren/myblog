@@ -34,7 +34,7 @@
     </foreach>
   </select>
 
-  <select id="slectByRoleId" resultMap="BaseResultMap">
+  <select id="selectByRoleId" resultMap="BaseResultMap">
     SELECT
       p.*
     FROM

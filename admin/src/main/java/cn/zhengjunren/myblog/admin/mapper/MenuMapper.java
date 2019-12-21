@@ -28,6 +28,13 @@ public interface MenuMapper extends BaseMapper<Menu>, MyMapper<MenuDTO, Menu> {
     List<Menu> findByRolesIdAndTypeIsNotInOrderBySortAsc(@Param("id") Long id, @Param("type") Integer type);
 
     /**
+     * 根据角色id查找菜单
+     * @param roleId 角色id
+     * @return 角色拥有的菜单
+     */
+    List<Menu> selectByRoleId(@Param("roleId") long roleId);
+
+    /**
      * 将 Menu 类型转为 MenuDto
      * @param entity Menu 类实体
      * @return MenuDto 类实体
@@ -52,13 +59,8 @@ public interface MenuMapper extends BaseMapper<Menu>, MyMapper<MenuDTO, Menu> {
         if ( entityList == null ) {
             return null;
         }
-
-//        List<MenuDTO> list = new ArrayList<MenuDTO>( entityList.size() );
-//
-//        for ( Menu menu : entityList ) {
-//            list.add( toDto( menu ) );
-//        }
-
         return entityList.stream().map(this::toDto).collect(Collectors.toList());
     }
+
+
 }

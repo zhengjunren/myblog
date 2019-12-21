@@ -12,12 +12,25 @@ import java.util.List;
 public interface RoleService extends IService<Role>{
 
     /**
+     * 更新角色信息
+     * @param role 需要更新的角色信息
+     * @return 影响结果
+     */
+    int updateRole(Role role);
+
+    /**
      * 根据名称获取角色
      * @param name 名称
      * @return {@link Role}
      */
     Role selectByName(String name);
 
+    /**
+     *  分页查询
+     * @param current 页码
+     * @param size 每页显示条数
+     * @return {@link ListInfo}
+     */
     ListInfo page(long current, long size);
 
     /**

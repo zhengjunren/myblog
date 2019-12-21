@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhengjunren.myblog.admin.mapper.RolePermissionMapper">
+  <resultMap id="BaseResultMap" type="cn.zhengjunren.myblog.admin.domain.RolePermission">
+    <!--@mbg.generated-->
+    <!--@Table role_permission-->
+    <id column="role_id" jdbcType="BIGINT" property="roleId" />
+    <id column="permission_id" jdbcType="BIGINT" property="permissionId" />
+  </resultMap>
+  <select id="selectByRoleId" resultMap="BaseResultMap">
+    SELECT role_permission.*
+    FROM role_permission
+    WHERE role_id = #{roleId}
+  </select>
+  <delete id="deleteBatch">
+    DELETE FROM
+    role_permission
+    WHERE permission_id IN
+    <foreach collection="permissionIds" open="(" close=")" separator="," item="permissionId">
+      #{permissionId}
+    </foreach>
+    AND role_id = #{roleId}
+  </delete>
+
+</mapper>

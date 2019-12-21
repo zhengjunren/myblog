@@ -18,4 +18,18 @@ public interface PermissionService extends IService<Permission>{
      */
     List<Permission> selectByRoleIdList(List<Long> ids);
 
+
+    /**
+     * 根据父 id 获取权限
+     * @param parentId 父 id
+     * @return 权限
+     */
+    List<Permission> selectByParentId(long parentId);
+
+    /**
+     * 权限树
+     * @param permissions 权限
+     * @return 结果
+     */
+    Object getPermissionTree(List<Permission> permissions);
 }
