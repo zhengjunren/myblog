@@ -102,7 +102,7 @@
                   <p>确定删除吗,此操作不能撤销！</p>
                   <div style="text-align: right; margin: 0">
                     <el-button size="mini" type="text" @click="$refs[scope.row.id].doClose()">取消</el-button>
-                    <el-button :loading="delLoading" type="primary" size="mini" @click="">确定</el-button>
+                    <el-button :loading="delLoading" type="primary" size="mini" @click="subDelete(scope.row.id)">确定</el-button>
                   </div>
                   <el-button slot="reference" type="danger" icon="el-icon-delete" size="mini"/>
                 </el-popover>
@@ -118,7 +118,7 @@
 </template>
 
 <script>
-import { getRoles, updatePermission, updateMenu, downloadExcel } from '@/api/role'
+import { getRoles, updatePermission, updateMenu, del,downloadExcel } from '@/api/role'
 import { getPermissionTree } from '@/api/permission'
 import { getMenusTree } from '@/api/menu'
 import {downloadFile} from '@/utils/index'
@@ -187,6 +187,28 @@ export default {
     add() {
       this.isAdd = true
       this.$refs.form.dialog = true
+    },
+    subDelete(id) {
+      this.delLoading = true
+      del(id).then(res => {
+        this.delLoading = false
+        this.$refs[id].doClose()
+        this.fetchData()
+        this.$notify({
+          title: '删除成功',
+          type: 'success',
+          duration: 2500
+        })
+      }).catch(err => {
+        console.log(err)
+        this.delLoading = false
+        this.$refs[id].doClose()
+        this.$notify({
+          title: '删除失败',
+          type: 'danger',
+          duration: 2500
+        })
+      })
     },
 
     handleCurrentChange(val) {

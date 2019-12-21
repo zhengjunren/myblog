@@ -8,6 +8,11 @@ import cn.zhengjunren.myblog.admin.service.RoleMenuService;
 import cn.zhengjunren.myblog.admin.service.RolePermissionService;
 import cn.zhengjunren.myblog.admin.service.RoleService;
 import cn.zhengjunren.myblog.common.result.ApiResponse;
+import cn.zhengjunren.myblog.common.staus.Status;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @version 1.0.0
  * @date 2019/12/20 11:58
  */
+@Slf4j
 @RestController
 @RequestMapping("/api/roles")
 public class RoleController extends BaseController<Role, RoleService> {
@@ -70,17 +76,14 @@ public class RoleController extends BaseController<Role, RoleService> {
         return ApiResponse.ofSuccess();
     }
 
-
-//    @Override
-//    @GetMapping("excel")
-//    public void exportExcel(HttpServletResponse response) throws IOException {
-//        // 这里注意 有同学反应使用swagger 会导致各种问题，请直接用浏览器或者用postman
-//        response.setContentType("application/vnd.ms-excel");
-//        response.setCharacterEncoding("utf-8");
-//        // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
-//        String fileName = URLEncoder.encode("角色", "UTF-8");
-//        response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
-//        EasyExcel.write(response.getOutputStream(), Role.class).sheet("sheet1").doWrite(service.list());
-//    }
-
+    @DeleteMapping("{id}")
+    public ApiResponse delete(@PathVariable long id) {
+        try {
+            service.removeById(id);
+        } catch (DataIntegrityViolationException e) {
+            log.error("【异常捕获】DataIntegrityViolationException: 错误信息 {}", e.getMessage());
+            return ApiResponse.ofStatus(Status.MENU_IS_ASSOCIATED_WITH_ROLE);
+        }
+        return ApiResponse.ofSuccess();
+    }
 }

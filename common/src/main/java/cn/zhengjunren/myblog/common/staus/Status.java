@@ -60,6 +60,11 @@ public enum Status implements IStatus {
     MENU_IS_ASSOCIATED_WITH_ROLE(400, "菜单与角色有关联，请先清除角色拥有的菜单"),
 
     /**
+     * 角色与用户有关联
+     */
+    ROLE_IS_ASSOCIATED_WITH_USER(400, "角色与用户有关联，请先清除用户拥有的角色"),
+
+    /**
      * 实体不能有ID
      */
     ENTITY_CANNOT_HAVE_AN_ID(400, "实体不能有ID值！"),

@@ -32,3 +32,10 @@ export function downloadExcel() {
     method: 'get'
   })
 }
+
+export function del(id) {
+  return request({
+    url: '/roles/' + id,
+    method: 'delete'
+  })
+}
