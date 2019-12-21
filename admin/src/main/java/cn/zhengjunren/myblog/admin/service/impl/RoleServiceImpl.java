@@ -1,7 +1,7 @@
 package cn.zhengjunren.myblog.admin.service.impl;
 
 import cn.zhengjunren.myblog.admin.domain.Role;
-import cn.zhengjunren.myblog.admin.dto.ListInfo;
+import cn.zhengjunren.myblog.admin.dto.info.ListInfo;
 import cn.zhengjunren.myblog.admin.mapper.MenuMapper;
 import cn.zhengjunren.myblog.admin.mapper.PermissionMapper;
 import cn.zhengjunren.myblog.admin.mapper.RoleMapper;

@@ -1,0 +1,12 @@
+version: '3.1'
+services:
+  myblog-admin:
+    build: .
+    container_name: myblog-admin
+    ports:
+      - 8000:8000
+
+networks:
+  default:
+    external:
+      name: myblog

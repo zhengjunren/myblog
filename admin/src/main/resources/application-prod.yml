@@ -1,11 +1,13 @@
 spring:
+  profiles:
+    active: prod
   cache:
     type: redis
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/blog?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&failOverReadOnly=false&serverTimezone=GMT%2B8
+    url: jdbc:mysql://myblog-db:3306/blog?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&failOverReadOnly=false&serverTimezone=GMT%2B8
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -26,7 +28,7 @@ spring:
   mvc:
     throw-exception-if-no-handler-found: true
   redis:
-    host: localhost
+    host: myblog-redis
     port: 6379
     # 连接超时时间（记得添加单位，Duration）
     timeout: 10000ms

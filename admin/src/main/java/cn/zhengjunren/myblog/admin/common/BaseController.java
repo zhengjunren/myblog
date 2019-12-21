@@ -1,7 +1,7 @@
 package cn.zhengjunren.myblog.admin.common;
 
 import cn.hutool.core.util.StrUtil;
-import cn.zhengjunren.myblog.admin.dto.ListInfo;
+import cn.zhengjunren.myblog.admin.dto.info.ListInfo;
 import cn.zhengjunren.myblog.common.exception.BadRequestException;
 import cn.zhengjunren.myblog.common.result.ApiResponse;
 import cn.zhengjunren.myblog.common.staus.Status;

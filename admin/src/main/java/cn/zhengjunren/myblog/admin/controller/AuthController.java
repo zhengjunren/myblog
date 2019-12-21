@@ -2,7 +2,7 @@ package cn.zhengjunren.myblog.admin.controller;
 
 
 import cn.zhengjunren.myblog.admin.dto.LoginRequest;
-import cn.zhengjunren.myblog.admin.dto.UserInfo;
+import cn.zhengjunren.myblog.admin.dto.info.UserInfo;
 import cn.zhengjunren.myblog.admin.exception.SecurityException;
 import cn.zhengjunren.myblog.admin.utils.JwtUtil;
 import cn.zhengjunren.myblog.admin.utils.SecurityUtil;

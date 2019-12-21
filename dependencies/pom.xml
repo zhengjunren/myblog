@@ -20,7 +20,8 @@
         <swagger2.version>2.9.2</swagger2.version>
         <ip2region.version>1.7.2</ip2region.version>
         <mapstruct.version>1.2.0.Final</mapstruct.version>
-        <!-- Native Cloud -->
+        <oshi.version>3.9.1</oshi.version>
+
         <mybatis-plus.version>3.2.0</mybatis-plus.version>
 
         <!-- Ali Cloud -->
@@ -142,6 +143,13 @@
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger-ui</artifactId>
                 <version>${swagger2.version}</version>
+            </dependency>
+
+            <!-- 获取系统信息 -->
+            <dependency>
+                <groupId>com.github.oshi</groupId>
+                <artifactId>oshi-core</artifactId>
+                <version>${oshi.version}</version>
             </dependency>
 
             <!--mapStruct依赖-->

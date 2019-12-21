@@ -84,5 +84,10 @@ public interface Consts {
      */
     long REDIS_TTL = 10800000L;
 
+    /**
+     * WebSocket常量
+     */
+    String PUSH_SERVER = "/topic/server";
+
 }
 

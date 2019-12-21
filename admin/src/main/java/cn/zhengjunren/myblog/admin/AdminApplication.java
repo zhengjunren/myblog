@@ -2,6 +2,7 @@ package cn.zhengjunren.myblog.admin;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * <p>ClassName: AdminApplication</p>
@@ -12,6 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date 2019/12/15 21:02
  */
 @SpringBootApplication
+@EnableScheduling
 public class AdminApplication {
     public static void main(String[] args) {
         SpringApplication.run(AdminApplication.class, args);
