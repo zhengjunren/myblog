@@ -89,10 +89,10 @@ custom:
         - "/api/auth/logout"
       # 需要过滤的请求，不限方法
       pattern:
-        - "/test/*"
         - "/static/js/**"
         - "/static/*.html"
         - "/api/notification/**"
+        - "/api/server/index"
       options:
         - "/**"
 server:
