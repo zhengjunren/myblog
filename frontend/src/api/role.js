@@ -16,3 +16,11 @@ export function updatePermission(data) {
     data
   })
 }
+
+export function updateMenu(data) {
+  return request({
+    url: '/roles/menu',
+    method: 'put',
+    data
+  })
+}

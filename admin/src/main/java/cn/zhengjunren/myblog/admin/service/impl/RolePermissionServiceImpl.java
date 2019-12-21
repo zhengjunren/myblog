@@ -36,7 +36,6 @@ public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper,
                 .collect(Collectors.toList());
         HashSet<Long> oldPermission = new HashSet<>(oldPermissionIds);
         HashSet<Long> newPermission = new HashSet<>(permissionIds);
-        int result = 0;
         //删除权限
         if (permissionIds.size() < oldPermissionIds.size()){
             oldPermission.removeAll(newPermission);

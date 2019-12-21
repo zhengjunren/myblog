@@ -11,7 +11,7 @@
               size="mini"
               style="float: right; padding: 6px 9px"
               type="primary"
-              @click="">保存</el-button>
+              @click="saveMenu">保存</el-button>
           </div>
           <el-tree
             ref="menu"
@@ -21,6 +21,7 @@
             accordion
             show-checkbox
             node-key="id"
+            :check-strictly = 'true'
             highlight-current
           >
           </el-tree>
@@ -117,7 +118,7 @@
 </template>
 
 <script>
-import { getRoles, updatePermission } from '@/api/role'
+import { getRoles, updatePermission, updateMenu } from '@/api/role'
 import { getPermissionTree } from '@/api/permission'
 import { getMenusTree } from '@/api/menu'
 import Pagination from '@/components/Pagination'
@@ -220,6 +221,25 @@ export default {
         currentRoleId: this.currentId,
         permissionIds: permissionIds
       }).then(response => {
+        this.fetchData()
+        this.$notify({
+          title: '成功',
+          message: response.message,
+          type: 'success',
+          duration: 2000
+        })
+      })
+    },
+    saveMenu() {
+      const menuIds = []
+      this.$refs.menu.getCheckedKeys().forEach(function(data, index) {
+        menuIds.push(data)
+      })
+      updateMenu({
+        currentRoleId: this.currentId,
+        menuIds: menuIds
+      }).then(response => {
+        this.fetchData()
         this.$notify({
           title: '成功',
           message: response.message,

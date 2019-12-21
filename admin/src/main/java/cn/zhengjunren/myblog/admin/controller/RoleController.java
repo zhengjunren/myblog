@@ -2,7 +2,9 @@ package cn.zhengjunren.myblog.admin.controller;
 
 import cn.zhengjunren.myblog.admin.common.BaseController;
 import cn.zhengjunren.myblog.admin.domain.Role;
+import cn.zhengjunren.myblog.admin.dto.params.MenuParams;
 import cn.zhengjunren.myblog.admin.dto.params.PermissionParams;
+import cn.zhengjunren.myblog.admin.service.RoleMenuService;
 import cn.zhengjunren.myblog.admin.service.RolePermissionService;
 import cn.zhengjunren.myblog.admin.service.RoleService;
 import cn.zhengjunren.myblog.common.result.ApiResponse;
@@ -25,9 +27,12 @@ public class RoleController extends BaseController<Role, RoleService> {
 
     private final RolePermissionService rolePermissionService;
 
-    public RoleController(RoleService service, RolePermissionService rolePermissionService) {
+    private final RoleMenuService roleMenuService;
+
+    public RoleController(RoleService service, RolePermissionService rolePermissionService, RoleMenuService roleMenuService) {
         super(service);
         this.rolePermissionService = rolePermissionService;
+        this.roleMenuService = roleMenuService;
     }
 
 
@@ -56,6 +61,12 @@ public class RoleController extends BaseController<Role, RoleService> {
     @PutMapping("permission")
     public ApiResponse updatePermission(@RequestBody PermissionParams permissionParams) {
         rolePermissionService.updatePermission(permissionParams.getPermissionIds(), permissionParams.getCurrentRoleId());
+        return ApiResponse.ofSuccess();
+    }
+
+    @PutMapping("menu")
+    public ApiResponse updateMenu(@RequestBody MenuParams menuParams) {
+        roleMenuService.updateMenu(menuParams.getMenuIds(), menuParams.getCurrentRoleId());
         return ApiResponse.ofSuccess();
     }
 

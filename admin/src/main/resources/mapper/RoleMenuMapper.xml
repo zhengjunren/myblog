@@ -7,4 +7,18 @@
     <id column="menu_id" jdbcType="BIGINT" property="menuId" />
     <id column="role_id" jdbcType="BIGINT" property="roleId" />
   </resultMap>
+  <select id="selectByRoleId" resultMap="BaseResultMap">
+    SELECT role_menu.*
+    FROM role_menu
+    WHERE role_id = #{roleId}
+  </select>
+  <delete id="deleteBatch">
+    DELETE FROM
+    role_menu
+    WHERE menu_id IN
+    <foreach collection="menuIds" open="(" close=")" separator="," item="menuId">
+      #{menuId}
+    </foreach>
+    AND role_id = #{roleId}
+  </delete>
 </mapper>
