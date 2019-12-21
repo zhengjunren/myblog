@@ -1,4 +1,7 @@
 spring:
+  thymeleaf:
+    cache: false #关闭缓存
+    prefix: classpath:/static/
   cache:
     type: redis
   jackson:
@@ -87,13 +90,15 @@ custom:
         - "/api/auth/logout"
       # 需要过滤的请求，不限方法
       pattern:
-        - "/test/*"
         - "/static/js/**"
         - "/static/*.html"
         - "/api/notification/**"
+        - "/api/server/index"
       options:
         - "/**"
 server:
   port: 8000
 
-
+myblog:
+  host: localhost:8000
+  js: localhost:8000/static/js/

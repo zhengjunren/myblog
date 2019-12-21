@@ -4,9 +4,12 @@ import cn.hutool.core.lang.Dict;
 import cn.zhengjunren.myblog.admin.domain.Server;
 import cn.zhengjunren.myblog.admin.utils.ServerUtil;
 import cn.zhengjunren.myblog.admin.vo.sever.ServerVO;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * <p>ClassName: ServerController</p>
@@ -16,11 +19,18 @@ import org.springframework.web.bind.annotation.RestController;
  * @version 1.0.0
  * @date 2019/12/21 18:07
  */
-@RestController
+@Controller
 @RequestMapping("/api/server")
 public class ServerController {
 
+    @Value("${myblog.host}")
+    private String host;
+
+    @Value("${myblog.js}")
+    private  String js;
+
     @GetMapping
+    @ResponseBody
     public Dict serverInfo() throws Exception {
         Server server = new Server();
         server.copyTo();
@@ -28,4 +38,10 @@ public class ServerController {
         return ServerUtil.wrapServerDict(serverVO);
     }
 
+    @GetMapping("index")
+    public String server(Model model) {
+        model.addAttribute("host", host);
+        model.addAttribute("js", js);
+        return "server";
+    }
 }

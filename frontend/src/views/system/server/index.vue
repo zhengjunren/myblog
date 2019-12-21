@@ -7,13 +7,13 @@
 <script>
   import Iframe from "@/components/Iframe";
   export default {
-    name: "business",
+    name: "index",
     components: {
       Iframe
     },
     data() {
       return {
-        server: process.env.VUE_APP_BASE + "/static/server.html"
+        server: process.env.VUE_APP_BASE_API + "/server/index"
       }
     }
   }
