@@ -57,7 +57,7 @@
           </div>
           <div class="filter-container">
             <el-button v-waves class="filter-item" type="primary" icon="el-icon-plus" @click="add">新增</el-button>
-            <el-button v-waves class="filter-item" type="primary" icon="el-icon-download" :loading="downloadLoading" @click="">导出</el-button>
+            <el-button v-waves class="filter-item" type="primary" icon="el-icon-download" :loading="downloadLoading" @click="downloadExcel">导出</el-button>
           </div>
           <el-table
             v-loading="listLoading"
@@ -118,9 +118,10 @@
 </template>
 
 <script>
-import { getRoles, updatePermission, updateMenu } from '@/api/role'
+import { getRoles, updatePermission, updateMenu, downloadExcel } from '@/api/role'
 import { getPermissionTree } from '@/api/permission'
 import { getMenusTree } from '@/api/menu'
+import {downloadFile} from '@/utils/index'
 import Pagination from '@/components/Pagination'
 import waves from '@/directive/waves'
 import eForm from './form'
@@ -246,6 +247,12 @@ export default {
           type: 'success',
           duration: 2000
         })
+      })
+    },
+    downloadExcel() {
+      downloadExcel().then(result => {
+        downloadFile(result, '角色列表', 'xlsx')
+        this.downloadLoading = false
       })
     }
   }

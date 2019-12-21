@@ -24,3 +24,11 @@ export function updateMenu(data) {
     data
   })
 }
+
+export function downloadExcel() {
+  return request({
+    responseType: 'blob',
+    url: '/roles/excel',
+    method: 'get'
+  })
+}

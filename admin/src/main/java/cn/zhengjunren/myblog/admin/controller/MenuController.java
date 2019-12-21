@@ -1,5 +1,6 @@
 package cn.zhengjunren.myblog.admin.controller;
 
+import cn.zhengjunren.myblog.admin.common.BaseController;
 import cn.zhengjunren.myblog.admin.domain.Menu;
 import cn.zhengjunren.myblog.admin.domain.Role;
 import cn.zhengjunren.myblog.admin.dto.MenuDTO;
@@ -38,18 +39,17 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestController
 @RequestMapping("/api/menus")
-public class MenuController {
-
-    private final MenuService menuService;
+public class MenuController extends BaseController<Menu, MenuService> {
 
     private final RoleService roleService;
 
     private final static String ENTITY_NAME = "menu";
 
-    public MenuController(MenuService menuService, RoleService roleService) {
-        this.menuService = menuService;
+    public MenuController(MenuService service, RoleService roleService) {
+        super(service);
         this.roleService = roleService;
     }
+
 
     /**
      * 根据角色生成前端所需的菜单
@@ -60,19 +60,19 @@ public class MenuController {
         UserPrincipal userPrincipal = SecurityUtil.getCurrentUser();
         assert userPrincipal != null;
         List<Role> roles = userPrincipal.getRoles().stream().map(roleService::selectByName).collect(Collectors.toList());
-        List<MenuDTO> menuDTOList = menuService.findByRoles(roles);
-        List<MenuDTO> menuDTOS = (List<MenuDTO>) menuService.buildTree(menuDTOList).get("content");
-        return ApiResponse.ofSuccess(menuService.buildMenus(menuDTOS));
+        List<MenuDTO> menuDTOList = service.findByRoles(roles);
+        List<MenuDTO> menuDTOS = (List<MenuDTO>) service.buildTree(menuDTOList).get("content");
+        return ApiResponse.ofSuccess(service.buildMenus(menuDTOS));
     }
 
     /**
      * 获取树形菜单列表
      * @return 树形菜单列表
      */
-    @GetMapping
+    @GetMapping("list")
     public ApiResponse getMenus() {
-        List<MenuDTO> list = menuService.getAll();
-        return ApiResponse.ofSuccess(menuService.buildTree(list));
+        List<MenuDTO> list = service.getAll();
+        return ApiResponse.ofSuccess(service.buildTree(list));
     }
 
     /**
@@ -80,12 +80,13 @@ public class MenuController {
      * @param menu {@link Menu}
      * @return 成功
      */
+    @Override
     @PostMapping
     public ApiResponse create(@RequestBody Menu menu) {
         if (menu.getId() != null) {
             throw new BadRequestException(Status.ENTITY_CANNOT_HAVE_AN_ID);
         }
-        menuService.save(menu);
+        service.save(menu);
         return ApiResponse.ofSuccess();
     }
 
@@ -96,13 +97,13 @@ public class MenuController {
      */
     @DeleteMapping(value = "/{id}")
     public ApiResponse delete(@PathVariable Long id) {
-        List<Menu> menuList = menuService.findByParentId(id);
+        List<Menu> menuList = service.findByParentId(id);
         Set<Menu> menuSet = new HashSet<>();
-        menuSet.add(menuService.getById(id));
-        menuSet = menuService.getDeleteMenus(menuList, menuSet);
+        menuSet.add(service.getById(id));
+        menuSet = service.getDeleteMenus(menuList, menuSet);
         List<Long> ids = menuSet.stream().map(Menu::getId).collect(Collectors.toList());
         try {
-            menuService.delete(ids);
+            service.delete(ids);
         } catch (DataIntegrityViolationException e) {
             log.error("【异常捕获】DataIntegrityViolationException: 错误信息 {}", e.getMessage());
             return ApiResponse.ofStatus(Status.MENU_IS_ASSOCIATED_WITH_ROLE);
@@ -116,7 +117,7 @@ public class MenuController {
      */
     @GetMapping(value = "/tree")
     public ApiResponse getMenuTree() {
-        return ApiResponse.ofSuccess(menuService.getMenuTree(menuService.findByParentId(0L)));
+        return ApiResponse.ofSuccess(service.getMenuTree(service.findByParentId(0L)));
     }
 
     /**
@@ -126,7 +127,8 @@ public class MenuController {
      */
     @PutMapping
     public ApiResponse update(@Validated @RequestBody Menu resources){
-        menuService.update(resources);
+        service.update(resources);
         return ApiResponse.ofSuccess();
     }
+
 }

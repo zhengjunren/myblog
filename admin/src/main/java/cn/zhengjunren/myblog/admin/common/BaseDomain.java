@@ -1,5 +1,6 @@
 package cn.zhengjunren.myblog.admin.common;
 
+import com.alibaba.excel.annotation.ExcelIgnore;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
@@ -23,6 +24,7 @@ public abstract class BaseDomain {
     /**
      * ID
      */
+    @ExcelIgnore
     @TableId(value = "id", type = IdType.AUTO)
     protected Long id;
 }

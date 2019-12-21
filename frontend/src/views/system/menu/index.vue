@@ -4,7 +4,7 @@
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="add">
         新增
       </el-button>
-      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="">
+      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="downloadExcel">
         导出
       </el-button>
 
@@ -88,8 +88,9 @@
 </template>
 
 <script>
-import { getMenus } from '@/api/menu'
+import { getMenus, downloadExcel } from '@/api/menu'
 import { del } from '@/api/menu'
+import {downloadFile} from '@/utils/index'
 import waves from '@/directive/waves'
 import eForm from './form'
 export default {
@@ -114,7 +115,6 @@ export default {
       })
     },
     edit(data) {
-
       this.isAdd = false
       const _this = this.$refs.form
       _this.getMenus()
@@ -148,6 +148,12 @@ export default {
         })
       })
     },
+    downloadExcel() {
+      downloadExcel().then(result => {
+        downloadFile(result, '菜单列表', 'xlsx')
+        this.downloadLoading = false
+      })
+    }
   }
 
 }

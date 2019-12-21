@@ -17,7 +17,7 @@ export function buildMenus() {
 
 export function getMenus() {
   return request({
-    url: '/menus',
+    url: '/menus/list',
     method: 'get'
   })
 }
@@ -42,5 +42,13 @@ export function edit(data) {
     url: '/menus',
     method: 'put',
     data
+  })
+}
+
+export function downloadExcel() {
+  return request({
+    responseType: 'blob',
+    url: '/menus/excel',
+    method: 'get'
   })
 }

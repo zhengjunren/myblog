@@ -9,6 +9,7 @@ package cn.zhengjunren.myblog.common.consts;
  * @date 2019/12/15 21:57
  */
 public interface Consts {
+
     /**
      * 启用
      */
@@ -82,5 +83,6 @@ public interface Consts {
      * redis 存活时间（单位：毫秒）：3小时
      */
     long REDIS_TTL = 10800000L;
+
 }
 
