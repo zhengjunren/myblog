@@ -93,5 +93,3 @@ custom:
         - "/api/notification/**"
       options:
         - "/**"
-server:
-  port:
