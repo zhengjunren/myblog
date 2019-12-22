@@ -89,5 +89,17 @@ public interface Consts {
      */
     String PUSH_SERVER = "/topic/server";
 
+    /**
+     * INFO 日志类型
+     */
+    String INFO_LOG_TYPE = "INFO";
+
+    /**
+     * ERROR 日志类型
+     */
+    String ERROR_LOG_TYPE = "ERROR";
+
+
+
 }
 

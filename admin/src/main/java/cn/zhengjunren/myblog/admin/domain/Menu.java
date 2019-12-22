@@ -94,9 +94,6 @@ public class Menu extends BaseDomain implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ExcelIgnore
-    public static final String COL_ID = "id";
-
-    @ExcelIgnore
     public static final String COL_I_FRAME = "i_frame";
 
     @ExcelIgnore
@@ -125,9 +122,6 @@ public class Menu extends BaseDomain implements Serializable {
 
     @ExcelIgnore
     public static final String COL_COMPONENT_NAME = "component_name";
-
-    @ExcelIgnore
-    public static final String COL_CREATE_TIME = "create_time";
 
     @ExcelIgnore
     public static final String COL_PERMISSION = "permission";

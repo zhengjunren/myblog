@@ -40,4 +40,10 @@ public abstract class BaseDomain {
     @DateTimeFormat("yyyy-MM-dd HH:mm:ss")
     @TableField(value = "create_time")
     private Date createTime;
+
+    @ExcelIgnore
+    public static final String COL_ID = "id";
+
+    @ExcelIgnore
+    public static final String COL_CREATE_TIME = "create_time";
 }

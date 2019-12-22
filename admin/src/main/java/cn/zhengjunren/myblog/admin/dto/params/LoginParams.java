@@ -32,4 +32,11 @@ public class LoginParams {
      */
     private Boolean rememberMe = false;
 
+    @Override
+    public String toString() {
+        return "LoginParams{" +
+                "usernameOrEmailOrPhone='" + usernameOrEmailOrPhone + '\'' +
+                ", password='" + "******" + '\'' +
+                '}';
+    }
 }

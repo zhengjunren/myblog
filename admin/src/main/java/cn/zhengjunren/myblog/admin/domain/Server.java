@@ -193,6 +193,8 @@ public class Server {
             sysFile.setTotal(convertFileSize(total));
             sysFile.setFree(convertFileSize(free));
             sysFile.setUsed(convertFileSize(used));
+//            System.out.println(NumberUtil.mul(NumberUtil.div(used, total, 4), 100));
+//            System.out.println(NumberUtil.mul(NumberUtil.div(used, total, 4), 100));
 //            sysFile.setUsage(NumberUtil.mul(NumberUtil.div(used, total, 4), 100));
             sysFiles.add(sysFile);
         }

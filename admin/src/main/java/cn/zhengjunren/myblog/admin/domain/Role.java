@@ -48,18 +48,12 @@ public class Role extends BaseDomain implements Serializable {
     @TableField(value = "update_time")
     private Date updateTime;
 
-
-    @ExcelIgnore
-    public static final String COL_ID = "id";
-
     @ExcelIgnore
     public static final String COL_NAME = "name";
 
     @ExcelIgnore
     public static final String COL_DESCRIPTION = "description";
 
-    @ExcelIgnore
-    public static final String COL_CREATE_TIME = "create_time";
 
     @ExcelIgnore
     public static final String COL_UPDATE_TIME = "update_time";

@@ -1,5 +1,6 @@
 package cn.zhengjunren.myblog.admin.controller;
 
+import cn.zhengjunren.myblog.common.annotation.MyLog;
 import cn.zhengjunren.myblog.common.controller.BaseController;
 import cn.zhengjunren.myblog.admin.domain.Menu;
 import cn.zhengjunren.myblog.admin.domain.Role;
@@ -128,6 +129,7 @@ public class MenuController extends BaseController<Menu, MenuService> {
      * @return 成功
      */
     @PutMapping
+    @MyLog("更新菜单")
     public ApiResponse update(@Validated @RequestBody Menu resources){
         service.update(resources);
         return ApiResponse.ofSuccess();

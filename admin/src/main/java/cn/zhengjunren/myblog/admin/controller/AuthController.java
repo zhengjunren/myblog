@@ -1,13 +1,14 @@
 package cn.zhengjunren.myblog.admin.controller;
 
 
-import cn.zhengjunren.myblog.admin.dto.params.LoginParams;
+import cn.zhengjunren.myblog.common.annotation.MyLog;
 import cn.zhengjunren.myblog.admin.dto.info.UserInfo;
-import cn.zhengjunren.myblog.common.exception.SecurityException;
+import cn.zhengjunren.myblog.admin.dto.params.LoginParams;
 import cn.zhengjunren.myblog.admin.utils.JwtUtil;
 import cn.zhengjunren.myblog.admin.utils.SecurityUtil;
 import cn.zhengjunren.myblog.admin.vo.JwtResponse;
 import cn.zhengjunren.myblog.admin.vo.UserPrincipal;
+import cn.zhengjunren.myblog.common.exception.SecurityException;
 import cn.zhengjunren.myblog.common.result.ApiResponse;
 import cn.zhengjunren.myblog.common.staus.Status;
 import lombok.extern.slf4j.Slf4j;
@@ -50,17 +51,18 @@ public class AuthController {
 
     /**
      * 登录
-     * @param loginRequest {@link LoginParams}
+     * @param loginParams {@link LoginParams}
      * @return 返回带 token 的数据
      */
+    @MyLog("用户登录")
     @PostMapping("/login")
-    public ApiResponse login(@Valid @RequestBody LoginParams loginRequest) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsernameOrEmailOrPhone(), loginRequest.getPassword()));
+    public ApiResponse login(@Valid @RequestBody LoginParams loginParams) {
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginParams.getUsernameOrEmailOrPhone(), loginParams.getPassword()));
 
         SecurityContextHolder.getContext()
                 .setAuthentication(authentication);
 
-        String jwt = jwtUtil.createJWT(authentication,loginRequest.getRememberMe());
+        String jwt = jwtUtil.createJWT(authentication,loginParams.getRememberMe());
         return ApiResponse.ofSuccess(new JwtResponse(jwt));
     }
 

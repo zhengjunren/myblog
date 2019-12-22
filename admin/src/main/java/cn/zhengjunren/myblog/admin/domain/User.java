@@ -83,8 +83,6 @@ public class User extends BaseDomain implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public static final String COL_ID = "id";
-
     public static final String COL_USERNAME = "username";
 
     public static final String COL_PASSWORD = "password";
@@ -100,8 +98,6 @@ public class User extends BaseDomain implements Serializable {
     public static final String COL_SEX = "sex";
 
     public static final String COL_STATUS = "status";
-
-    public static final String COL_CREATE_TIME = "create_time";
 
     public static final String COL_UPDATE_TIME = "update_time";
 }

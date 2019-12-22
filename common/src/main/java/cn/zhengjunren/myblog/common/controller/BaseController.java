@@ -1,6 +1,7 @@
 package cn.zhengjunren.myblog.common.controller;
 
 import cn.hutool.core.util.StrUtil;
+import cn.zhengjunren.myblog.common.annotation.MyLog;
 import cn.zhengjunren.myblog.common.domain.BaseDomain;
 import cn.zhengjunren.myblog.common.dto.ListInfo;
 import cn.zhengjunren.myblog.common.exception.BadRequestException;
@@ -54,12 +55,14 @@ public abstract class BaseController<T extends BaseDomain, S extends IService<T>
     }
 
     @GetMapping
+    @MyLog("分页查询")
     public ApiResponse page(long page, long limit) {
         IPage<T> iPage = service.page(new Page<>(page, limit));
         return ApiResponse.ofSuccess(new ListInfo(iPage.getRecords(), iPage.getTotal()));
     }
 
     @GetMapping("excel")
+    @MyLog("导出excel数据")
     public <T> void  exportExcel(HttpServletResponse response) throws IOException, ClassNotFoundException {
         // 这里注意 有同学反应使用swagger 会导致各种问题，请直接用浏览器或者用postman
         response.setContentType("application/vnd.ms-excel");

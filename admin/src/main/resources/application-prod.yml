@@ -90,12 +90,8 @@ custom:
       # 需要过滤的请求，不限方法
       pattern:
         - "/api/notification/**"
-        - "/api/server/**"
       options:
         - "/**"
 server:
   port: 8000
 
-myblog:
-  host: 119.3.222.119:8000
-  js: 119.3.222.119:8000/static/js/
