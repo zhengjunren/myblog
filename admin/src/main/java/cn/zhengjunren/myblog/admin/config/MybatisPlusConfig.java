@@ -19,10 +19,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class MybatisPlusConfig {
     /**
-     * 性能分析拦截器，不建议生产使用
-     */
-
-    /**
      * 分页插件
      */
     @Bean

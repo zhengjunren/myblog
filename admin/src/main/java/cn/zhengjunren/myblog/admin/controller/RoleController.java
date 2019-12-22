@@ -1,6 +1,6 @@
 package cn.zhengjunren.myblog.admin.controller;
 
-import cn.zhengjunren.myblog.admin.common.BaseController;
+import cn.zhengjunren.myblog.common.controller.BaseController;
 import cn.zhengjunren.myblog.admin.domain.Role;
 import cn.zhengjunren.myblog.admin.dto.params.MenuParams;
 import cn.zhengjunren.myblog.admin.dto.params.PermissionParams;

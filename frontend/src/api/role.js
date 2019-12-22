@@ -39,3 +39,19 @@ export function del(id) {
     method: 'delete'
   })
 }
+
+export function add(data) {
+  return request({
+    url: '/roles',
+    method: 'post',
+    data
+  })
+}
+
+export function edit(data) {
+  return request({
+    url: '/roles',
+    method: 'put',
+    data
+  })
+}

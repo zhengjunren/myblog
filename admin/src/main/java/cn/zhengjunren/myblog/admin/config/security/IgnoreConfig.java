@@ -1,4 +1,4 @@
-package cn.zhengjunren.myblog.admin.config;
+package cn.zhengjunren.myblog.admin.config.security;
 
 import com.google.common.collect.Lists;
 import lombok.Data;

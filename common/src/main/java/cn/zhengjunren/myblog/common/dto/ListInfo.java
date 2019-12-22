@@ -1,4 +1,4 @@
-package cn.zhengjunren.myblog.admin.dto.info;
+package cn.zhengjunren.myblog.common.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

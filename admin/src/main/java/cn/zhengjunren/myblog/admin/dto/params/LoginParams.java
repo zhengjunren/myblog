@@ -1,4 +1,4 @@
-package cn.zhengjunren.myblog.admin.dto;
+package cn.zhengjunren.myblog.admin.dto.params;
 
 import lombok.Data;
 
@@ -13,7 +13,7 @@ import javax.validation.constraints.NotBlank;
  * @date 2019/12/15 22:16
  */
 @Data
-public class LoginRequest {
+public class LoginParams {
 
     /**
      * 用户名或邮箱或手机号

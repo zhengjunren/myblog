@@ -5,7 +5,7 @@ import cn.zhengjunren.myblog.admin.domain.server.Jvm;
 import cn.zhengjunren.myblog.admin.domain.server.Mem;
 import cn.zhengjunren.myblog.admin.domain.server.Sys;
 import cn.zhengjunren.myblog.admin.domain.server.SysFile;
-import cn.zhengjunren.myblog.admin.utils.IpUtil;
+import cn.zhengjunren.myblog.common.utils.IpUtil;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
 import oshi.hardware.CentralProcessor.TickType;

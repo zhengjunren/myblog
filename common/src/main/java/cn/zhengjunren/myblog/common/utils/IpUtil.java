@@ -1,4 +1,4 @@
-package cn.zhengjunren.myblog.admin.utils;
+package cn.zhengjunren.myblog.common.utils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;

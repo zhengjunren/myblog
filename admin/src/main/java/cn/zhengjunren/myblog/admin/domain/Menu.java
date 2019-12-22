@@ -1,9 +1,8 @@
 package cn.zhengjunren.myblog.admin.domain;
 
-import cn.zhengjunren.myblog.admin.common.BaseDomain;
+import cn.zhengjunren.myblog.common.domain.BaseDomain;
 import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;
-import com.alibaba.excel.annotation.format.DateTimeFormat;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -12,7 +11,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @author ZhengJunren
@@ -83,14 +81,6 @@ public class Menu extends BaseDomain implements Serializable {
     @ExcelProperty("组件名")
     @TableField(value = "component_name")
     private String componentName;
-
-    /**
-     * 创建日期
-     */
-    @ExcelProperty("创建时间")
-    @DateTimeFormat("yyyy-MM-dd HH:mm:ss")
-    @TableField(value = "create_time")
-    private Date createTime;
 
     @ExcelProperty("权限标识")
     @TableField(value = "permission")

@@ -1,9 +1,9 @@
 package cn.zhengjunren.myblog.admin.controller;
 
 
-import cn.zhengjunren.myblog.admin.dto.LoginRequest;
+import cn.zhengjunren.myblog.admin.dto.params.LoginParams;
 import cn.zhengjunren.myblog.admin.dto.info.UserInfo;
-import cn.zhengjunren.myblog.admin.exception.SecurityException;
+import cn.zhengjunren.myblog.common.exception.SecurityException;
 import cn.zhengjunren.myblog.admin.utils.JwtUtil;
 import cn.zhengjunren.myblog.admin.utils.SecurityUtil;
 import cn.zhengjunren.myblog.admin.vo.JwtResponse;
@@ -50,11 +50,11 @@ public class AuthController {
 
     /**
      * 登录
-     * @param loginRequest {@link LoginRequest}
+     * @param loginRequest {@link LoginParams}
      * @return 返回带 token 的数据
      */
     @PostMapping("/login")
-    public ApiResponse login(@Valid @RequestBody LoginRequest loginRequest) {
+    public ApiResponse login(@Valid @RequestBody LoginParams loginRequest) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsernameOrEmailOrPhone(), loginRequest.getPassword()));
 
         SecurityContextHolder.getContext()

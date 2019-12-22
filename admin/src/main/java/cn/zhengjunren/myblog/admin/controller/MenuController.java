@@ -1,6 +1,6 @@
 package cn.zhengjunren.myblog.admin.controller;
 
-import cn.zhengjunren.myblog.admin.common.BaseController;
+import cn.zhengjunren.myblog.common.controller.BaseController;
 import cn.zhengjunren.myblog.admin.domain.Menu;
 import cn.zhengjunren.myblog.admin.domain.Role;
 import cn.zhengjunren.myblog.admin.dto.MenuDTO;
@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -86,6 +87,7 @@ public class MenuController extends BaseController<Menu, MenuService> {
         if (menu.getId() != null) {
             throw new BadRequestException(Status.ENTITY_CANNOT_HAVE_AN_ID);
         }
+        menu.setCreateTime(new Date());
         service.save(menu);
         return ApiResponse.ofSuccess();
     }

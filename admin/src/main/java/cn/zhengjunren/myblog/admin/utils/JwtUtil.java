@@ -2,8 +2,8 @@ package cn.zhengjunren.myblog.admin.utils;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.zhengjunren.myblog.admin.config.JwtConfig;
-import cn.zhengjunren.myblog.admin.exception.SecurityException;
+import cn.zhengjunren.myblog.admin.config.security.JwtConfig;
+import cn.zhengjunren.myblog.common.exception.SecurityException;
 import cn.zhengjunren.myblog.admin.vo.UserPrincipal;
 import cn.zhengjunren.myblog.common.consts.Consts;
 import cn.zhengjunren.myblog.common.staus.Status;

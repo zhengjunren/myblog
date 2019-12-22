@@ -1,7 +1,6 @@
-package cn.zhengjunren.myblog.admin.exception;
+package cn.zhengjunren.myblog.common.exception;
 
 
-import cn.zhengjunren.myblog.common.exception.BaseException;
 import cn.zhengjunren.myblog.common.staus.Status;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

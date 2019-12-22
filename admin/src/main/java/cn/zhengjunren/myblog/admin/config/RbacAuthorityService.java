@@ -3,7 +3,7 @@ package cn.zhengjunren.myblog.admin.config;
 import cn.hutool.core.util.StrUtil;
 import cn.zhengjunren.myblog.admin.domain.Permission;
 import cn.zhengjunren.myblog.admin.domain.Role;
-import cn.zhengjunren.myblog.admin.exception.SecurityException;
+import cn.zhengjunren.myblog.common.exception.SecurityException;
 import cn.zhengjunren.myblog.admin.service.PermissionService;
 import cn.zhengjunren.myblog.admin.service.RoleService;
 import cn.zhengjunren.myblog.admin.vo.UserPrincipal;

@@ -87,7 +87,7 @@
                 <span>{{ scope.row.createTime }}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" label="创建时间" width="185">
+            <el-table-column align="center" label="更新时间" width="185">
               <template slot-scope="scope">
                 <span>{{ scope.row.updateTime }}</span>
               </template>

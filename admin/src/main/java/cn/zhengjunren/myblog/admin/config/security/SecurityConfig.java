@@ -1,5 +1,6 @@
-package cn.zhengjunren.myblog.admin.config;
+package cn.zhengjunren.myblog.admin.config.security;
 
+import cn.zhengjunren.myblog.admin.config.security.filter.JwtAuthenticationFilter;
 import cn.zhengjunren.myblog.admin.service.CustomUserDetailsService;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;

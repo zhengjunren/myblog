@@ -1,6 +1,6 @@
 package cn.zhengjunren.myblog.admin.domain;
 
-import cn.zhengjunren.myblog.admin.common.BaseDomain;
+import cn.zhengjunren.myblog.common.domain.BaseDomain;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;

@@ -1,6 +1,6 @@
 package cn.zhengjunren.myblog.admin.domain;
 
-import cn.zhengjunren.myblog.admin.common.BaseDomain;
+import cn.zhengjunren.myblog.common.domain.BaseDomain;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -74,12 +74,6 @@ public class User extends BaseDomain implements Serializable {
      */
     @TableField(value = "status")
     private Integer status;
-
-    /**
-     * 创建时间
-     */
-    @TableField(value = "create_time")
-    private Date createTime;
 
     /**
      * 更新时间

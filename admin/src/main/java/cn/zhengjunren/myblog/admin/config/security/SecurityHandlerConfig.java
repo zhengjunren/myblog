@@ -1,4 +1,4 @@
-package cn.zhengjunren.myblog.admin.config;
+package cn.zhengjunren.myblog.admin.config.security;
 
 import cn.zhengjunren.myblog.admin.utils.ResponseUtil;
 import cn.zhengjunren.myblog.common.staus.Status;

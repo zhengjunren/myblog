@@ -1,9 +1,10 @@
-package cn.zhengjunren.myblog.admin.config;
+package cn.zhengjunren.myblog.admin.config.security.filter;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.zhengjunren.myblog.admin.exception.SecurityException;
+import cn.zhengjunren.myblog.admin.config.security.CustomConfig;
+import cn.zhengjunren.myblog.common.exception.SecurityException;
 import cn.zhengjunren.myblog.admin.service.CustomUserDetailsService;
 import cn.zhengjunren.myblog.admin.utils.JwtUtil;
 import cn.zhengjunren.myblog.admin.utils.ResponseUtil;

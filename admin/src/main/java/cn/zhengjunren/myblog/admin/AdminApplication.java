@@ -12,7 +12,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * @version 1.0.0
  * @date 2019/12/15 21:02
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "cn.zhengjunren.myblog")
 @EnableScheduling
 public class AdminApplication {
     public static void main(String[] args) {

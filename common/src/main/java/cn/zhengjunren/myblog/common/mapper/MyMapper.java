@@ -1,4 +1,4 @@
-package cn.zhengjunren.myblog.admin.common;
+package cn.zhengjunren.myblog.common.mapper;
 
 import java.util.List;
 

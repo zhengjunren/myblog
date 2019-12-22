@@ -1,6 +1,6 @@
 package cn.zhengjunren.myblog.admin.mapper;
 
-import cn.zhengjunren.myblog.admin.common.MyMapper;
+import cn.zhengjunren.myblog.common.mapper.MyMapper;
 import cn.zhengjunren.myblog.admin.domain.Menu;
 import cn.zhengjunren.myblog.admin.dto.MenuDTO;
 import cn.zhengjunren.myblog.common.consts.Consts;

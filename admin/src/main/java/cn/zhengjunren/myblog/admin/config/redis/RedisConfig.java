@@ -1,4 +1,4 @@
-package cn.zhengjunren.myblog.admin.config;
+package cn.zhengjunren.myblog.admin.config.redis;
 
 import cn.zhengjunren.myblog.common.consts.Consts;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;

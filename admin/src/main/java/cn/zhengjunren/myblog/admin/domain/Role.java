@@ -1,6 +1,6 @@
 package cn.zhengjunren.myblog.admin.domain;
 
-import cn.zhengjunren.myblog.admin.common.BaseDomain;
+import cn.zhengjunren.myblog.common.domain.BaseDomain;
 import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.format.DateTimeFormat;
@@ -39,14 +39,6 @@ public class Role extends BaseDomain implements Serializable {
     @ExcelProperty("角色描述")
     @TableField(value = "description")
     private String description;
-
-    /**
-     * 创建时间
-     */
-    @ExcelProperty("创建时间")
-    @DateTimeFormat("yyyy-MM-dd HH:mm:ss")
-    @TableField(value = "create_time")
-    private Date createTime;
 
     /**
      * 更新时间

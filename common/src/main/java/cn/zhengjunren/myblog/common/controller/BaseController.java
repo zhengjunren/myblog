@@ -1,7 +1,8 @@
-package cn.zhengjunren.myblog.admin.common;
+package cn.zhengjunren.myblog.common.controller;
 
 import cn.hutool.core.util.StrUtil;
-import cn.zhengjunren.myblog.admin.dto.info.ListInfo;
+import cn.zhengjunren.myblog.common.domain.BaseDomain;
+import cn.zhengjunren.myblog.common.dto.ListInfo;
 import cn.zhengjunren.myblog.common.exception.BadRequestException;
 import cn.zhengjunren.myblog.common.result.ApiResponse;
 import cn.zhengjunren.myblog.common.staus.Status;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -46,6 +48,7 @@ public abstract class BaseController<T extends BaseDomain, S extends IService<T>
         if (entity.getId() != null) {
             throw new BadRequestException(Status.ENTITY_CANNOT_HAVE_AN_ID);
         }
+        entity.setCreateTime(new Date());
         service.save(entity);
         return ApiResponse.ofSuccess();
     }

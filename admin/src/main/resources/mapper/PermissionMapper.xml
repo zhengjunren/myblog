@@ -12,10 +12,11 @@
     <result column="method" jdbcType="VARCHAR" property="method" />
     <result column="sort" jdbcType="INTEGER" property="sort" />
     <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, `name`, url, `type`, permission, `method`, sort, parent_id
+    id, `name`, url, `type`, permission, `method`, sort, parent_id, create_time
   </sql>
 
   <select id="selectByRoleIdList" resultMap="BaseResultMap">

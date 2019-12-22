@@ -1,12 +1,17 @@
-package cn.zhengjunren.myblog.admin.common;
+package cn.zhengjunren.myblog.common.domain;
 
 import com.alibaba.excel.annotation.ExcelIgnore;
+import com.alibaba.excel.annotation.ExcelProperty;
+import com.alibaba.excel.annotation.format.DateTimeFormat;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Date;
 
 /**
  * <p>ClassName: BaseDomain</p>
@@ -27,4 +32,12 @@ public abstract class BaseDomain {
     @ExcelIgnore
     @TableId(value = "id", type = IdType.AUTO)
     protected Long id;
+
+    /**
+     * 创建日期
+     */
+    @ExcelProperty("创建时间")
+    @DateTimeFormat("yyyy-MM-dd HH:mm:ss")
+    @TableField(value = "create_time")
+    private Date createTime;
 }

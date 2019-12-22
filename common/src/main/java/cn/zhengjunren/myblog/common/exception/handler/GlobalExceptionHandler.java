@@ -1,4 +1,4 @@
-package cn.zhengjunren.myblog.admin.exception.handler;
+package cn.zhengjunren.myblog.common.exception.handler;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.json.JSONUtil;

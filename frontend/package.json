@@ -17,6 +17,8 @@
   "dependencies": {
     "@riophae/vue-treeselect": "^0.4.0",
     "axios": "0.18.1",
+    "browserslist": "^4.8.2",
+    "caniuse-lite": "^1.0.30001016",
     "element-ui": "2.7.2",
     "fuse.js": "^3.4.6",
     "js-cookie": "2.2.0",

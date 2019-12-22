@@ -1,7 +1,7 @@
 package cn.zhengjunren.myblog.admin.service;
 
 import cn.zhengjunren.myblog.admin.domain.Role;
-import cn.zhengjunren.myblog.admin.dto.info.ListInfo;
+import cn.zhengjunren.myblog.common.dto.ListInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
