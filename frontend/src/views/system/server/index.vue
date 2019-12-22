@@ -1,24 +1,161 @@
 <template>
   <div class="app-container">
-    <Iframe :src="server" />
+    <el-row :gutter="20">
+      <el-col :span="12">
+        <el-card>
+          <div slot="header">
+            <span>CPU信息</span>
+          </div>
+          <el-table size="small" border :data="server.cpu" style="width: 100%">
+            <el-table-column prop="key" label="属性">
+            </el-table-column>
+            <el-table-column prop="value" label="值">
+            </el-table-column>
+          </el-table>
+        </el-card>
+      </el-col>
+      <el-col :span="12">
+        <el-card>
+          <div slot="header">
+            <span>内存信息</span>
+          </div>
+          <el-table size="small" border :data="server.mem" style="width: 100%">
+            <el-table-column prop="key" label="属性">
+            </el-table-column>
+            <el-table-column prop="value" label="值">
+            </el-table-column>
+          </el-table>
+        </el-card>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="12">
+        <el-card>
+          <div slot="header">
+            <span>服务器信息</span>
+          </div>
+          <el-table size="small" border :data="server.sys" style="width: 100%">
+            <el-table-column prop="key" label="属性">
+            </el-table-column>
+            <el-table-column prop="value" label="值">
+            </el-table-column>
+          </el-table>
+        </el-card>
+      </el-col>
+      <el-col :span="12">
+        <el-card>
+          <div slot="header">
+            <span>Java虚拟机信息</span>
+          </div>
+          <el-table size="small" border :data="server.jvm" style="width: 100%">
+            <el-table-column prop="key" label="属性">
+            </el-table-column>
+            <el-table-column prop="value" label="值">
+            </el-table-column>
+          </el-table>
+        </el-card>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="24">
+        <el-card>
+          <div slot="header">
+            <span>磁盘状态</span>
+          </div>
+          <div class="sysFile" v-for="(item,index) in server.sysFile" :key="index">
+            <el-table size="small" border :data="item" style="width: 100%">
+              <el-table-column prop="key" label="属性">
+              </el-table-column>
+              <el-table-column prop="value" label="值">
+              </el-table-column>
+            </el-table>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script>
-  import Iframe from "@/components/Iframe";
+  import SockJS from  'sockjs-client';
+  import  Stomp from 'stompjs';
+  import { getToken } from '@/utils/auth'
+  const wsTopic = "/topic/server";
+  const wsHost = process.env.VUE_APP_BASE_API + "/notification"
   export default {
-    name: "index",
-    components: {
-      Iframe
-    },
-    data() {
+    data(){
       return {
-        server: process.env.VUE_APP_BASE_API + "/server/index"
+        timer:'',
+        isConnected: false,
+        stompClient: {},
+        socket: {},
+        server: {
+          cpu: [],
+          mem: [],
+          jvm: [],
+          sys: [],
+          sysFile: []
+        }
       }
+    },
+    methods: {
+      initWebSocket() {
+        this.connection();
+        let that= this;
+        // 断开重连机制,尝试发送消息,捕获异常发生时重连
+        this.timer = setInterval(() => {
+          try {
+            that.stompClient.send("test");
+          } catch (err) {
+            that.connection();
+          }
+        }, 5000);
+      },
+      connection() {
+        // 建立连接对象 http://119.3.222.119
+        let socket = new SockJS(wsHost);
+        // 获取STOMP子协议的客户端对象
+        this.stompClient = Stomp.over(socket);
+        // 定义客户端的认证信息,按需求配置
+        let headers = {
+          Authorization: 'Bearer ' + getToken()
+        }
+        // 向服务器发起websocket连接
+        this.stompClient.connect(headers,() => {
+          this.$message({
+            message: '连接成功',
+            type: 'success'
+          });
+
+          this.stompClient.subscribe(wsTopic, (msg) => { // 订阅服务端提供的某个topic
+            this.server = JSON.parse(msg.body);
+          },headers);
+        }, (err) => {
+          // 连接发生错误时的处理函数
+        });
+      },
+      disconnect() {
+        if (this.stompClient) {
+          this.stompClient.disconnect();
+        }
+      },
+    },
+    mounted(){
+      this.initWebSocket();
+    },
+    beforeDestroy() {
+      // 页面离开时断开连接,清除定时器
+      this.disconnect();
+      clearInterval(this.timer);
+      this.$message('连接断开');
     }
+
   }
 </script>
 
 <style scoped>
-
+  .line{
+    text-align: center;
+  }
 </style>
+

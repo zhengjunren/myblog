@@ -1,6 +1,6 @@
 {
   "name": "blog",
-  "version": "4.2.1",
+  "version": "1.0.0",
   "description": "A vue admin template with Element UI & axios & iconfont & permission control & lint",
   "author": "Zheng <zhengjr989@gmail.com>",
   "license": "MIT",
@@ -24,6 +24,8 @@
     "nprogress": "0.2.0",
     "path-to-regexp": "2.4.0",
     "screenfull": "^5.0.0",
+    "sockjs-client": "^1.0.0",
+    "stompjs": "^2.3.3",
     "vue": "2.6.10",
     "vue-router": "3.0.6",
     "vuex": "3.1.0"
