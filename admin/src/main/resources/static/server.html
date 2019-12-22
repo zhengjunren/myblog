@@ -137,7 +137,7 @@
         },
         methods: {
             _getServerInfo() {
-                axios.get('/demo/server')
+                axios.get('/api/server')
                     .then((response) => {
                         this.server = response.data
                         console.log()

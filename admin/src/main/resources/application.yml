@@ -93,7 +93,7 @@ custom:
         - "/static/js/**"
         - "/static/*.html"
         - "/api/notification/**"
-        - "/api/server/index"
+        - "/api/server/**"
       options:
         - "/**"
 server:
