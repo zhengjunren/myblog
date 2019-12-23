@@ -88,8 +88,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
                 // 异常处理
-                .and().exceptionHandling().accessDeniedHandler(accessDeniedHandler)
-                .and().headers().frameOptions().disable();
+                .and().exceptionHandling().accessDeniedHandler(accessDeniedHandler);
         // @formatter:on
 
         // 添加自定义 JWT 过滤器

@@ -90,6 +90,11 @@ custom:
       # 需要过滤的请求，不限方法
       pattern:
         - "/api/notification/**"
+        - "/webjars/**"
+        - "/resources/**"
+        - "/v2/api-docs"
+        - "/swagger-resources/**"
+        - "/doc.html"
       options:
         - "/**"
 server:
