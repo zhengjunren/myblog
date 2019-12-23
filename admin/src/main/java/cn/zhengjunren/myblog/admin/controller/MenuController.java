@@ -57,6 +57,7 @@ public class MenuController extends BaseController<Menu, MenuService> {
      * 根据角色生成前端所需的菜单
      * @return 菜单
      */
+    @MyLog("获取前端所需菜单")
     @GetMapping(value = "/build")
     public ApiResponse build() {
         UserPrincipal userPrincipal = SecurityUtil.getCurrentUser();
@@ -84,6 +85,7 @@ public class MenuController extends BaseController<Menu, MenuService> {
      */
     @Override
     @PostMapping
+    @MyLog("创建菜单")
     public ApiResponse create(@RequestBody Menu menu) {
         if (menu.getId() != null) {
             throw new BadRequestException(Status.ENTITY_CANNOT_HAVE_AN_ID);
@@ -99,6 +101,7 @@ public class MenuController extends BaseController<Menu, MenuService> {
      * @return 成功
      */
     @DeleteMapping(value = "/{id}")
+    @MyLog("删除菜单")
     public ApiResponse delete(@PathVariable Long id) {
         List<Menu> menuList = service.findByParentId(id);
         Set<Menu> menuSet = new HashSet<>();

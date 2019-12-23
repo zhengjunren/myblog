@@ -1,12 +1,13 @@
 package cn.zhengjunren.myblog.admin.controller;
 
-import cn.zhengjunren.myblog.common.controller.BaseController;
 import cn.zhengjunren.myblog.admin.domain.Role;
 import cn.zhengjunren.myblog.admin.dto.params.MenuParams;
 import cn.zhengjunren.myblog.admin.dto.params.PermissionParams;
 import cn.zhengjunren.myblog.admin.service.RoleMenuService;
 import cn.zhengjunren.myblog.admin.service.RolePermissionService;
 import cn.zhengjunren.myblog.admin.service.RoleService;
+import cn.zhengjunren.myblog.common.annotation.MyLog;
+import cn.zhengjunren.myblog.common.controller.BaseController;
 import cn.zhengjunren.myblog.common.result.ApiResponse;
 import cn.zhengjunren.myblog.common.staus.Status;
 import lombok.extern.slf4j.Slf4j;
@@ -49,6 +50,7 @@ public class RoleController extends BaseController<Role, RoleService> {
      * @return 分页结果
      */
     @Override
+    @MyLog("分页查询角色")
     public ApiResponse page(long page, long limit) {
         return ApiResponse.ofSuccess(service.page(page, limit));
     }
@@ -59,24 +61,28 @@ public class RoleController extends BaseController<Role, RoleService> {
      * @return 更新结果
      */
     @PutMapping
+    @MyLog("更新角色")
     public ApiResponse update(@RequestBody Role role) {
         service.updateRole(role);
         return ApiResponse.ofSuccess();
     }
 
     @PutMapping("permission")
+    @MyLog("更新角色权限")
     public ApiResponse updatePermission(@RequestBody PermissionParams permissionParams) {
         rolePermissionService.updatePermission(permissionParams.getPermissionIds(), permissionParams.getCurrentRoleId());
         return ApiResponse.ofSuccess();
     }
 
     @PutMapping("menu")
+    @MyLog("更新角色菜单")
     public ApiResponse updateMenu(@RequestBody MenuParams menuParams) {
         roleMenuService.updateMenu(menuParams.getMenuIds(), menuParams.getCurrentRoleId());
         return ApiResponse.ofSuccess();
     }
 
     @DeleteMapping("{id}")
+    @MyLog("删除角色")
     public ApiResponse delete(@PathVariable long id) {
         try {
             service.removeById(id);

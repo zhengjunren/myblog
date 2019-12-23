@@ -1,6 +1,7 @@
 package cn.zhengjunren.myblog.admin.controller;
 
 import cn.zhengjunren.myblog.admin.dto.info.FileInfo;
+import cn.zhengjunren.myblog.common.annotation.MyLog;
 import cn.zhengjunren.myblog.common.result.ApiResponse;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
@@ -35,6 +36,7 @@ public class UploadController {
      * @param multipartFile @{code MultipartFile}
      * @return {@link ApiResponse} 文件上传路径
      */
+    @MyLog("上传文件")
     @PostMapping(value = "", headers = "Content-Type=multipart/form-data")
     public ApiResponse upload(MultipartFile multipartFile) {
         String fileName = multipartFile.getOriginalFilename();

@@ -17,9 +17,30 @@
     <result column="address" jdbcType="VARCHAR" property="address" />
     <result column="browser" jdbcType="VARCHAR" property="browser" />
   </resultMap>
+
+  <resultMap id="BaseResultMap2" type="cn.zhengjunren.myblog.admin.dto.log.InfoLogDto">
+    <!--@mbg.generated-->
+    <!--@Table log-->
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="method" jdbcType="VARCHAR" property="method" />
+    <result column="params" jdbcType="LONGVARCHAR" property="params" />
+    <result column="request_ip" jdbcType="VARCHAR" property="requestIp" />
+    <result column="time" jdbcType="BIGINT" property="time" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="browser" jdbcType="VARCHAR" property="browser" />
+  </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, create_time, description, exception_detail, log_type, `method`, params, request_ip, 
+    id, create_time, description, exception_detail, log_type, `method`, params, request_ip,
     `time`, username, address, browser
   </sql>
+
+  <select id="getInfoLogList" resultMap="BaseResultMap2">
+    SELECT *
+    FROM log
+    WHERE log_type = 'INFO'
+  </select>
+
 </mapper>

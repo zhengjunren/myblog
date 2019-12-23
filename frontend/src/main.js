@@ -10,6 +10,10 @@ import 'element-ui/lib/theme-chalk/index.css'
 
 import '@/styles/index.scss' // global css
 
+// 代码高亮
+import VueHighlightJS from 'vue-highlightjs'
+import 'highlight.js/styles/atom-one-dark.css'
+
 import App from './App'
 import store from './store'
 import router from './router'
@@ -31,6 +35,7 @@ if (process.env.NODE_ENV === 'production') {
   mockXHR()
 }
 
+Vue.use(VueHighlightJS)
 // set ElementUI lang to EN
 Vue.use(ElementUI, {
   size: Cookies.get('size') || 'medium' // set element-ui default size

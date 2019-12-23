@@ -39,7 +39,7 @@ public abstract class BaseDomain {
     @ExcelProperty("创建时间")
     @DateTimeFormat("yyyy-MM-dd HH:mm:ss")
     @TableField(value = "create_time")
-    private Date createTime;
+    protected Date createTime;
 
     @ExcelIgnore
     public static final String COL_ID = "id";

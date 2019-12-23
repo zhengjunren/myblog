@@ -3,6 +3,7 @@ package cn.zhengjunren.myblog.admin.domain;
 import cn.zhengjunren.myblog.common.domain.BaseDomain;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,6 +19,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName(value = "log")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Log extends BaseDomain implements Serializable {
 
     public Log(String logType, Long time) {

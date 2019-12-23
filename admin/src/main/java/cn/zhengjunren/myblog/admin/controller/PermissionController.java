@@ -2,6 +2,7 @@ package cn.zhengjunren.myblog.admin.controller;
 
 import cn.zhengjunren.myblog.admin.domain.Permission;
 import cn.zhengjunren.myblog.admin.service.PermissionService;
+import cn.zhengjunren.myblog.common.annotation.MyLog;
 import cn.zhengjunren.myblog.common.result.ApiResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +28,7 @@ public class PermissionController {
         this.permissionService = permissionService;
     }
 
+    @MyLog("获取权限树")
     @GetMapping("tree")
     public ApiResponse getPermissionTree() {
         List<Permission> permissions = permissionService.selectByParentId(0L);
