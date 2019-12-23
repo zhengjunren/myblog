@@ -1,16 +1,20 @@
 package cn.zhengjunren.myblog.admin.controller;
 
 
-import cn.zhengjunren.myblog.common.annotation.MyLog;
 import cn.zhengjunren.myblog.admin.dto.info.UserInfo;
 import cn.zhengjunren.myblog.admin.dto.params.LoginParams;
 import cn.zhengjunren.myblog.admin.utils.JwtUtil;
 import cn.zhengjunren.myblog.admin.utils.SecurityUtil;
 import cn.zhengjunren.myblog.admin.vo.JwtResponse;
 import cn.zhengjunren.myblog.admin.vo.UserPrincipal;
+import cn.zhengjunren.myblog.common.annotation.MyLog;
 import cn.zhengjunren.myblog.common.exception.SecurityException;
 import cn.zhengjunren.myblog.common.result.ApiResponse;
 import cn.zhengjunren.myblog.common.staus.Status;
+import cn.zhengjunren.myblog.common.utils.ParamTypeUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -38,6 +42,7 @@ import javax.validation.Valid;
 @Slf4j
 @RestController
 @RequestMapping("/api/auth")
+@Api(tags = "登录授权")
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
@@ -56,6 +61,8 @@ public class AuthController {
      */
     @MyLog("用户登录")
     @PostMapping("/login")
+    @ApiOperation(value = "登录", notes="用户名、邮箱、手机")
+    @ApiImplicitParam(name = "loginParams", value = "登录参数", required = true, dataType = "LoginParams", paramType = ParamTypeUtils.BODY)
     public ApiResponse login(@Valid @RequestBody LoginParams loginParams) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginParams.getUsernameOrEmailOrPhone(), loginParams.getPassword()));
 
@@ -72,6 +79,7 @@ public class AuthController {
      * @return 退出成功
      */
     @PostMapping("/logout")
+    @ApiOperation(value = "用户注销", notes="需要携带token")
     public ApiResponse logout(HttpServletRequest request) {
         try {
             // 设置JWT过期
@@ -88,6 +96,7 @@ public class AuthController {
      */
     @MyLog("获取用户信息")
     @GetMapping("info")
+    @ApiOperation(value = "获取用户信息")
     public ApiResponse getUserInfo() {
         UserPrincipal currentUser = SecurityUtil.getCurrentUser();
         UserInfo userInfo = new UserInfo();

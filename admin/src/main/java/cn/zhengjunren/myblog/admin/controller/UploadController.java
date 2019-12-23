@@ -6,6 +6,7 @@ import cn.zhengjunren.myblog.common.result.ApiResponse;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.model.PutObjectRequest;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +26,7 @@ import java.util.UUID;
  */
 @RestController
 @RequestMapping("/api/upload")
+@Api(tags = "上传文件")
 public class UploadController {
     private static final String ENDPOINT = "oss-cn-hangzhou.aliyuncs.com";
     private static final String ACCESS_KEY_ID = "LTAIdQL25lDzsU6l";

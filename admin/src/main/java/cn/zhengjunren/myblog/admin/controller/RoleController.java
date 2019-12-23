@@ -10,6 +10,12 @@ import cn.zhengjunren.myblog.common.annotation.MyLog;
 import cn.zhengjunren.myblog.common.controller.BaseController;
 import cn.zhengjunren.myblog.common.result.ApiResponse;
 import cn.zhengjunren.myblog.common.staus.Status;
+import cn.zhengjunren.myblog.common.utils.DataTypeUtils;
+import cn.zhengjunren.myblog.common.utils.ParamTypeUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,6 +36,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequestMapping("/api/roles")
+@Api(tags = "角色管理")
 public class RoleController extends BaseController<Role, RoleService> {
 
     private final RolePermissionService rolePermissionService;
@@ -51,6 +58,11 @@ public class RoleController extends BaseController<Role, RoleService> {
      */
     @Override
     @MyLog("分页查询角色")
+    @ApiOperation(value = "查询角色", notes="分页查询")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "页码", required = true, dataType = DataTypeUtils.LONG, paramType = ParamTypeUtils.QUERY),
+            @ApiImplicitParam(name = "limit", value = "笔数", required = true, dataType = DataTypeUtils.LONG, paramType = ParamTypeUtils.QUERY),
+    })
     public ApiResponse page(long page, long limit) {
         return ApiResponse.ofSuccess(service.page(page, limit));
     }
@@ -62,6 +74,8 @@ public class RoleController extends BaseController<Role, RoleService> {
      */
     @PutMapping
     @MyLog("更新角色")
+    @ApiOperation(value = "更新角色")
+    @ApiImplicitParam(name = "role", value = "更新角色", required = true, dataType = "Role", paramType = ParamTypeUtils.BODY)
     public ApiResponse update(@RequestBody Role role) {
         service.updateRole(role);
         return ApiResponse.ofSuccess();
@@ -69,6 +83,8 @@ public class RoleController extends BaseController<Role, RoleService> {
 
     @PutMapping("permission")
     @MyLog("更新角色权限")
+    @ApiOperation(value = "更新角色权限")
+    @ApiImplicitParam(name = "permissionParams", value = "角色id和权限id", required = true, dataType = "PermissionParams", paramType = ParamTypeUtils.BODY)
     public ApiResponse updatePermission(@RequestBody PermissionParams permissionParams) {
         rolePermissionService.updatePermission(permissionParams.getPermissionIds(), permissionParams.getCurrentRoleId());
         return ApiResponse.ofSuccess();
@@ -76,6 +92,8 @@ public class RoleController extends BaseController<Role, RoleService> {
 
     @PutMapping("menu")
     @MyLog("更新角色菜单")
+    @ApiOperation(value = "更新角色菜单")
+    @ApiImplicitParam(name = "menuParams", value = "角色id和菜单id", required = true, dataType = "MenuParams", paramType = ParamTypeUtils.BODY)
     public ApiResponse updateMenu(@RequestBody MenuParams menuParams) {
         roleMenuService.updateMenu(menuParams.getMenuIds(), menuParams.getCurrentRoleId());
         return ApiResponse.ofSuccess();
@@ -83,6 +101,8 @@ public class RoleController extends BaseController<Role, RoleService> {
 
     @DeleteMapping("{id}")
     @MyLog("删除角色")
+    @ApiOperation(value = "删除角色")
+    @ApiImplicitParam(name = "id", value = "id", required = true, dataType = DataTypeUtils.LONG, paramType = ParamTypeUtils.PATH)
     public ApiResponse delete(@PathVariable long id) {
         try {
             service.removeById(id);

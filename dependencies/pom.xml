@@ -18,6 +18,8 @@
         <jjwt.veersion>0.9.1</jjwt.veersion>
         <mail.version>1.4.7</mail.version>
         <swagger2.version>2.9.2</swagger2.version>
+        <swagger2-ui.version>1.9.6</swagger2-ui.version>
+        <knife4j.version>2.0.1</knife4j.version>
         <ip2region.version>1.7.2</ip2region.version>
         <mapstruct.version>1.2.0.Final</mapstruct.version>
         <oshi.version>3.9.1</oshi.version>
@@ -140,10 +142,14 @@
                 <version>${swagger2.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger-ui</artifactId>
-                <version>${swagger2.version}</version>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>swagger-bootstrap-ui</artifactId>
+                <version>${swagger2-ui.version}</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/com.github.xiaoymin/knife4j-spring-boot-starter -->
+
+
+
 
             <!-- 获取系统信息 -->
             <dependency>

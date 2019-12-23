@@ -1,7 +1,5 @@
 package cn.zhengjunren.myblog.admin.controller;
 
-import cn.zhengjunren.myblog.common.annotation.MyLog;
-import cn.zhengjunren.myblog.common.controller.BaseController;
 import cn.zhengjunren.myblog.admin.domain.Menu;
 import cn.zhengjunren.myblog.admin.domain.Role;
 import cn.zhengjunren.myblog.admin.dto.MenuDTO;
@@ -9,9 +7,16 @@ import cn.zhengjunren.myblog.admin.service.MenuService;
 import cn.zhengjunren.myblog.admin.service.RoleService;
 import cn.zhengjunren.myblog.admin.utils.SecurityUtil;
 import cn.zhengjunren.myblog.admin.vo.UserPrincipal;
+import cn.zhengjunren.myblog.common.annotation.MyLog;
+import cn.zhengjunren.myblog.common.controller.BaseController;
 import cn.zhengjunren.myblog.common.exception.BadRequestException;
 import cn.zhengjunren.myblog.common.result.ApiResponse;
 import cn.zhengjunren.myblog.common.staus.Status;
+import cn.zhengjunren.myblog.common.utils.DataTypeUtils;
+import cn.zhengjunren.myblog.common.utils.ParamTypeUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.validation.annotation.Validated;
@@ -41,6 +46,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestController
 @RequestMapping("/api/menus")
+@Api(tags = "菜单管理")
 public class MenuController extends BaseController<Menu, MenuService> {
 
     private final RoleService roleService;
@@ -59,6 +65,7 @@ public class MenuController extends BaseController<Menu, MenuService> {
      */
     @MyLog("获取前端所需菜单")
     @GetMapping(value = "/build")
+    @ApiOperation(value = "获取前端所需菜单")
     public ApiResponse build() {
         UserPrincipal userPrincipal = SecurityUtil.getCurrentUser();
         assert userPrincipal != null;
@@ -73,6 +80,7 @@ public class MenuController extends BaseController<Menu, MenuService> {
      * @return 树形菜单列表
      */
     @GetMapping("list")
+    @ApiOperation(value = "获取树形菜单列表")
     public ApiResponse getMenus() {
         List<MenuDTO> list = service.getAll();
         return ApiResponse.ofSuccess(service.buildTree(list));
@@ -86,6 +94,8 @@ public class MenuController extends BaseController<Menu, MenuService> {
     @Override
     @PostMapping
     @MyLog("创建菜单")
+    @ApiOperation(value = "创建菜单")
+    @ApiImplicitParam(name = "menu", value = "菜单：不带id，创建时间", required = true, dataType = "Menu", paramType = ParamTypeUtils.BODY)
     public ApiResponse create(@RequestBody Menu menu) {
         if (menu.getId() != null) {
             throw new BadRequestException(Status.ENTITY_CANNOT_HAVE_AN_ID);
@@ -102,6 +112,8 @@ public class MenuController extends BaseController<Menu, MenuService> {
      */
     @DeleteMapping(value = "/{id}")
     @MyLog("删除菜单")
+    @ApiOperation(value = "删除菜单")
+    @ApiImplicitParam(name = "id", value = "id", required = true, dataType = DataTypeUtils.LONG, paramType = ParamTypeUtils.PATH)
     public ApiResponse delete(@PathVariable Long id) {
         List<Menu> menuList = service.findByParentId(id);
         Set<Menu> menuSet = new HashSet<>();
@@ -121,6 +133,7 @@ public class MenuController extends BaseController<Menu, MenuService> {
      * 菜单树
      * @return 菜单树结果
      */
+    @ApiOperation(value = "菜单树")
     @GetMapping(value = "/tree")
     public ApiResponse getMenuTree() {
         return ApiResponse.ofSuccess(service.getMenuTree(service.findByParentId(0L)));
@@ -133,6 +146,8 @@ public class MenuController extends BaseController<Menu, MenuService> {
      */
     @PutMapping
     @MyLog("更新菜单")
+    @ApiOperation(value = "更新菜单")
+    @ApiImplicitParam(name = "resources", value = "", required = true, dataType = "Menu", paramType = ParamTypeUtils.BODY)
     public ApiResponse update(@Validated @RequestBody Menu resources){
         service.update(resources);
         return ApiResponse.ofSuccess();

@@ -10,9 +10,9 @@
           value-format="yyyy-MM-dd HH:mm:ss"
           start-placeholder="开始日期"
           end-placeholder="结束日期"/>
-        <el-button v-waves class="filter-item" type="primary" icon="el-icon-download" @click="isError ? fetchErrorLog() : fetchData()">搜索</el-button>
+        <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="isError ? fetchErrorLog() : fetchData()">搜索</el-button>
         <el-button v-waves class="filter-item" type="primary" icon="el-icon-download" :loading="downloadLoading" @click="isError ? downloadErrorLogExcel() : downloadInfoLogExcel()">导出</el-button>
-        <el-button v-waves class="filter-item" type="danger" icon="el-icon-delete" @click="deleteLogs">清空日志</el-button>
+        <el-button v-waves class="filter-item" type="danger" icon="el-icon-delete" @click="deleteLogs">清空</el-button>
       </div>
       <el-tab-pane label="操作日志" name="INFO">
         <el-table

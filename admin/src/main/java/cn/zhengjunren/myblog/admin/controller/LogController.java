@@ -8,8 +8,14 @@ import cn.zhengjunren.myblog.admin.service.LogService;
 import cn.zhengjunren.myblog.common.consts.Consts;
 import cn.zhengjunren.myblog.common.controller.BaseController;
 import cn.zhengjunren.myblog.common.result.ApiResponse;
+import cn.zhengjunren.myblog.common.utils.DataTypeUtils;
+import cn.zhengjunren.myblog.common.utils.ParamTypeUtils;
 import com.alibaba.excel.EasyExcel;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +39,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/api/logs")
+@Api(tags = "日志管理")
 public class LogController extends BaseController<Log, LogService> {
 
     public LogController(LogService service) {
@@ -40,17 +47,28 @@ public class LogController extends BaseController<Log, LogService> {
     }
 
     @GetMapping("/{type}")
+    @ApiOperation(value = "查询日志", notes="根据时间、类型、分页查询")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "页码", required = true, dataType = DataTypeUtils.LONG, paramType = ParamTypeUtils.QUERY),
+            @ApiImplicitParam(name = "limit", value = "笔数", required = true, dataType = DataTypeUtils.LONG, paramType = ParamTypeUtils.QUERY),
+            @ApiImplicitParam(name = "start", value = "开始", required = true, dataType = DataTypeUtils.DATETIME, paramType = ParamTypeUtils.QUERY),
+            @ApiImplicitParam(name = "end", value = "截止", required = true, dataType = DataTypeUtils.DATETIME, paramType = ParamTypeUtils.QUERY),
+            @ApiImplicitParam(name = "type", value = "类型：为 INFO 或 ERROR", required = true, dataType = DataTypeUtils.STRING, paramType = ParamTypeUtils.PATH),
+    })
     public ApiResponse page(long page, long limit, Timestamp start, Timestamp end, @PathVariable("type") String type) {
         return ApiResponse.ofSuccess(service.page(page, limit, start, end, type));
     }
 
     @GetMapping("/error/{id}")
+    @ApiOperation(value = "查询异常", notes="根据id查询异常")
+    @ApiImplicitParam(name = "id", value = "id", required = true, dataType = DataTypeUtils.LONG, paramType = ParamTypeUtils.PATH)
     public ApiResponse getError(@PathVariable long id) {
         return ApiResponse.ofSuccess(service.getErrorDetail(id));
     }
 
     @Override
     @GetMapping("/info/excel")
+    @ApiOperation(value = "导出info日志excel")
     public void exportExcel(HttpServletResponse response) throws IOException, ClassNotFoundException {
         // 这里注意 有同学反应使用swagger 会导致各种问题，请直接用浏览器或者用postman
         response.setContentType("application/vnd.ms-excel");
@@ -62,6 +80,7 @@ public class LogController extends BaseController<Log, LogService> {
     }
 
     @GetMapping("/error/excel")
+    @ApiOperation(value = "导出error日志excel")
     public void exportErrorLogExcel(HttpServletResponse response) throws IOException, ClassNotFoundException {
         // 这里注意 有同学反应使用swagger 会导致各种问题，请直接用浏览器或者用postman
         response.setContentType("application/vnd.ms-excel");
@@ -79,6 +98,8 @@ public class LogController extends BaseController<Log, LogService> {
     }
 
     @DeleteMapping("/{type}")
+    @ApiOperation(value = "清空日志")
+    @ApiImplicitParam(name = "type", value = "类型：为 INFO 或 ERROR", required = true, dataType = DataTypeUtils.STRING, paramType = ParamTypeUtils.PATH)
     public ApiResponse delete(@PathVariable String type) {
         QueryWrapper<Log> logQueryWrapper = new QueryWrapper<>();
         logQueryWrapper.eq(Log.COL_LOG_TYPE, type);
