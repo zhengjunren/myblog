@@ -69,6 +69,7 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements LogSe
         boolean flag = start != null && end != null;
         logQueryWrapper.between(flag, Log.COL_CREATE_TIME, start, end);
         logQueryWrapper.eq(Log.COL_LOG_TYPE, type);
+        logQueryWrapper.orderByDesc(Log.COL_CREATE_TIME);
         IPage<Log> logIPage = baseMapper.selectPage(page, logQueryWrapper);
         return new ListInfo(logIPage.getRecords(), logIPage.getTotal());
     }

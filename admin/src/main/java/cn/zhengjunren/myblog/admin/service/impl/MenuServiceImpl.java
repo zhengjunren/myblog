@@ -45,6 +45,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     public List<Menu> findByParentId(Long parentId) {
         QueryWrapper<Menu> menuQueryWrapper = new QueryWrapper<>();
         menuQueryWrapper.eq(Menu.COL_PARENT_ID, parentId);
+        menuQueryWrapper.orderByAsc(Menu.COL_SORT);
         return menuMapper.selectList(menuQueryWrapper);
     }
 
@@ -119,7 +120,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
     @Override
     public List<MenuDTO> getAll() {
-        List<Menu> menus = menuMapper.selectList(null);
+        QueryWrapper<Menu> menuQueryWrapper = new QueryWrapper<>();
+        menuQueryWrapper.orderByAsc(Menu.COL_SORT);
+        List<Menu> menus = menuMapper.selectList(menuQueryWrapper);
         return menuMapper.toDto(menus);
     }
 
