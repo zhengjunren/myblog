@@ -86,6 +86,7 @@ public class AuthController {
      * 根据 token 获取前端存储在 vuex 中的用户信息
      * @return 用户信息
      */
+    @MyLog("获取用户信息")
     @GetMapping("info")
     public ApiResponse getUserInfo() {
         UserPrincipal currentUser = SecurityUtil.getCurrentUser();
