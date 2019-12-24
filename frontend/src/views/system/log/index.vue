@@ -197,6 +197,7 @@ export default {
       listQuery: {
         page: 1,
         limit: 10,
+        type: "INFO",
         start: undefined,
         end: undefined
       },
@@ -216,6 +217,7 @@ export default {
         this.listQuery.start = date[0]
         this.listQuery.end = date[1]
       }
+      this.listQuery.type = "INFO"
       getInfoLog(this.listQuery).then(response =>{
         this.list = response.data.items
         this.total = response.data.total
@@ -230,6 +232,7 @@ export default {
         this.listQuery.start = date[0]
         this.listQuery.end = date[1]
       }
+      this.listQuery.type = "ERROR"
       getErrorLog(this.listQuery).then(response =>{
         this.list = response.data.items
         this.total = response.data.total
@@ -283,6 +286,7 @@ export default {
       this.listQuery = {
         page: 1,
         limit: 10,
+        type: "INFO",
         start: null,
         end: null
       }

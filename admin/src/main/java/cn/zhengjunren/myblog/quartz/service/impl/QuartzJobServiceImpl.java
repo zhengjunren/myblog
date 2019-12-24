@@ -49,7 +49,7 @@ public class QuartzJobServiceImpl extends ServiceImpl<QuartzJobMapper, QuartzJob
             quartzManage.pauseJob(quartzJob);
             quartzJob.setIsPause(true);
         }
-        baseMapper.insert(quartzJob);
+        baseMapper.updateById(quartzJob);
     }
 
     @Override

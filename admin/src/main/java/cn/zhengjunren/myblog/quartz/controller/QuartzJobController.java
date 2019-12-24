@@ -1,6 +1,7 @@
 package cn.zhengjunren.myblog.quartz.controller;
 
 import cn.zhengjunren.myblog.common.controller.BaseController;
+import cn.zhengjunren.myblog.common.dto.BaseQueryPageCondition;
 import cn.zhengjunren.myblog.common.result.ApiResponse;
 import cn.zhengjunren.myblog.quartz.domain.QuartzJob;
 import cn.zhengjunren.myblog.quartz.service.QuartzJobService;
@@ -26,7 +27,7 @@ import java.util.Set;
  */
 @RestController
 @RequestMapping("/api/jobs")
-public class QuartzJobController extends BaseController<QuartzJob, QuartzJobService> {
+public class QuartzJobController extends BaseController<QuartzJob, QuartzJobService, BaseQueryPageCondition> {
 
 
     public QuartzJobController(QuartzJobService service) {

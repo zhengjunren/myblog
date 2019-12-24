@@ -1,17 +1,18 @@
 package cn.zhengjunren.myblog.system.controller;
 
+import cn.zhengjunren.myblog.common.annotation.MyLog;
+import cn.zhengjunren.myblog.common.controller.BaseController;
+import cn.zhengjunren.myblog.common.dto.BaseQueryPageCondition;
+import cn.zhengjunren.myblog.common.result.ApiResponse;
+import cn.zhengjunren.myblog.common.staus.Status;
+import cn.zhengjunren.myblog.common.utils.DataTypeUtils;
+import cn.zhengjunren.myblog.common.utils.ParamTypeUtils;
 import cn.zhengjunren.myblog.system.domain.Role;
 import cn.zhengjunren.myblog.system.dto.params.MenuParams;
 import cn.zhengjunren.myblog.system.dto.params.PermissionParams;
 import cn.zhengjunren.myblog.system.service.RoleMenuService;
 import cn.zhengjunren.myblog.system.service.RolePermissionService;
 import cn.zhengjunren.myblog.system.service.RoleService;
-import cn.zhengjunren.myblog.common.annotation.MyLog;
-import cn.zhengjunren.myblog.common.controller.BaseController;
-import cn.zhengjunren.myblog.common.result.ApiResponse;
-import cn.zhengjunren.myblog.common.staus.Status;
-import cn.zhengjunren.myblog.common.utils.DataTypeUtils;
-import cn.zhengjunren.myblog.common.utils.ParamTypeUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -37,7 +38,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/roles")
 @Api(tags = "角色管理")
-public class RoleController extends BaseController<Role, RoleService> {
+public class RoleController extends BaseController<Role, RoleService, BaseQueryPageCondition> {
 
     private final RolePermissionService rolePermissionService;
 
@@ -52,8 +53,7 @@ public class RoleController extends BaseController<Role, RoleService> {
 
     /**
      *  分页查询
-     * @param page 页码
-     * @param limit 每页显示条数
+     * @param baseQueryPageCondition 分页查询条件
      * @return 分页结果
      */
     @Override
@@ -63,8 +63,8 @@ public class RoleController extends BaseController<Role, RoleService> {
             @ApiImplicitParam(name = "page", value = "页码", required = true, dataType = DataTypeUtils.LONG, paramType = ParamTypeUtils.QUERY),
             @ApiImplicitParam(name = "limit", value = "笔数", required = true, dataType = DataTypeUtils.LONG, paramType = ParamTypeUtils.QUERY),
     })
-    public ApiResponse page(long page, long limit) {
-        return ApiResponse.ofSuccess(service.page(page, limit));
+    public ApiResponse page(BaseQueryPageCondition baseQueryPageCondition) {
+        return ApiResponse.ofSuccess(service.page(baseQueryPageCondition.getPage(), baseQueryPageCondition.getLimit()));
     }
 
     /**

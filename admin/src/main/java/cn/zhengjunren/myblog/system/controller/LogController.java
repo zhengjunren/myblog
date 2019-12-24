@@ -1,15 +1,16 @@
 package cn.zhengjunren.myblog.system.controller;
 
 import cn.hutool.core.util.ObjectUtil;
-import cn.zhengjunren.myblog.log.domain.Log;
-import cn.zhengjunren.myblog.log.dto.ErrorLogDto;
-import cn.zhengjunren.myblog.log.dto.InfoLogDto;
-import cn.zhengjunren.myblog.log.service.LogService;
 import cn.zhengjunren.myblog.common.consts.Consts;
 import cn.zhengjunren.myblog.common.controller.BaseController;
 import cn.zhengjunren.myblog.common.result.ApiResponse;
 import cn.zhengjunren.myblog.common.utils.DataTypeUtils;
 import cn.zhengjunren.myblog.common.utils.ParamTypeUtils;
+import cn.zhengjunren.myblog.log.domain.Log;
+import cn.zhengjunren.myblog.log.dto.ErrorLogDto;
+import cn.zhengjunren.myblog.log.dto.InfoLogDto;
+import cn.zhengjunren.myblog.log.service.LogService;
+import cn.zhengjunren.myblog.system.dto.condition.LogQueryCondition;
 import com.alibaba.excel.EasyExcel;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.Api;
@@ -25,7 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,13 +40,14 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/logs")
 @Api(tags = "日志管理")
-public class LogController extends BaseController<Log, LogService> {
+public class LogController extends BaseController<Log, LogService, LogQueryCondition> {
 
     public LogController(LogService service) {
         super(service);
     }
 
-    @GetMapping("/{type}")
+    @Override
+    @GetMapping()
     @ApiOperation(value = "查询日志", notes="根据时间、类型、分页查询")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "页码", required = true, dataType = DataTypeUtils.LONG, paramType = ParamTypeUtils.QUERY),
@@ -55,8 +56,9 @@ public class LogController extends BaseController<Log, LogService> {
             @ApiImplicitParam(name = "end", value = "截止", required = true, dataType = DataTypeUtils.DATETIME, paramType = ParamTypeUtils.QUERY),
             @ApiImplicitParam(name = "type", value = "类型：为 INFO 或 ERROR", required = true, dataType = DataTypeUtils.STRING, paramType = ParamTypeUtils.PATH),
     })
-    public ApiResponse page(long page, long limit, Timestamp start, Timestamp end, @PathVariable("type") String type) {
-        return ApiResponse.ofSuccess(service.page(page, limit, start, end, type));
+    public ApiResponse page(LogQueryCondition logQueryCondition) {
+        System.out.println(logQueryCondition.toString());
+        return ApiResponse.ofSuccess(service.page(logQueryCondition.getPage(), logQueryCondition.getLimit(), logQueryCondition.getStart(), logQueryCondition.getEnd(), logQueryCondition.getType()));
     }
 
     @GetMapping("/error/{id}")

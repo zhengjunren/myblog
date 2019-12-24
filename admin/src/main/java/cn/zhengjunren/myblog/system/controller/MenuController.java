@@ -1,19 +1,19 @@
 package cn.zhengjunren.myblog.system.controller;
 
+import cn.zhengjunren.myblog.common.annotation.MyLog;
+import cn.zhengjunren.myblog.common.controller.BaseController;
+import cn.zhengjunren.myblog.common.dto.BaseQueryPageCondition;
+import cn.zhengjunren.myblog.common.result.ApiResponse;
+import cn.zhengjunren.myblog.common.staus.Status;
+import cn.zhengjunren.myblog.common.utils.DataTypeUtils;
+import cn.zhengjunren.myblog.common.utils.ParamTypeUtils;
+import cn.zhengjunren.myblog.security.utils.SecurityUtil;
+import cn.zhengjunren.myblog.security.vo.UserPrincipal;
 import cn.zhengjunren.myblog.system.domain.Menu;
 import cn.zhengjunren.myblog.system.domain.Role;
 import cn.zhengjunren.myblog.system.dto.MenuDTO;
 import cn.zhengjunren.myblog.system.service.MenuService;
 import cn.zhengjunren.myblog.system.service.RoleService;
-import cn.zhengjunren.myblog.security.utils.SecurityUtil;
-import cn.zhengjunren.myblog.security.vo.UserPrincipal;
-import cn.zhengjunren.myblog.common.annotation.MyLog;
-import cn.zhengjunren.myblog.common.controller.BaseController;
-import cn.zhengjunren.myblog.common.exception.BadRequestException;
-import cn.zhengjunren.myblog.common.result.ApiResponse;
-import cn.zhengjunren.myblog.common.staus.Status;
-import cn.zhengjunren.myblog.common.utils.DataTypeUtils;
-import cn.zhengjunren.myblog.common.utils.ParamTypeUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -23,13 +23,11 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -47,7 +45,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/menus")
 @Api(tags = "菜单管理")
-public class MenuController extends BaseController<Menu, MenuService> {
+public class MenuController extends BaseController<Menu, MenuService, BaseQueryPageCondition> {
 
     private final RoleService roleService;
 
@@ -86,24 +84,24 @@ public class MenuController extends BaseController<Menu, MenuService> {
         return ApiResponse.ofSuccess(service.buildTree(list));
     }
 
-    /**
-     * 新增
-     * @param menu {@link Menu}
-     * @return 成功
-     */
-    @Override
-    @PostMapping
-    @MyLog("创建菜单")
-    @ApiOperation(value = "创建菜单")
-    @ApiImplicitParam(name = "menu", value = "菜单：不带id，创建时间", required = true, dataType = "Menu", paramType = ParamTypeUtils.BODY)
-    public ApiResponse create(@RequestBody Menu menu) {
-        if (menu.getId() != null) {
-            throw new BadRequestException(Status.ENTITY_CANNOT_HAVE_AN_ID);
-        }
-        menu.setCreateTime(new Date());
-        service.save(menu);
-        return ApiResponse.ofSuccess();
-    }
+    //    /**
+//     * 新增
+//     * @param menu {@link Menu}
+//     * @return 成功
+//     */
+//    @Override
+//    @PostMapping
+//    @MyLog("创建菜单")
+//    @ApiOperation(value = "创建菜单")
+//    @ApiImplicitParam(name = "menu", value = "菜单：不带id，创建时间", required = true, dataType = "Menu", paramType = ParamTypeUtils.BODY)
+//    public ApiResponse create(@RequestBody Menu menu) {
+//        if (menu.getId() != null) {
+//            throw new BadRequestException(Status.ENTITY_CANNOT_HAVE_AN_ID);
+//        }
+//        menu.setCreateTime(new Date());
+//        service.save(menu);
+//        return ApiResponse.ofSuccess();
+//    }
 
     /**
      * 根据 id 删除

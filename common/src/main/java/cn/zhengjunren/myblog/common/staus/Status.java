@@ -45,6 +45,11 @@ public enum Status implements IStatus {
     BAD_REQUEST(400, "请求异常！"),
 
     /**
+     * 不允许访问
+     */
+    NOT_ALLOW_ACCESS(400, "不允许访问"),
+
+    /**
      * 参数不匹配！
      */
     PARAM_NOT_MATCH(400, "参数不匹配！"),

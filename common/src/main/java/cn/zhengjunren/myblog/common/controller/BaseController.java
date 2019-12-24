@@ -3,6 +3,7 @@ package cn.zhengjunren.myblog.common.controller;
 import cn.hutool.core.util.StrUtil;
 import cn.zhengjunren.myblog.common.annotation.MyLog;
 import cn.zhengjunren.myblog.common.domain.BaseDomain;
+import cn.zhengjunren.myblog.common.dto.BaseQueryPageCondition;
 import cn.zhengjunren.myblog.common.dto.ListInfo;
 import cn.zhengjunren.myblog.common.exception.BadRequestException;
 import cn.zhengjunren.myblog.common.result.ApiResponse;
@@ -23,7 +24,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
 import java.util.Date;
-import java.util.List;
 
 /**
  * <p>ClassName: BaseController</p>
@@ -34,20 +34,15 @@ import java.util.List;
  * @date 2019/12/20 12:02
  */
 @RestController
-public abstract class BaseController<T extends BaseDomain, S extends IService<T>> {
+public abstract class BaseController<T extends BaseDomain, S extends IService<T>, C extends BaseQueryPageCondition> {
     protected final S service;
 
     public BaseController(S service) {
         this.service = service;
     }
 
-    @GetMapping("all")
-    protected ApiResponse get() {
-        List<T> list = service.list(null);
-        return ApiResponse.ofSuccess(list);
-    }
-
     @PostMapping
+    @MyLog("创建数据")
     @ApiOperation(value = "创建")
     @ApiImplicitParam(name = "entity", value = "实体", required = true, dataType = "T", paramType = ParamTypeUtils.BODY)
     public ApiResponse create(@RequestBody T entity) {
@@ -61,8 +56,8 @@ public abstract class BaseController<T extends BaseDomain, S extends IService<T>
 
     @GetMapping
     @MyLog("分页查询")
-    public ApiResponse page(long page, long limit) {
-        IPage<T> iPage = service.page(new Page<>(page, limit));
+    public ApiResponse page(C baseQueryPageCondition) {
+        IPage<T> iPage = service.page(new Page<>(baseQueryPageCondition.getPage(), baseQueryPageCondition.getLimit()));
         return ApiResponse.ofSuccess(new ListInfo(iPage.getRecords(), iPage.getTotal()));
     }
 

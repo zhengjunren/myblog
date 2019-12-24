@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function getInfoLog(query) {
   return request({
-    url: '/logs/INFO',
+    url: '/logs',
     method: 'get',
     params: query
   })
@@ -10,7 +10,7 @@ export function getInfoLog(query) {
 
 export function getErrorLog(query) {
   return request({
-    url: '/logs/ERROR',
+    url: '/logs',
     method: 'get',
     params: query
   })
