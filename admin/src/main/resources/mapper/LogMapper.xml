@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.zhengjunren.myblog.admin.mapper.LogMapper">
-  <resultMap id="BaseResultMap" type="cn.zhengjunren.myblog.admin.domain.Log">
+<mapper namespace="cn.zhengjunren.myblog.log.mapper.LogMapper">
+  <resultMap id="BaseResultMap" type="cn.zhengjunren.myblog.log.domain.Log">
     <!--@mbg.generated-->
     <!--@Table log-->
     <id column="id" jdbcType="BIGINT" property="id" />
@@ -18,7 +18,7 @@
     <result column="browser" jdbcType="VARCHAR" property="browser" />
   </resultMap>
 
-  <resultMap id="BaseResultMap2" type="cn.zhengjunren.myblog.admin.dto.log.InfoLogDto">
+  <resultMap id="BaseResultMap2" type="cn.zhengjunren.myblog.log.dto.InfoLogDto">
     <!--@mbg.generated-->
     <!--@Table log-->
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />

@@ -70,6 +70,10 @@
             <artifactId>commons-pool2</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.xkcoding</groupId>
+            <artifactId>justauth-spring-boot-starter</artifactId>
+        </dependency>
 
         <!-- DataSource -->
 
@@ -141,7 +145,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>cn.zhengjunren.myblog.admin.AdminApplication</mainClass>
+                    <mainClass>cn.zhengjunren.myblog.BlogAdminApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>

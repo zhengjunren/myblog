@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.zhengjunren.myblog.admin.mapper.RoleMenuMapper">
-  <resultMap id="BaseResultMap" type="cn.zhengjunren.myblog.admin.domain.RoleMenu">
+<mapper namespace="cn.zhengjunren.myblog.system.mapper.RoleMenuMapper">
+  <resultMap id="BaseResultMap" type="cn.zhengjunren.myblog.system.domain.RoleMenu">
     <!--@mbg.generated-->
     <!--@Table role_menu-->
     <id column="menu_id" jdbcType="BIGINT" property="menuId" />

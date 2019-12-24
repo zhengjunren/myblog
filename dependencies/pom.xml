@@ -24,6 +24,7 @@
         <mapstruct.version>1.2.0.Final</mapstruct.version>
         <oshi.version>3.9.1</oshi.version>
 
+        <justauth-spring-boot.version>1.1.0</justauth-spring-boot.version>
         <mybatis-plus.version>3.2.0</mybatis-plus.version>
 
         <!-- Ali Cloud -->
@@ -78,6 +79,12 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.xkcoding</groupId>
+                <artifactId>justauth-spring-boot-starter</artifactId>
+                <version>${justauth-spring-boot.version}</version>
             </dependency>
 
             <!-- Commons -->
@@ -148,9 +155,6 @@
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.github.xiaoymin/knife4j-spring-boot-starter -->
 
-
-
-
             <!-- 获取系统信息 -->
             <dependency>
                 <groupId>com.github.oshi</groupId>
@@ -170,8 +174,6 @@
                 <version>${mapstruct.version}</version>
                 <scope>provided</scope>
             </dependency>
-
-
         </dependencies>
     </dependencyManagement>
     <repositories>
