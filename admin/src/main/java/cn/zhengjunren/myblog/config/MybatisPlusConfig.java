@@ -15,7 +15,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @date 2019/12/15 21:07
  */
 @Configuration
-@MapperScan(basePackages = {"cn.zhengjunren.myblog.system.mapper", "cn.zhengjunren.myblog.log.mapper"})
+@MapperScan(basePackages = {
+    "cn.zhengjunren.myblog.system.mapper",
+    "cn.zhengjunren.myblog.log.mapper",
+    "cn.zhengjunren.myblog.quartz.mapper"
+})
 @EnableTransactionManagement
 public class MybatisPlusConfig {
     /**

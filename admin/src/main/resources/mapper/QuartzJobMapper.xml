@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhengjunren.myblog.quartz.mapper.QuartzJobMapper">
+  <resultMap id="BaseResultMap" type="cn.zhengjunren.myblog.quartz.domain.QuartzJob">
+    <!--@mbg.generated-->
+    <!--@Table quartz_job-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="bean_name" jdbcType="VARCHAR" property="beanName" />
+    <result column="cron_expression" jdbcType="VARCHAR" property="cronExpression" />
+    <result column="is_pause" jdbcType="BIT" property="isPause" />
+    <result column="job_name" jdbcType="VARCHAR" property="jobName" />
+    <result column="method_name" jdbcType="VARCHAR" property="methodName" />
+    <result column="params" jdbcType="VARCHAR" property="params" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, bean_name, cron_expression, is_pause, job_name, method_name, params, remark,
+    create_time
+  </sql>
+
+  <select id="findByIsPauseIsFalse" resultMap="BaseResultMap">
+    SELECT quartz_job.*
+    FROM quartz_job
+    WHERE quartz_job.is_pause = 0
+  </select>
+</mapper>

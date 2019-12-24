@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhengjunren.myblog.quartz.mapper.QuartzLogMapper">
+  <resultMap id="BaseResultMap" type="cn.zhengjunren.myblog.quartz.domain.QuartzLog">
+    <!--@mbg.generated-->
+    <!--@Table quartz_log-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="bean_name" jdbcType="VARCHAR" property="beanName" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="cron_expression" jdbcType="VARCHAR" property="cronExpression" />
+    <result column="exception_detail" jdbcType="LONGVARCHAR" property="exceptionDetail" />
+    <result column="is_success" jdbcType="BIT" property="isSuccess" />
+    <result column="job_name" jdbcType="VARCHAR" property="jobName" />
+    <result column="method_name" jdbcType="VARCHAR" property="methodName" />
+    <result column="params" jdbcType="VARCHAR" property="params" />
+    <result column="time" jdbcType="BIGINT" property="time" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, baen_name, create_time, cron_expression, exception_detail, is_success, job_name,
+    method_name, params, `time`
+  </sql>
+</mapper>
