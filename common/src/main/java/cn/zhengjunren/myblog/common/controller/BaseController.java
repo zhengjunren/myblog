@@ -56,8 +56,8 @@ public abstract class BaseController<T extends BaseDomain, S extends IService<T>
 
     @GetMapping
     @MyLog("分页查询")
-    public ApiResponse page(C baseQueryPageCondition) {
-        IPage<T> iPage = service.page(new Page<>(baseQueryPageCondition.getPage(), baseQueryPageCondition.getLimit()));
+    public ApiResponse page(C condition) {
+        IPage<T> iPage = service.page(new Page<>(condition.getPage(), condition.getLimit()));
         return ApiResponse.ofSuccess(new ListInfo(iPage.getRecords(), iPage.getTotal()));
     }
 

@@ -1,14 +1,13 @@
 package cn.zhengjunren.myblog.quartz.controller;
 
 import cn.zhengjunren.myblog.common.controller.BaseController;
-import cn.zhengjunren.myblog.common.dto.BaseQueryPageCondition;
 import cn.zhengjunren.myblog.common.result.ApiResponse;
 import cn.zhengjunren.myblog.quartz.domain.QuartzJob;
+import cn.zhengjunren.myblog.quartz.dto.QuartzQueryCondition;
 import cn.zhengjunren.myblog.quartz.service.QuartzJobService;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,18 +26,24 @@ import java.util.Set;
  */
 @RestController
 @RequestMapping("/api/jobs")
-public class QuartzJobController extends BaseController<QuartzJob, QuartzJobService, BaseQueryPageCondition> {
+public class QuartzJobController extends BaseController<QuartzJob, QuartzJobService, QuartzQueryCondition> {
 
 
     public QuartzJobController(QuartzJobService service) {
         super(service);
     }
 
+    @Override
+    @GetMapping
+    public ApiResponse page(QuartzQueryCondition condition) {
+        return ApiResponse.ofSuccess(service.page(condition.getPage(), condition.getLimit(), condition.getStart(), condition.getEnd()));
+    }
+
     @ApiOperation("修改定时任务")
     @PutMapping
-    public ResponseEntity<Object> update( @RequestBody QuartzJob resources){
+    public ApiResponse update( @RequestBody QuartzJob resources){
         service.update(resources);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ApiResponse.ofSuccess();
     }
 
     @ApiOperation("更改定时任务状态")

@@ -272,6 +272,7 @@ export default {
       })
     },
     downloadExcel() {
+      this.downloadLoading = true
       downloadExcel().then(result => {
         downloadFile(result, '角色列表', 'xlsx')
         this.downloadLoading = false

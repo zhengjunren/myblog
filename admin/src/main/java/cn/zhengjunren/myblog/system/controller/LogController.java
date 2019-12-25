@@ -56,9 +56,8 @@ public class LogController extends BaseController<Log, LogService, LogQueryCondi
             @ApiImplicitParam(name = "end", value = "截止", required = true, dataType = DataTypeUtils.DATETIME, paramType = ParamTypeUtils.QUERY),
             @ApiImplicitParam(name = "type", value = "类型：为 INFO 或 ERROR", required = true, dataType = DataTypeUtils.STRING, paramType = ParamTypeUtils.PATH),
     })
-    public ApiResponse page(LogQueryCondition logQueryCondition) {
-        System.out.println(logQueryCondition.toString());
-        return ApiResponse.ofSuccess(service.page(logQueryCondition.getPage(), logQueryCondition.getLimit(), logQueryCondition.getStart(), logQueryCondition.getEnd(), logQueryCondition.getType()));
+    public ApiResponse page(LogQueryCondition condition) {
+        return ApiResponse.ofSuccess(service.page(condition.getPage(), condition.getLimit(), condition.getStart(), condition.getEnd(), condition.getType()));
     }
 
     @GetMapping("/error/{id}")

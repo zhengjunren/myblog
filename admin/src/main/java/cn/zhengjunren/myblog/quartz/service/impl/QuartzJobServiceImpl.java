@@ -1,15 +1,20 @@
 package cn.zhengjunren.myblog.quartz.service.impl;
 
+import cn.zhengjunren.myblog.common.dto.ListInfo;
 import cn.zhengjunren.myblog.common.exception.BadRequestException;
 import cn.zhengjunren.myblog.quartz.domain.QuartzJob;
 import cn.zhengjunren.myblog.quartz.mapper.QuartzJobMapper;
 import cn.zhengjunren.myblog.quartz.service.QuartzJobService;
 import cn.zhengjunren.myblog.quartz.service.QuartzLogService;
 import cn.zhengjunren.myblog.quartz.utils.QuartzManage;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.quartz.CronExpression;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.Set;
 
 @Service(value = "quartzJobService")
@@ -33,7 +38,7 @@ public class QuartzJobServiceImpl extends ServiceImpl<QuartzJobMapper, QuartzJob
         if (!CronExpression.isValidExpression(resources.getCronExpression())){
             throw new BadRequestException(400, "cron表达式格式错误");
         }
-        baseMapper.insert(resources);
+        baseMapper.updateById(resources);
         quartzManage.updateJobCron(resources);
     }
 
@@ -70,5 +75,15 @@ public class QuartzJobServiceImpl extends ServiceImpl<QuartzJobMapper, QuartzJob
             quartzManage.deleteJob(quartzJob);
             baseMapper.deleteById(id);
         }
+    }
+
+    @Override
+    public ListInfo page(long pageNum, long pageSize, Timestamp start, Timestamp end) {
+        Page<QuartzJob> page = new Page<>(pageNum, pageSize);
+        QueryWrapper<QuartzJob> quartzJobQueryWrapper = new QueryWrapper<>();
+        boolean flag = start != null && end != null;
+        quartzJobQueryWrapper.between(flag, QuartzJob.COL_CREATE_TIME, start, end);
+        IPage<QuartzJob> quartzJobIPage = baseMapper.selectPage(page, quartzJobQueryWrapper);
+        return new ListInfo(quartzJobIPage.getRecords(), quartzJobIPage.getTotal());
     }
 }
