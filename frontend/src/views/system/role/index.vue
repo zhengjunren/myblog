@@ -67,32 +67,32 @@
             highlight-current-row
             @current-change="handleCurrentChange"
             style="width: 100%">
-            <el-table-column align="center" label="序号" width="80">
+            <el-table-column align="center" label="序号" min-width="80">
               <template slot-scope="scope">
                 <span>{{ scope.$index + (listQuery.page-1) * (listQuery.limit) + 1 }}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" label="名称" width="120">
+            <el-table-column align="center" label="名称" min-width="120">
               <template slot-scope="scope">
                 <span>{{ scope.row.name }}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" label="描述" width="150">
+            <el-table-column align="center" label="描述" min-width="150">
               <template slot-scope="scope">
                 <span>{{ scope.row.description }}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" label="创建时间" width="185">
+            <el-table-column align="center" label="创建时间" min-width="185">
               <template slot-scope="scope">
                 <span>{{ scope.row.createTime }}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" label="更新时间" width="185">
+            <el-table-column align="center" label="更新时间" min-width="185">
               <template slot-scope="scope">
                 <span>{{ scope.row.updateTime }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="操作" width="160px" align="center" fixed="right">
+            <el-table-column label="操作" min-width="160px" align="center" fixed="right">
               <template slot-scope="scope">
                 <el-button size="mini" type="primary" icon="el-icon-edit" @click="edit(scope.row)"/>
                 <el-popover

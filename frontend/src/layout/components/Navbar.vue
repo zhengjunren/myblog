@@ -7,12 +7,15 @@
     <div class="right-menu">
       <template v-if="device!=='mobile'">
         <search id="header-search" class="right-menu-item" />
-
-
-        <screenfull id="screenfull" class="right-menu-item hover-effect" />
-
-        <el-tooltip content="Global Size" effect="dark" placement="bottom">
-          <size-select id="size-select" class="right-menu-item hover-effect" />
+        <el-tooltip content="GitHub" effect="dark" placement="bottom">
+          <a target="_blank" class="right-menu-item" href="https://github.com/zhengjunren/myblog/">
+            <svg-icon icon-class="github" />
+          </a>
+        </el-tooltip>
+        <el-tooltip content="码云" effect="dark" placement="bottom">
+          <a target="_blank" class="right-menu-item" href="https://gitee.com/zhengjunren/myblog/">
+            <svg-icon icon-class="gitee" />
+         </a>
         </el-tooltip>
 
       </template>

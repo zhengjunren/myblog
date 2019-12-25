@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :visible.sync="dialog" append-to-body title="执行日志" width="88%">
+  <el-dialog :visible.sync="dialog" append-to-body top="0px" title="执行日志" width="88%">
     <div class="filter-container">
       <el-date-picker
         v-model="time"

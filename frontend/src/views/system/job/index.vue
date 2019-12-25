@@ -57,22 +57,22 @@
           <span>{{ scope.$index + (listQuery.page-1) * (listQuery.limit) + 1 }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="任务名称" width="80">
+      <el-table-column align="center" label="任务名称" min-width="80">
         <template slot-scope="scope">
           <span>{{ scope.row.jobName }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="Bean名称" width="90">
+      <el-table-column align="center" label="Bean名称" min-width="90">
         <template slot-scope="scope">
           <span>{{ scope.row.beanName }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="执行方法" width="80">
+      <el-table-column align="center" label="执行方法" min-width="80">
         <template slot-scope="scope">
           <span>{{ scope.row.methodName }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="参数" width="100">
+      <el-table-column align="center" label="参数" min-width="100">
         <template slot-scope="scope">
           <span>{{ scope.row.params }}</span>
         </template>
@@ -82,30 +82,35 @@
         <span>{{ scope.row.cronExpression }}</span>
       </template>
     </el-table-column>
-      <el-table-column align="center" label="状态" width="100">
+      <el-table-column align="center" label="状态" min-width="100">
         <template slot-scope="scope">
           <el-tag :type="scope.row.isPause | tagTypeFilter">
             {{ scope.row.isPause | statusFilter }}
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="描述" width="140">
+      <el-table-column align="center" label="描述" min-width="140">
         <template slot-scope="scope">
           <span>{{ scope.row.remark }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="创建时间" width="190">
+      <el-table-column align="center" label="创建时间" min-width="190">
         <template slot-scope="scope">
           <span>{{ scope.row.createTime }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" min-width="160">
+      <el-table-column align="center" label="操作" min-width="240" fixed="right">
         <template slot-scope="scope">
           <el-button v-waves icon="el-icon-edit" type="primary" size="mini" @click="edit(scope.row)"/>
-          <el-button v-waves type="primary" size="mini" @click="execute(scope.row.id)"><svg-icon icon-class="exec" /></el-button>
-          <el-button v-if="!scope.row.isPause" v-waves type="primary" size="mini" @click="updateIsPause(scope.row.id)"><svg-icon icon-class="pause" /></el-button>
-          <el-button v-if="scope.row.isPause" v-waves type="primary" size="mini" @click="updateIsPause(scope.row.id)"><svg-icon icon-class="resume"/></el-button>
-          &nbsp;
+          <el-tooltip content="执行一次" effect="dark" placement="top">
+            <el-button v-waves type="primary" size="mini" @click="execute(scope.row.id)"><svg-icon icon-class="exec" /></el-button>
+          </el-tooltip>
+          <el-tooltip v-if="!scope.row.isPause" content="暂停" effect="dark" placement="top">
+            <el-button v-waves type="primary" size="mini" @click="updateIsPause(scope.row.id)"><svg-icon icon-class="pause" /></el-button>
+          </el-tooltip>
+          <el-tooltip v-if="scope.row.isPause" content="恢复" effect="dark" placement="top">
+            <el-button  v-waves type="primary" size="mini" @click="updateIsPause(scope.row.id)"><svg-icon icon-class="resume"/></el-button>
+          </el-tooltip>&nbsp;
           <el-popover
             :ref="scope.row.id"
             placement="top"
