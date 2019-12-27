@@ -42,7 +42,17 @@ export const constantRoutes = [
     component: () => import('@/views/404'),
     hidden: true
   },
-
+  {
+    path: '/redirect',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/redirect/:path*',
+        component: () => import('@/views/features/redirect')
+      }
+    ]
+  },
   {
     path: '/',
     component: Layout,

@@ -36,7 +36,7 @@
           <span>{{ scope.row.ip }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="IP来源" min-width="120">
+      <el-table-column align="center" label="IP来源" min-width="160">
         <template slot-scope="scope">
           <span>{{ scope.row.address }}</span>
         </template>
@@ -46,7 +46,7 @@
           <span>{{ scope.row.loginTime }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" min-width="120">
+      <el-table-column align="center" label="操作" min-width="120" fixed="right">
         <template slot-scope="scope">
           <el-popover
             :ref="scope.row.username"
@@ -104,6 +104,8 @@ export default {
     kickOut(row) {
       kickOut(row.key).then(response => {
         this.$refs[row.username].doClose()
+        const index = this.list.indexOf(row)
+        this.list.splice(index, 1)
         this.$notify({
           title: '成功',
           message: "踢出成功",
