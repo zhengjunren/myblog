@@ -77,6 +77,8 @@ jwt:
     key: xkcoding
     ttl: 10800000
     remember: 604800000
+  online-key: online-token
+
 
 custom:
   config:

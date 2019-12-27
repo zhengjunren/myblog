@@ -21,3 +21,29 @@ export function logout() {
     method: 'post'
   })
 }
+
+export function getOnlineUsers(query) {
+  return request({
+    url: '/online',
+    method: 'get',
+    params: query
+  })
+}
+
+export function kickOut(key) {
+  return request({
+    url: '/online',
+    method: 'delete',
+    params: {
+      key: key
+    }
+  })
+}
+
+export function downloadExcel() {
+  return request({
+    responseType: 'blob',
+    url: '/online/excel',
+    method: 'get'
+  })
+}

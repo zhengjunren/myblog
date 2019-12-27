@@ -1,6 +1,7 @@
 package cn.zhengjunren.myblog.security.controller;
 
 
+import cn.zhengjunren.myblog.security.service.OnlineService;
 import cn.zhengjunren.myblog.system.dto.info.UserInfo;
 import cn.zhengjunren.myblog.system.dto.params.LoginParams;
 import cn.zhengjunren.myblog.security.utils.JwtUtil;
@@ -47,10 +48,13 @@ public class AuthController {
 
     private final AuthenticationManager authenticationManager;
 
+    private final OnlineService onlineService;
+
     private final JwtUtil jwtUtil;
 
-    public AuthController(AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
+    public AuthController(AuthenticationManager authenticationManager, OnlineService onlineService, JwtUtil jwtUtil) {
         this.authenticationManager = authenticationManager;
+        this.onlineService = onlineService;
         this.jwtUtil = jwtUtil;
     }
 
@@ -63,13 +67,15 @@ public class AuthController {
     @PostMapping("/login")
     @ApiOperation(value = "登录", notes="用户名、邮箱、手机")
     @ApiImplicitParam(name = "loginParams", value = "登录参数", required = true, dataType = "LoginParams", paramType = ParamTypeUtils.BODY)
-    public ApiResponse login(@Valid @RequestBody LoginParams loginParams) {
+    public ApiResponse login(@Valid @RequestBody LoginParams loginParams, HttpServletRequest request) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginParams.getUsernameOrEmailOrPhone(), loginParams.getPassword()));
 
         SecurityContextHolder.getContext()
                 .setAuthentication(authentication);
 
         String jwt = jwtUtil.createJWT(authentication,loginParams.getRememberMe());
+        UserPrincipal currentUser = SecurityUtil.getCurrentUser();
+        onlineService.save(currentUser, request, jwt);
         return ApiResponse.ofSuccess(new JwtResponse(jwt));
     }
 
