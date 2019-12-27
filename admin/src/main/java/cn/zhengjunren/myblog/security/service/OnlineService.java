@@ -125,4 +125,8 @@ public class OnlineService {
         }
     }
 
+    public void kickOutSelf(String token){
+        redisUtil.del(onlineKey + ":" + token);
+    }
+
 }

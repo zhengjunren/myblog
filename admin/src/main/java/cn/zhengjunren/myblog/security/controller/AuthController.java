@@ -88,8 +88,10 @@ public class AuthController {
     @ApiOperation(value = "用户注销", notes="需要携带token")
     public ApiResponse logout(HttpServletRequest request) {
         try {
+            String jwt = jwtUtil.getJwtFromRequest(request);
             // 设置JWT过期
             jwtUtil.invalidateJWT(request);
+            onlineService.kickOutSelf(jwt);
         } catch (SecurityException e) {
             throw new SecurityException(Status.UNAUTHORIZED);
         }

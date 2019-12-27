@@ -52,6 +52,6 @@ public class OnlineController {
     @DeleteMapping
     public ApiResponse kickOut(String key, HttpServletRequest request) throws Exception {
         onlineService.kickOut(key, request);
-        return null;
+        return ApiResponse.ofSuccess();
     }
 }
