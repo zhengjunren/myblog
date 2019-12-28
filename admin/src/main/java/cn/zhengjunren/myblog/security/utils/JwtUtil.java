@@ -82,9 +82,10 @@ public class JwtUtil {
         }
 
         String jwt = builder.compact();
-        // 将生成的JWT保存至Redis
+        // 将生成的JWT保存至Redis  将token作为key，如要修改为原来的前缀+用户名为key token为value
+        // 注意修改下面的 parseJWT()、invalidateJWT()方法和OnlineService的kickOut()方法
         stringRedisTemplate.opsForValue()
-                .set(Consts.REDIS_JWT_KEY_PREFIX + subject, jwt, ttl, TimeUnit.MILLISECONDS);
+                .set(jwt, Consts.REDIS_JWT_KEY_PREFIX + subject, ttl, TimeUnit.MILLISECONDS);
         return jwt;
     }
 
@@ -117,21 +118,21 @@ public class JwtUtil {
             String redisKey = Consts.REDIS_JWT_KEY_PREFIX + username;
 
             // 校验redis中的JWT是否存在
-            Long expire = stringRedisTemplate.getExpire(redisKey, TimeUnit.MILLISECONDS);
+            // jwt是键哦
+            Long expire = stringRedisTemplate.getExpire(jwt, TimeUnit.MILLISECONDS);
             if (Objects.isNull(expire) || expire <= 0) {
                 throw new SecurityException(Status.TOKEN_EXPIRED);
             }
 
             // 校验redis中的JWT是否与当前的一致，不一致则代表用户已注销/用户在不同设备登录，均代表JWT已过期
-            String redisToken = stringRedisTemplate.opsForValue()
-                    .get(redisKey);
-            if (!StrUtil.equals(jwt, redisToken)) {
+//            String redisToken = stringRedisTemplate.opsForValue().get(jwt);
+//            if (!StrUtil.equals(jwt, redisToken)) {
                 // 如果检查别处登录，需要取消下面两行代码的注释
 //                stringRedisTemplate.delete(onlineKey + ":" + redisToken);
 //                throw new SecurityException(Status.TOKEN_OUT_OF_CTRL);
 
                 log.info("不检查当前用户已在别处登录");
-            }
+//            }
             return claims;
         } catch (ExpiredJwtException e) {
             log.error("Token 已过期");
@@ -159,8 +160,8 @@ public class JwtUtil {
     public void invalidateJWT(HttpServletRequest request) {
         String jwt = getJwtFromRequest(request);
         String username = getUsernameFromJWT(jwt);
-        // 从redis中清除JWT
-        stringRedisTemplate.delete(Consts.REDIS_JWT_KEY_PREFIX + username);
+        // 从redis中清除JWT  jwt 是键
+        stringRedisTemplate.delete(jwt);
     }
 
     /**

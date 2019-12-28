@@ -1,6 +1,7 @@
 package cn.zhengjunren.myblog.log.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.json.JSONObject;
 import cn.zhengjunren.myblog.log.domain.Log;
 import cn.zhengjunren.myblog.log.dto.InfoLogDto;
 import cn.zhengjunren.myblog.log.mapper.LogMapper;
@@ -53,6 +54,15 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements LogSe
         }
         assert log != null;
         log.setRequestIp(ip);
+        String loginPath = "login";
+        if(loginPath.equals(signature.getName())){
+            try {
+                assert argValues != null;
+                username = new JSONObject(argValues[0]).get("usernameOrEmailOrPhone").toString();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
         log.setParams(params.toString() + " }");
         log.setAddress(UserAgentUtil.ip2Region(ip));
         log.setMethod(methodName);

@@ -1,7 +1,6 @@
 package cn.zhengjunren.myblog.security.service;
 
 import cn.hutool.core.util.NumberUtil;
-import cn.zhengjunren.myblog.common.consts.Consts;
 import cn.zhengjunren.myblog.common.dto.ListInfo;
 import cn.zhengjunren.myblog.common.exception.BadRequestException;
 import cn.zhengjunren.myblog.common.utils.EncryptUtils;
@@ -118,7 +117,8 @@ public class OnlineService {
         String requestToken = jwtUtil.getJwtFromRequest(request);
         if (!requestToken.equals(token)){
             redisUtil.del(key1);
-            redisUtil.del(Consts.REDIS_JWT_KEY_PREFIX + jwtUtil.getUsernameFromJWT(token));
+            redisUtil.del(token);
+//            redisUtil.del(Consts.REDIS_JWT_KEY_PREFIX + jwtUtil.getUsernameFromJWT(token));
         }
         else {
             throw new BadRequestException(400, "不能踢出自己");
