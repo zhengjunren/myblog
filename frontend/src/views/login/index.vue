@@ -44,7 +44,7 @@
         <span class="svg-container">
             <svg-icon slot="prefix" icon-class="validCode" class="el-input__icon input-icon" />
           </span>
-        <el-input v-model="loginForm.code" auto-complete="off" placeholder="验证码" style="width: 63%" @keyup.enter.native="handleLogin"/>
+        <el-input ref="code" v-model="loginForm.code" auto-complete="off" placeholder="验证码" style="width: 63%" @keyup.enter.native="handleLogin"/>
         <div class="login-code">
           <img :src="codeUrl" @click="getCode">
         </div>
@@ -64,7 +64,7 @@ export default {
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
+        callback(new Error('请输入正确的用户名'))
       } else {
         callback()
       }
@@ -86,7 +86,8 @@ export default {
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        password: [{ required: true, trigger: 'blur', validator: validatePassword }],
+        code: [{ required: true, trigger: 'blur', message: '验证码不能为空' }]
       },
       loading: false,
       passwordType: 'password',
@@ -251,7 +252,8 @@ $light_gray:#eee;
     user-select: none;
   }
   .login-code {
-    margin-top: 5px;
+    margin-top: 6px;
+    margin-right: 5px;
     display: inline-block;
     height: 38px;
     float: right;
