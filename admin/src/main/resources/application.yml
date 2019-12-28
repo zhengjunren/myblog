@@ -83,6 +83,8 @@ jwt:
 custom:
   config:
     ignores:
+      get:
+        - "/api/auth/code"
       # 需要过滤的 post 请求
       post:
         - "/api/auth/login"

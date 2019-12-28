@@ -1,22 +1,27 @@
 package cn.zhengjunren.myblog.security.controller;
 
 
-import cn.zhengjunren.myblog.security.service.OnlineService;
-import cn.zhengjunren.myblog.system.dto.info.UserInfo;
-import cn.zhengjunren.myblog.system.dto.params.LoginParams;
-import cn.zhengjunren.myblog.security.utils.JwtUtil;
-import cn.zhengjunren.myblog.security.utils.SecurityUtil;
-import cn.zhengjunren.myblog.security.vo.JwtResponse;
-import cn.zhengjunren.myblog.security.vo.UserPrincipal;
+import cn.hutool.core.util.IdUtil;
 import cn.zhengjunren.myblog.common.annotation.MyLog;
+import cn.zhengjunren.myblog.common.exception.BadRequestException;
 import cn.zhengjunren.myblog.common.exception.SecurityException;
 import cn.zhengjunren.myblog.common.result.ApiResponse;
 import cn.zhengjunren.myblog.common.staus.Status;
 import cn.zhengjunren.myblog.common.utils.ParamTypeUtils;
+import cn.zhengjunren.myblog.common.utils.RedisUtil;
+import cn.zhengjunren.myblog.security.service.OnlineService;
+import cn.zhengjunren.myblog.security.utils.JwtUtil;
+import cn.zhengjunren.myblog.security.utils.SecurityUtil;
+import cn.zhengjunren.myblog.security.vo.JwtResponse;
+import cn.zhengjunren.myblog.security.vo.UserPrincipal;
+import cn.zhengjunren.myblog.system.dto.info.UserInfo;
+import cn.zhengjunren.myblog.system.dto.params.LoginParams;
+import com.wf.captcha.ArithmeticCaptcha;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -30,6 +35,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -46,15 +54,20 @@ import javax.validation.Valid;
 @Api(tags = "登录授权")
 public class AuthController {
 
+    private final static String CODE_KEY = "code-key:";
+
     private final AuthenticationManager authenticationManager;
 
     private final OnlineService onlineService;
 
+    private final RedisUtil redisUtil;
+
     private final JwtUtil jwtUtil;
 
-    public AuthController(AuthenticationManager authenticationManager, OnlineService onlineService, JwtUtil jwtUtil) {
+    public AuthController(AuthenticationManager authenticationManager, OnlineService onlineService, RedisUtil redisUtil, JwtUtil jwtUtil) {
         this.authenticationManager = authenticationManager;
         this.onlineService = onlineService;
+        this.redisUtil = redisUtil;
         this.jwtUtil = jwtUtil;
     }
 
@@ -68,6 +81,14 @@ public class AuthController {
     @ApiOperation(value = "登录", notes="用户名、邮箱、手机")
     @ApiImplicitParam(name = "loginParams", value = "登录参数", required = true, dataType = "LoginParams", paramType = ParamTypeUtils.BODY)
     public ApiResponse login(@Valid @RequestBody LoginParams loginParams, HttpServletRequest request) {
+        String code = (String) redisUtil.get(loginParams.getUuid());
+        redisUtil.del(loginParams.getUuid());
+        if (StringUtils.isBlank(code)) {
+            throw new BadRequestException(400, "验证码不存在或已过期");
+        }
+        if (StringUtils.isBlank(loginParams.getCode()) || !loginParams.getCode().equalsIgnoreCase(code)) {
+            throw new BadRequestException(400, "验证码错误");
+        }
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginParams.getUsernameOrEmailOrPhone(), loginParams.getPassword()));
 
         SecurityContextHolder.getContext()
@@ -77,6 +98,20 @@ public class AuthController {
         UserPrincipal currentUser = SecurityUtil.getCurrentUser();
         onlineService.save(currentUser, request, jwt);
         return ApiResponse.ofSuccess(new JwtResponse(jwt));
+    }
+
+    @GetMapping(value = "/code")
+    public ApiResponse getCode() {
+        ArithmeticCaptcha captcha = new ArithmeticCaptcha (111, 36);
+        captcha.setLen(2);
+        String result = captcha.text();
+        String uuid = CODE_KEY + IdUtil.simpleUUID();
+        redisUtil.set(uuid, result, 2, TimeUnit.MINUTES);
+        Map<String,Object> imgResult = new HashMap<String,Object>(2){{
+            put("img", captcha.toBase64());
+            put("uuid", uuid);
+        }};
+        return ApiResponse.ofSuccess(imgResult);
     }
 
     /**

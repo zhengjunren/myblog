@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhengjunren.myblog.system.mapper.VisitsMapper">
+  <resultMap id="BaseResultMap" type="cn.zhengjunren.myblog.system.domain.Visits">
+    <!--@mbg.generated-->
+    <!--@Table visits-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="date" jdbcType="VARCHAR" property="date" />
+    <result column="ip_counts" jdbcType="BIGINT" property="ipCounts" />
+    <result column="pv_counts" jdbcType="BIGINT" property="pvCounts" />
+    <result column="week_day" jdbcType="VARCHAR" property="weekDay" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, create_time, `date`, ip_counts, pv_counts, week_day
+  </sql>
+    <select id="findIp" resultType="java.lang.Long">
+      SELECT
+        count( * )
+      FROM
+        ( SELECT request_ip FROM log WHERE create_time BETWEEN #{date1} AND #{date2} GROUP BY request_ip ) AS s
+    </select>
+</mapper>

@@ -40,6 +40,15 @@
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
       </el-form-item>
+      <el-form-item prop="code">
+        <span class="svg-container">
+            <svg-icon slot="prefix" icon-class="validCode" class="el-input__icon input-icon" />
+          </span>
+        <el-input v-model="loginForm.code" auto-complete="off" placeholder="验证码" style="width: 63%" @keyup.enter.native="handleLogin"/>
+        <div class="login-code">
+          <img :src="codeUrl" @click="getCode">
+        </div>
+      </el-form-item>
 
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
 
@@ -49,7 +58,7 @@
 
 <script>
 import { validUsername } from '@/utils/validate'
-
+import {getCode} from '@/api/user'
 export default {
   name: 'Login',
   data() {
@@ -68,9 +77,12 @@ export default {
       }
     }
     return {
+      codeUrl: '',
       loginForm: {
         username: process.env.VUE_APP_BASE_USERNAME,
-        password: '123456'
+        password: '123456',
+        code: '',
+        uuid: ''
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -89,7 +101,16 @@ export default {
       immediate: true
     }
   },
+  created() {
+    this.getCode()
+  },
   methods: {
+    getCode() {
+      getCode().then(response => {
+        this.codeUrl = response.data.img
+        this.loginForm.uuid = response.data.uuid
+      })
+    },
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''
@@ -108,6 +129,7 @@ export default {
             this.$router.push({ path: this.redirect || '/' })
             this.loading = false
           }).catch(() => {
+            this.getCode()
             this.loading = false
           })
         } else {
@@ -227,6 +249,16 @@ $light_gray:#eee;
     color: $dark_gray;
     cursor: pointer;
     user-select: none;
+  }
+  .login-code {
+    margin-top: 5px;
+    display: inline-block;
+    height: 38px;
+    float: right;
+    img {
+      cursor: pointer;
+      vertical-align:middle
+    }
   }
 }
 </style>

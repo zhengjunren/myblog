@@ -23,6 +23,7 @@
         <ip2region.version>1.7.2</ip2region.version>
         <mapstruct.version>1.2.0.Final</mapstruct.version>
         <oshi.version>3.9.1</oshi.version>
+        <easy-captcha.version>1.6.2</easy-captcha.version>
 
         <justauth-spring-boot.version>1.1.0</justauth-spring-boot.version>
         <mybatis-plus.version>3.2.0</mybatis-plus.version>
@@ -172,8 +173,15 @@
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct-processor</artifactId>
                 <version>${mapstruct.version}</version>
-                <scope>provided</scope>
             </dependency>
+
+            <!-- 验证码 -->
+            <dependency>
+                <groupId>com.github.whvcse</groupId>
+                <artifactId>easy-captcha</artifactId>
+                <version>${easy-captcha.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
     <repositories>
