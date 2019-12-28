@@ -2,11 +2,11 @@ package cn.zhengjunren.myblog.security.utils;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.zhengjunren.myblog.security.config.JwtConfig;
-import cn.zhengjunren.myblog.common.exception.SecurityException;
-import cn.zhengjunren.myblog.security.vo.UserPrincipal;
 import cn.zhengjunren.myblog.common.consts.Consts;
+import cn.zhengjunren.myblog.common.exception.SecurityException;
 import cn.zhengjunren.myblog.common.staus.Status;
+import cn.zhengjunren.myblog.security.config.JwtConfig;
+import cn.zhengjunren.myblog.security.vo.UserPrincipal;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtBuilder;
@@ -16,6 +16,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -44,6 +45,10 @@ public class JwtUtil {
     private final JwtConfig jwtConfig;
 
     private final StringRedisTemplate stringRedisTemplate;
+
+    @Value("${jwt.online-key}")
+    private String onlineKey;
+
 
     public JwtUtil(JwtConfig jwtConfig, StringRedisTemplate stringRedisTemplate) {
         this.jwtConfig = jwtConfig;
@@ -121,7 +126,11 @@ public class JwtUtil {
             String redisToken = stringRedisTemplate.opsForValue()
                     .get(redisKey);
             if (!StrUtil.equals(jwt, redisToken)) {
-                throw new SecurityException(Status.TOKEN_OUT_OF_CTRL);
+                // 如果检查别处登录，需要取消下面两行代码的注释
+//                stringRedisTemplate.delete(onlineKey + ":" + redisToken);
+//                throw new SecurityException(Status.TOKEN_OUT_OF_CTRL);
+
+                log.info("不检查当前用户已在别处登录");
             }
             return claims;
         } catch (ExpiredJwtException e) {

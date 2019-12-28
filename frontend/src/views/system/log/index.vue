@@ -273,12 +273,16 @@ export default {
       })
     },
     downloadInfoLogExcel() {
+      this.downloadLoading = true
       downloadInfoLogExcel().then(response => {
+        this.downloadLoading = false
         downloadFile(response, 'info日志', 'xlsx')
       })
     },
     downloadErrorLogExcel() {
+      this.downloadLoading = true
       downloadErrorLogExcel().then(response => {
+        this.downloadLoading = false
         downloadFile(response, 'error日志', 'xlsx')
       })
     },

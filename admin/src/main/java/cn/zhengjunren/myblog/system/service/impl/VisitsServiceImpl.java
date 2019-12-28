@@ -25,6 +25,7 @@ public class VisitsServiceImpl extends ServiceImpl<VisitsMapper, Visits> impleme
         visits.setPvCounts(visits.getPvCounts()+1);
         long ipCounts = baseMapper.findIp(localDate.toString(), localDate.plusDays(1).toString());
         visits.setIpCounts(ipCounts);
-        baseMapper.updateById(visits);
+        saveOrUpdate(visits);
+//        baseMapper.updateById(visits);
     }
 }

@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-button v-waves class="filter-item" type="success" @click="initWebSocket"><svg-icon icon-class="connect" />&nbsp;手动连接</el-button>
-      <el-button v-waves class="filter-item" type="info" @click="destroyConnect"><svg-icon icon-class="disconnect" />&nbsp;&nbsp;断开连接</el-button>
+      <el-button :disabled="!showButton" v-waves class="filter-item" type="success" @click="initWebSocket"><svg-icon icon-class="connect" />&nbsp;手动连接</el-button>
+      <el-button :disabled="showButton" v-waves class="filter-item" type="info" @click="destroyConnect"><svg-icon icon-class="disconnect" />&nbsp;&nbsp;断开连接</el-button>
     </div>
     <el-row :gutter="20">
       <el-col :span="8" :xs="24">
@@ -85,6 +85,7 @@ export default {
   directives: { waves },
   data(){
     return {
+      showButton: false,
       timer:'',
       isConnected: false,
       stompClient: {},
@@ -122,6 +123,8 @@ export default {
       }
       // 向服务器发起websocket连接
       this.stompClient.connect(headers,() => {
+        this.showButton = false
+        this.isConnected = true
         this.$message({
           message: '连接成功',
           type: 'success'
@@ -134,14 +137,18 @@ export default {
       });
     },
     disconnect() {
-      if (this.stompClient) {
-        this.stompClient.disconnect();
+      if (this.isConnected){
+        if (this.stompClient) {
+          this.stompClient.disconnect();
+          this.showButton = true
+          this.isConnected = false
+          this.$message('连接断开');
+        }
       }
     },
     destroyConnect() {
       this.disconnect();
       clearInterval(this.timer);
-      this.$message('连接断开');
     }
   },
   mounted(){
