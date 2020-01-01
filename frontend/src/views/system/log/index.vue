@@ -99,7 +99,7 @@
               </el-form>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="序号" min-width="80">
+          <el-table-column align="center" label="序号" min-width="60">
             <template slot-scope="scope">
               <span>{{ scope.$index + (listQuery.page-1) * (listQuery.limit) + 1 }}</span>
             </template>
@@ -114,7 +114,7 @@
               <span>{{ scope.row.requestIp }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="IP来源" prop="address" align="center" min-width="170">
+          <el-table-column label="IP来源" prop="address" align="center" min-width="190">
             <template slot-scope="scope">
               <span>{{ scope.row.address }}</span>
             </template>
@@ -124,7 +124,7 @@
               <span>{{ scope.row.browser }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="耗时" class-name="status-col" align="center" min-width="80">
+          <el-table-column label="耗时" class-name="status-col" align="center" min-width="90">
             <template slot-scope="{row}">
               <el-tag :type="row.time | tagTypeFilter">
                 {{ row.time  | timeFilter}}
@@ -136,7 +136,7 @@
               <span>{{ scope.row.username }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="操作时间" prop="createTime" align="center" min-width="200">
+          <el-table-column label="操作时间" prop="createTime" align="center" min-width="190">
             <template slot-scope="scope">
               <span>{{ scope.row.createTime }}</span>
             </template>

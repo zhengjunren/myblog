@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhengjunren.myblog.system.mapper.EmailConfigMapper">
+  <resultMap id="BaseResultMap" type="cn.zhengjunren.myblog.system.domain.EmailConfig">
+    <!--@mbg.generated-->
+    <!--@Table email_config-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="from_user" jdbcType="VARCHAR" property="fromUser" />
+    <result column="host" jdbcType="VARCHAR" property="host" />
+    <result column="pass" jdbcType="VARCHAR" property="pass" />
+    <result column="port" jdbcType="VARCHAR" property="port" />
+    <result column="user" jdbcType="VARCHAR" property="user" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, from_user, `host`, pass, port, `user`
+  </sql>
+</mapper>

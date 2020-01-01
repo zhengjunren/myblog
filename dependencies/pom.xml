@@ -13,7 +13,7 @@
         <feign-okhttp.version>10.3.0</feign-okhttp.version>
         <alibaba-easyexcel.verison>2.0.5</alibaba-easyexcel.verison>
         <userAgentUtils.version>1.21</userAgentUtils.version>
-        <hu-tool.version>5.0.6</hu-tool.version>
+        <hu-tool.version>5.1.0</hu-tool.version>
         <guava.version>28.1-jre</guava.version>
         <jjwt.veersion>0.9.1</jjwt.veersion>
         <mail.version>1.4.7</mail.version>

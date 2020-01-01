@@ -10,6 +10,7 @@
 
     </div>
     <el-table
+      v-loading="listLoading"
       :data="treeData"
       style="width: 100%;margin-bottom: 20px;"
       row-key="id"
@@ -100,6 +101,7 @@ export default {
       treeData: [],
       isAdd: false,
       delLoading: false,
+      listLoading: true,
       downloadLoading: false
     }
   },
@@ -108,8 +110,10 @@ export default {
   },
   methods :{
     fetchData() {
+      this.listLoading = true
       getMenus().then(response => {
         this.treeData = response.data.content
+        this.listLoading = false
       })
     },
     edit(data) {

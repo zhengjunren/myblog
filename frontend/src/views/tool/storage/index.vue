@@ -44,6 +44,11 @@
           <span>{{ scope.row.bucket }}</span>
         </template>
       </el-table-column>
+      <el-table-column label="空间类型" prop="bucket" align="left" min-width="150">
+        <template slot-scope="scope">
+          <span>{{ scope.row.type }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="文件类型" prop="suffix" align="left" min-width="150">
         <template slot-scope="scope">
           <span>{{ scope.row.suffix }}</span>

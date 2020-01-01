@@ -1,11 +1,12 @@
 package cn.zhengjunren.myblog.system.domain;
 
+import cn.hutool.core.util.NumberUtil;
+import cn.zhengjunren.myblog.common.utils.IpUtil;
 import cn.zhengjunren.myblog.system.domain.server.Cpu;
 import cn.zhengjunren.myblog.system.domain.server.Jvm;
 import cn.zhengjunren.myblog.system.domain.server.Mem;
 import cn.zhengjunren.myblog.system.domain.server.Sys;
 import cn.zhengjunren.myblog.system.domain.server.SysFile;
-import cn.zhengjunren.myblog.common.utils.IpUtil;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
 import oshi.hardware.CentralProcessor.TickType;
@@ -193,9 +194,7 @@ public class Server {
             sysFile.setTotal(convertFileSize(total));
             sysFile.setFree(convertFileSize(free));
             sysFile.setUsed(convertFileSize(used));
-//            System.out.println(NumberUtil.mul(NumberUtil.div(used, total, 4), 100));
-//            System.out.println(NumberUtil.mul(NumberUtil.div(used, total, 4), 100));
-//            sysFile.setUsage(NumberUtil.mul(NumberUtil.div(used, total, 4), 100));
+            sysFile.setUsage(NumberUtil.mul(NumberUtil.div(used, total, 4), 100));
             sysFiles.add(sysFile);
         }
     }
