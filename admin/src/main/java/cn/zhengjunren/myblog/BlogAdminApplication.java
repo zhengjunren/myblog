@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * <p>ClassName: AdminApplication</p>
@@ -16,6 +17,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * @date 2019/12/15 21:02
  */
 @SpringBootApplication(scanBasePackages = "cn.zhengjunren.myblog")
+@EnableTransactionManagement
 @EnableScheduling
 @EnableAsync
 public class BlogAdminApplication {

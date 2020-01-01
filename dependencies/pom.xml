@@ -24,6 +24,7 @@
         <mapstruct.version>1.2.0.Final</mapstruct.version>
         <oshi.version>3.9.1</oshi.version>
         <easy-captcha.version>1.6.2</easy-captcha.version>
+        <qiniu-java-sdk.version>[7.2.0, 7.2.99]</qiniu-java-sdk.version>
 
         <justauth-spring-boot.version>1.1.0</justauth-spring-boot.version>
         <mybatis-plus.version>3.2.0</mybatis-plus.version>
@@ -59,6 +60,14 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+
+            <dependency>
+                <groupId>com.qiniu</groupId>
+                <artifactId>qiniu-java-sdk</artifactId>
+                <version>${qiniu-java-sdk.version}</version>
+            </dependency>
+
+
             <!-- DataSource -->
             <dependency>
                 <groupId>com.zaxxer</groupId>

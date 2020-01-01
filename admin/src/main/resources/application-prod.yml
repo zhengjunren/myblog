@@ -1,6 +1,12 @@
 spring:
   profiles:
     active: prod
+  servlet:
+    multipart:
+      enabled: true
+      location: /home/myblog/file/
+      file-size-threshold: 5MB
+      max-file-size: 20MB
   cache:
     type: redis
   jackson:
@@ -79,6 +85,7 @@ jwt:
     key: xkcoding
     ttl: 10800000
     remember: 604800000
+  online-key: online-token
 
 custom:
   config:
@@ -119,3 +126,7 @@ task:
     keep-alive-seconds: 60
     # 队列容量
     queue-capacity: 50
+
+qiniu:
+  # 文件大小 /M
+  max-size: 15

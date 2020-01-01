@@ -49,12 +49,12 @@
       <el-table-column align="center" label="操作" min-width="120" fixed="right">
         <template slot-scope="scope">
           <el-popover
-            :ref="scope.row.username"
+            :ref="scope.row.username + scope.row.loginTime"
             placement="top"
             width="200">
             <p>确定踢出吗！</p>
             <div style="text-align: right; margin: 0">
-              <el-button size="mini" type="text" @click="$refs[scope.row.username].doClose()">取消</el-button>
+              <el-button size="mini" type="text" @click="$refs[scope.row.username + scope.row.loginTime].doClose()">取消</el-button>
               <el-button :loading="delLoading" type="primary" size="mini" @click="kickOut(scope.row)">确定</el-button>
             </div>
             <el-button slot="reference" size="mini" type="danger"><svg-icon icon-class="kick"/></el-button>
@@ -103,9 +103,10 @@ export default {
     },
     kickOut(row) {
       kickOut(row.key).then(response => {
-        this.$refs[row.username].doClose()
+        this.$refs[row.username + row.loginTime].doClose()
         const index = this.list.indexOf(row)
         this.list.splice(index, 1)
+        this.total = this.total - 1
         this.$notify({
           title: '成功',
           message: "踢出成功",

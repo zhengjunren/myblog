@@ -1,4 +1,10 @@
 spring:
+  servlet:
+    multipart:
+      enabled: true
+      location: G:\test
+      file-size-threshold: 5MB
+      max-file-size: 20MB
   cache:
     type: redis
   jackson:
@@ -79,7 +85,6 @@ jwt:
     remember: 604800000
   online-key: online-token
 
-
 custom:
   config:
     ignores:
@@ -119,3 +124,7 @@ task:
     keep-alive-seconds: 60
     # 队列容量
     queue-capacity: 50
+
+qiniu:
+  # 文件大小 /M
+  max-size: 15

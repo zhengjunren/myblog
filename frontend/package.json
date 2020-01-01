@@ -19,7 +19,7 @@
     "axios": "0.18.1",
     "browserslist": "^4.8.2",
     "caniuse-lite": "^1.0.30001016",
-    "element-ui": "2.7.2",
+    "element-ui": "2.13.0",
     "fuse.js": "^3.4.6",
     "js-cookie": "2.2.0",
     "normalize.css": "7.0.0",

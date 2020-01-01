@@ -99,7 +99,7 @@
               </el-form>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="序号" width="80">
+          <el-table-column align="center" label="序号" min-width="80">
             <template slot-scope="scope">
               <span>{{ scope.$index + (listQuery.page-1) * (listQuery.limit) + 1 }}</span>
             </template>
@@ -109,17 +109,17 @@
               <span>{{ scope.row.description }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="IP" prop="requestIp" align="center" width="150">
+          <el-table-column label="IP" prop="requestIp" align="center" min-width="150">
             <template slot-scope="scope">
               <span>{{ scope.row.requestIp }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="IP来源" prop="address" align="center" min-width="150">
+          <el-table-column label="IP来源" prop="address" align="center" min-width="170">
             <template slot-scope="scope">
               <span>{{ scope.row.address }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="浏览器" prop="browser" align="center" width="120">
+          <el-table-column label="浏览器" prop="browser" align="center" min-width="170">
             <template slot-scope="scope">
               <span>{{ scope.row.browser }}</span>
             </template>
@@ -131,17 +131,17 @@
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column label="操作者" prop="username" align="center" width="150">
+          <el-table-column label="操作者" prop="username" align="center" min-width="120">
             <template slot-scope="scope">
               <span>{{ scope.row.username }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="操作时间" prop="createTime" align="center" width="200">
+          <el-table-column label="操作时间" prop="createTime" align="center" min-width="200">
             <template slot-scope="scope">
               <span>{{ scope.row.createTime }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="查看异常" width="100px" align="center" fixed="right">
+          <el-table-column label="查看异常" min-width="100px" align="center" fixed="right">
             <template slot-scope="scope">
               <el-button size="mini" type="primary" @click="getErrorDetail(scope.row.id)"><svg-icon icon-class="look" />&nbsp;</el-button>
             </template>
