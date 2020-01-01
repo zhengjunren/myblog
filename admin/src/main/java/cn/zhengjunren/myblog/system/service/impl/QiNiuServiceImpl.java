@@ -126,6 +126,11 @@ public class QiNiuServiceImpl implements QiNiuService {
     }
 
     @Override
+    public void updateConfig(QiniuConfig qiniuConfig) {
+        qiniuConfigMapper.updateById(qiniuConfig);
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public void synchronize(QiniuConfig config) {
         if(config.getId() == null){

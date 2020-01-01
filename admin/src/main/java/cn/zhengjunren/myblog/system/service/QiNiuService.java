@@ -52,6 +52,8 @@ public interface QiNiuService {
      */
     QiniuConfig find();
 
+    void updateConfig(QiniuConfig qiniuConfig);
+
     /**
      * 同步数据
      * @param config 配置

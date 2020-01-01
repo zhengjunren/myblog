@@ -30,3 +30,18 @@ export function downloadExcel() {
     method: 'get'
   })
 }
+
+export function getConfig() {
+  return request({
+    url: '/qiniu/config',
+    method: 'get'
+  })
+}
+
+export function updateConfig(data) {
+  return request({
+    url: '/qiniu/config',
+    method: 'put',
+    data
+  })
+}

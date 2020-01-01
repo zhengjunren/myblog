@@ -14,7 +14,6 @@
       style="width: 100%;margin-bottom: 20px;"
       row-key="id"
       border
-      default-expand-all
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
       <el-table-column label="名称" prop="name" width="150px">
         <template slot-scope="scope">
@@ -32,10 +31,9 @@
         </template>
       </el-table-column>
       <el-table-column :show-overflow-tooltip="true" width="100px" prop="path" label="路由地址" />
-<!--      <el-table-column :show-overflow-tooltip="true" min-width="150px" prop="component" label="组件路径"/>-->
       <el-table-column :show-overflow-tooltip="true" min-width="150px" label="组件路径">
         <template slot-scope="scope">
-          {{ scope.row.component == null ? "目录" : scope.row.component }}
+          {{ scope.row.component === null || scope.row.component === "" ? "目录" : scope.row.component }}
         </template>
       </el-table-column>
 <!--      <el-table-column prop="sort" align="center" width="75px" label="组件名">-->

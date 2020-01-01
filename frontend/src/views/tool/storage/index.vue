@@ -12,7 +12,9 @@
       <el-input v-model="listQuery.key" class="filter-item" placeholder="文件名" style="width: 200px;" />
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="fetchData">搜索</el-button>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-download" :loading="downloadLoading" @click="downloadExcel">导出</el-button>
-      <el-button :icon="icon" class="filter-item" type="primary" @click="synchronize">同步</el-button>
+      <el-button :icon="icon" class="filter-item" type="success" @click="synchronize">同步</el-button>
+      <!-- 配置 -->
+      <el-button v-waves class="filter-item" type="primary" icon="el-icon-s-tools" @click="doConfig">配置</el-button>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-upload" @click="dialog = true">上传</el-button>
     </div>
     <el-table
@@ -49,7 +51,7 @@
       </el-table-column>
       <el-table-column label="上传时间" prop="createTime" align="left" min-width="220">
         <template slot-scope="scope">
-          <span>{{ scope.row.createTime }}</span>
+          <span>{{ scope.row.createTime === null ? scope.row.updateTime : scope.row.createTime }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" min-width="120px" align="center" fixed="right">
@@ -69,6 +71,7 @@
       </el-table-column>
     </el-table>
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="fetchData" />
+    <eForm ref="form" />
     <el-dialog :visible.sync="dialog" :close-on-click-modal="false" append-to-body width="500px" @close="">
       <el-upload
         :before-remove="handleBeforeRemove"
@@ -93,12 +96,13 @@
 import {getFiles, synchronize, del, downloadExcel} from '@/api/qiniu'
 import { getToken } from '@/utils/auth'
 import Pagination from '@/components/Pagination'
+import eForm from './form'
 import {downloadFile} from '@/utils/index'
 import waves from '@/directive/waves'
 export default {
   name: "index",
   directives: { waves },
-  components: { Pagination },
+  components: { Pagination, eForm },
   data() {
     return {
       url: process.env.VUE_APP_BASE_API + "/qiniu",
@@ -186,6 +190,12 @@ export default {
         downloadFile(result, '文件信息列表', 'xlsx')
         this.downloadLoading = false
       })
+    },
+
+    doConfig() {
+      const _this = this.$refs.form
+      _this.fetchData()
+      _this.dialog = true
     },
 
     // 监听上传失败

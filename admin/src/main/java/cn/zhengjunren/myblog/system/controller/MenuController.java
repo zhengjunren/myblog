@@ -84,25 +84,6 @@ public class MenuController extends BaseController<Menu, MenuService, BaseQueryP
         return ApiResponse.ofSuccess(service.buildTree(list));
     }
 
-    //    /**
-//     * 新增
-//     * @param menu {@link Menu}
-//     * @return 成功
-//     */
-//    @Override
-//    @PostMapping
-//    @MyLog("创建菜单")
-//    @ApiOperation(value = "创建菜单")
-//    @ApiImplicitParam(name = "menu", value = "菜单：不带id，创建时间", required = true, dataType = "Menu", paramType = ParamTypeUtils.BODY)
-//    public ApiResponse create(@RequestBody Menu menu) {
-//        if (menu.getId() != null) {
-//            throw new BadRequestException(Status.ENTITY_CANNOT_HAVE_AN_ID);
-//        }
-//        menu.setCreateTime(new Date());
-//        service.save(menu);
-//        return ApiResponse.ofSuccess();
-//    }
-
     /**
      * 根据 id 删除
      * @param id id

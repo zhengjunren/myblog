@@ -1,6 +1,7 @@
 package cn.zhengjunren.myblog.system.controller;
 
 import cn.zhengjunren.myblog.common.result.ApiResponse;
+import cn.zhengjunren.myblog.system.domain.QiniuConfig;
 import cn.zhengjunren.myblog.system.domain.QiniuContent;
 import cn.zhengjunren.myblog.system.dto.condition.QiniuQueryCondition;
 import cn.zhengjunren.myblog.system.service.QiNiuService;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,6 +43,16 @@ public class QiniuController {
         this.qiNiuService = qiNiuService;
     }
 
+    @GetMapping("/config")
+    public ApiResponse getConfig() {
+        return ApiResponse.ofSuccess(qiNiuService.find());
+    }
+
+    @PutMapping("/config")
+    public ApiResponse updateConfig(@RequestBody QiniuConfig qiniuConfig) {
+        qiNiuService.updateConfig(qiniuConfig);
+        return ApiResponse.ofSuccess();
+    }
 
     @ApiOperation("上传文件")
     @PostMapping
