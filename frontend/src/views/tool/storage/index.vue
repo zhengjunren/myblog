@@ -10,12 +10,14 @@
         start-placeholder="开始日期"
         end-placeholder="结束日期"/>
       <el-input v-model="listQuery.key" class="filter-item" placeholder="文件名" style="width: 200px;" />
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="fetchData">搜索</el-button>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-download" :loading="downloadLoading" @click="downloadExcel">导出</el-button>
-      <el-button :icon="icon" class="filter-item" type="success" @click="synchronize">同步</el-button>
-      <!-- 配置 -->
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-s-tools" @click="doConfig">配置</el-button>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-upload" @click="dialog = true">上传</el-button>
+      <el-button-group>
+        <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="fetchData">搜索</el-button>
+        <el-button v-waves class="filter-item" type="info" icon="el-icon-download" :loading="downloadLoading" @click="downloadExcel">导出</el-button>
+        <el-button :icon="icon" class="filter-item" type="success" @click="synchronize">同步</el-button>
+        <!-- 配置 -->
+        <el-button v-waves class="filter-item" type="warning" icon="el-icon-s-tools" @click="doConfig">配置</el-button>
+        <el-button v-waves class="filter-item" type="primary" icon="el-icon-upload" @click="dialog = true">上传</el-button>
+      </el-button-group>
     </div>
     <el-table
       v-loading="listLoading"

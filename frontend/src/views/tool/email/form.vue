@@ -16,10 +16,11 @@
       <el-form-item label="SMTP端口" prop="port">
         <el-input v-model="form.port"/>
       </el-form-item>
-      <el-form-item label="">
-        <el-button :loading="loading" size="medium" type="primary" @click="doSubmit">保存配置</el-button>
-      </el-form-item>
     </el-form>
+    <div slot="footer" class="dialog-footer">
+      <el-button type="text" @click="dialog = false">取消</el-button>
+      <el-button :loading="loading" type="primary" @click="doSubmit">确认</el-button>
+    </div>
   </el-dialog>
 </template>
 

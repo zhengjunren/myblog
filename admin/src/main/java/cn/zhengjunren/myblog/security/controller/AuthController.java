@@ -101,6 +101,7 @@ public class AuthController {
     }
 
     @GetMapping(value = "/code")
+    @ApiOperation(value = "获取验证码")
     public ApiResponse getCode() {
         ArithmeticCaptcha captcha = new ArithmeticCaptcha (111, 36);
         captcha.setLen(2);

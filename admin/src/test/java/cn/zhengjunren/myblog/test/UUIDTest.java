@@ -2,6 +2,7 @@ package cn.zhengjunren.myblog.test;
 
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.RuntimeUtil;
 import org.junit.Test;
 
 /**
@@ -22,5 +23,11 @@ public class UUIDTest {
     @Test
     public void IdUtilTest() {
         System.out.println(IdUtil.fastSimpleUUID());
+    }
+
+    @Test
+    public void runtimeUtilTest() {
+//        Console.log(1);
+        System.out.println(RuntimeUtil.execForStr("ping www.zhengjunren.cn"));
     }
 }

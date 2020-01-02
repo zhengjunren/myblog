@@ -2,8 +2,10 @@
   <div class="app-container">
     <div class="filter-container">
       <el-input v-model="listQuery.filter" class="filter-item" placeholder="关键字" style="width: 200px;" />
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="">搜索</el-button>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-download" :loading="downloadLoading" @click="downloadExcel">导出</el-button>
+      <el-button-group>
+        <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="">搜索</el-button>
+        <el-button v-waves class="filter-item" type="primary" icon="el-icon-download" :loading="downloadLoading" @click="downloadExcel">导出</el-button>
+      </el-button-group>
     </div>
     <el-table
       v-loading="listLoading"

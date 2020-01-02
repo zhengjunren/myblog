@@ -1,11 +1,15 @@
 package cn.zhengjunren.myblog.system.controller;
 
+import cn.zhengjunren.myblog.common.annotation.MyLog;
 import cn.zhengjunren.myblog.common.result.ApiResponse;
+import cn.zhengjunren.myblog.common.utils.ParamTypeUtils;
 import cn.zhengjunren.myblog.system.domain.QiniuConfig;
 import cn.zhengjunren.myblog.system.domain.QiniuContent;
 import cn.zhengjunren.myblog.system.dto.condition.QiniuQueryCondition;
 import cn.zhengjunren.myblog.system.service.QiNiuService;
 import com.alibaba.excel.EasyExcel;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +36,7 @@ import java.util.Map;
  * @version 1.0.0
  * @date 2020/1/1 14:10
  */
+@Api(tags = "七牛云管理")
 @RestController
 @RequestMapping("api/qiniu")
 public class QiniuController {
@@ -43,17 +48,23 @@ public class QiniuController {
         this.qiNiuService = qiNiuService;
     }
 
+    @MyLog("获取邮件配置")
     @GetMapping("/config")
+    @ApiOperation(value = "获取邮件配置")
     public ApiResponse getConfig() {
         return ApiResponse.ofSuccess(qiNiuService.find());
     }
 
+    @MyLog("更新七牛配置")
     @PutMapping("/config")
+    @ApiOperation(value = "更新七牛配置")
+    @ApiImplicitParam(name = "qiniuConfig", value = "七牛配置", required = true, dataType = "QiniuConfig", paramType = ParamTypeUtils.BODY)
     public ApiResponse updateConfig(@RequestBody QiniuConfig qiniuConfig) {
         qiNiuService.updateConfig(qiniuConfig);
         return ApiResponse.ofSuccess();
     }
 
+    @MyLog("上传文件")
     @ApiOperation("上传文件")
     @PostMapping
     public ApiResponse upload(@RequestParam MultipartFile file) throws Exception {
@@ -65,6 +76,7 @@ public class QiniuController {
         return ApiResponse.ofSuccess(map);
     }
 
+    @MyLog("同步七牛云数据")
     @ApiOperation("同步七牛云数据")
     @PostMapping(value = "/synchronize")
     public ApiResponse synchronize(){
@@ -72,11 +84,13 @@ public class QiniuController {
         return ApiResponse.ofSuccess();
     }
 
+    @MyLog("查询七牛云文件")
     @GetMapping
     public ApiResponse page(QiniuQueryCondition condition) {
         return ApiResponse.ofSuccess(qiNiuService.page(condition));
     }
 
+    @MyLog("导出文件信息excel")
     @GetMapping("/excel")
     public void exportExcel(HttpServletResponse response) throws IOException {
         response.setContentType("application/vnd.ms-excel");
@@ -87,6 +101,7 @@ public class QiniuController {
         EasyExcel.write(response.getOutputStream(), QiniuContent.class).sheet("sheet1").doWrite(list);
     }
 
+    @MyLog("删除文件")
     @DeleteMapping("/{id}")
     public ApiResponse delete(@PathVariable("id") long id) {
         qiNiuService.delete(qiNiuService.selectById(id), qiNiuService.find());

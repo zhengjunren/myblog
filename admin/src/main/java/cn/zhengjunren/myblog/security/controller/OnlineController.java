@@ -1,10 +1,17 @@
 package cn.zhengjunren.myblog.security.controller;
 
+import cn.zhengjunren.myblog.common.annotation.MyLog;
 import cn.zhengjunren.myblog.common.result.ApiResponse;
+import cn.zhengjunren.myblog.common.utils.DataTypeUtils;
+import cn.zhengjunren.myblog.common.utils.ParamTypeUtils;
 import cn.zhengjunren.myblog.security.dto.OnlineQueryCondition;
 import cn.zhengjunren.myblog.security.service.OnlineService;
 import cn.zhengjunren.myblog.security.vo.OnlineUser;
 import com.alibaba.excel.EasyExcel;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +30,7 @@ import java.io.IOException;
  * @version 1.0.0
  * @date 2019/12/27 15:45
  */
+@Api(tags = "在线用户管理")
 @Slf4j
 @RestController
 @RequestMapping("/api/online")
@@ -34,12 +42,15 @@ public class OnlineController {
         this.onlineService = onlineService;
     }
 
+    @MyLog("查询在线用户")
     @GetMapping
     public ApiResponse page(OnlineQueryCondition condition){
         return ApiResponse.ofSuccess(onlineService.page(condition));
     }
 
+    @MyLog("导出在线用户excel")
     @GetMapping("excel")
+    @ApiOperation(value = "导出在线用户excel")
     public void exportExcel(HttpServletResponse response) throws IOException, ClassNotFoundException {
         // 这里注意 有同学反应使用swagger 会导致各种问题，请直接用浏览器或者用postman
         response.setContentType("application/vnd.ms-excel");
@@ -49,7 +60,12 @@ public class OnlineController {
         EasyExcel.write(response.getOutputStream(), OnlineUser.class).sheet("sheet1").doWrite(onlineService.list());
     }
 
+    @MyLog("踢出用户")
     @DeleteMapping
+    @ApiOperation(value = "踢出用户")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "key", value = "key", required = true, dataType = DataTypeUtils.STRING, paramType = ParamTypeUtils.QUERY),
+    })
     public ApiResponse kickOut(String key, HttpServletRequest request) throws Exception {
         onlineService.kickOut(key, request);
         return ApiResponse.ofSuccess();

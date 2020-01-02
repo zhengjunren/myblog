@@ -1,8 +1,10 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-button :disabled="!showButton" v-waves class="filter-item" type="success" @click="initWebSocket"><svg-icon icon-class="connect" />&nbsp;手动连接</el-button>
-      <el-button :disabled="showButton" v-waves class="filter-item" type="info" @click="destroyConnect"><svg-icon icon-class="disconnect" />&nbsp;&nbsp;断开连接</el-button>
+      <el-button-group>
+        <el-button :disabled="!showButton" v-waves class="filter-item" type="primary" @click="initWebSocket"><svg-icon icon-class="connect" />&nbsp;连接</el-button>
+        <el-button :disabled="showButton" v-waves class="filter-item" type="danger" @click="destroyConnect"><svg-icon icon-class="disconnect" />&nbsp;&nbsp;断开</el-button>
+      </el-button-group>
     </div>
     <el-row :gutter="20">
       <el-col :span="8" :xs="24">

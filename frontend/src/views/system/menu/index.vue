@@ -1,13 +1,14 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus" @click="add">
-        新增
-      </el-button>
-      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="downloadExcel">
-        导出
-      </el-button>
-
+      <el-button-group>
+        <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus" @click="add">
+          新增
+        </el-button>
+        <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="downloadExcel">
+          导出
+        </el-button>
+      </el-button-group>
     </div>
     <el-table
       v-loading="listLoading"
@@ -37,11 +38,6 @@
           {{ scope.row.component === null || scope.row.component === "" ? "目录" : scope.row.component }}
         </template>
       </el-table-column>
-<!--      <el-table-column prop="sort" align="center" width="75px" label="组件名">-->
-<!--        <template slot-scope="scope">-->
-<!--          {{ scope.row.componentName===null? "目录" : scope.row.componentName }}-->
-<!--        </template>-->
-<!--      </el-table-column>-->
       <el-table-column prop="iframe" align="center" label="外链" width="90px">
         <template slot-scope="scope">
           <span v-if="scope.row.iframe">是</span>
@@ -67,18 +63,20 @@
       </el-table-column>
       <el-table-column label="操作" width="160px" align="center" fixed="right">
         <template slot-scope="scope">
-          <el-button size="mini" type="primary" icon="el-icon-edit" @click="edit(scope.row)"/>
-          <el-popover
-            :ref="scope.row.id"
-            placement="top"
-            width="200">
-            <p>确定删除吗,如果存在下级节点则一并删除，此操作不能撤销！</p>
-            <div style="text-align: right; margin: 0">
-              <el-button size="mini" type="text" @click="$refs[scope.row.id].doClose()">取消</el-button>
-              <el-button :loading="delLoading" type="primary" size="mini" @click="subDelete(scope.row.id)">确定</el-button>
-            </div>
-            <el-button slot="reference" type="danger" icon="el-icon-delete" size="mini"/>
-          </el-popover>
+          <el-button-group>
+            <el-button size="mini" type="primary" icon="el-icon-edit" @click="edit(scope.row)"/>
+            <el-popover
+              :ref="scope.row.id"
+              placement="top"
+              width="200">
+              <p>确定删除吗,如果存在下级节点则一并删除，此操作不能撤销！</p>
+              <div style="text-align: right; margin: 0">
+                <el-button size="mini" type="text" @click="$refs[scope.row.id].doClose()">取消</el-button>
+                <el-button :loading="delLoading" type="primary" size="mini" @click="subDelete(scope.row.id)">确定</el-button>
+              </div>
+              <el-button slot="reference" type="danger" icon="el-icon-delete" size="mini"/>
+            </el-popover>
+          </el-button-group>
         </template>
       </el-table-column>
     </el-table>

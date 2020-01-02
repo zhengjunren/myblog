@@ -9,10 +9,12 @@
         value-format="yyyy-MM-dd HH:mm:ss"
         start-placeholder="开始日期"
         end-placeholder="结束日期"/>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="fetchData">搜索</el-button>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-plus" @click="add">新增</el-button>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-download" :loading="downloadLoading" @click="downloadExcel">导出</el-button>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-tickets" @click="doLog">日志</el-button>
+      <el-button-group>
+        <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="fetchData">搜索</el-button>
+        <el-button v-waves class="filter-item" type="success" icon="el-icon-plus" @click="add">新增</el-button>
+        <el-button v-waves class="filter-item" type="info" icon="el-icon-download" :loading="downloadLoading" @click="downloadExcel">导出</el-button>
+        <el-button v-waves class="filter-item" type="warning" icon="el-icon-tickets" @click="doLog">日志</el-button>
+      </el-button-group>
     </div>
     <Log ref="log"/>
     <el-dialog :visible.sync="dialogVisible" :close-on-click-modal="false" :before-close="cancel" :title="isAdd ? '新增任务' : '编辑任务'" append-to-body width="600px">
@@ -101,26 +103,30 @@
       </el-table-column>
       <el-table-column align="center" label="操作" min-width="240" fixed="right">
         <template slot-scope="scope">
-          <el-button v-waves icon="el-icon-edit" type="primary" size="mini" @click="edit(scope.row)"/>
-          <el-tooltip content="执行一次" effect="dark" placement="top">
-            <el-button v-waves type="primary" size="mini" @click="execute(scope.row.id)"><svg-icon icon-class="exec" /></el-button>
-          </el-tooltip>
-          <el-tooltip v-if="!scope.row.isPause" content="暂停" effect="dark" placement="top">
-            <el-button v-waves type="primary" size="mini" @click="updateIsPause(scope.row.id)"><svg-icon icon-class="pause" /></el-button>
-          </el-tooltip>
-          <el-tooltip v-if="scope.row.isPause" content="恢复" effect="dark" placement="top">
-            <el-button  v-waves type="primary" size="mini" @click="updateIsPause(scope.row.id)"><svg-icon icon-class="resume"/></el-button>
-          </el-tooltip>&nbsp;
-          <el-popover
-            :ref="scope.row.id"
-            placement="top"
-            width="200">
-            <p>确定停止并删除该任务吗？</p>
-            <div style="text-align: right; margin: 0">
-              <el-button size="mini" type="text" @click="$refs[scope.row.id].doClose()">取消</el-button>
-              <el-button :loading="delLoading" type="primary" size="mini" @click="del(scope.row)">确定</el-button>
-            </div>
-            <el-button slot="reference" v-waves type="danger"  size="mini" icon="el-icon-delete"/></el-popover>
+          <el-button-group>
+            <el-button v-waves icon="el-icon-edit" type="primary" size="mini" @click="edit(scope.row)"/>
+            <el-tooltip content="执行一次" effect="dark" placement="top">
+              <el-button v-waves type="success" size="mini" @click="execute(scope.row.id)"><svg-icon icon-class="exec" /></el-button>
+            </el-tooltip>
+            <el-tooltip v-if="!scope.row.isPause" content="暂停" effect="dark" placement="top">
+              <el-button v-waves type="primary" size="mini" @click="updateIsPause(scope.row.id)"><svg-icon icon-class="pause" /></el-button>
+            </el-tooltip>
+            <el-tooltip v-if="scope.row.isPause" content="恢复" effect="dark" placement="top">
+              <el-button  v-waves type="warning" size="mini" @click="updateIsPause(scope.row.id)"><svg-icon icon-class="resume"/></el-button>
+            </el-tooltip>
+            <el-popover
+              :ref="scope.row.id"
+              placement="top"
+              width="200">
+              <p>确定停止并删除该任务吗？</p>
+              <div style="text-align: right; margin: 0">
+                <el-button size="mini" type="text" @click="$refs[scope.row.id].doClose()">取消</el-button>
+                <el-button :loading="delLoading" type="primary" size="mini" @click="del(scope.row)">确定</el-button>
+              </div>
+              <el-button slot="reference" v-waves type="danger"  size="mini" icon="el-icon-delete"/>
+            </el-popover>
+          </el-button-group>
+
         </template>
       </el-table-column>
     </el-table>

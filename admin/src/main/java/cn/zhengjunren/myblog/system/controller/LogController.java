@@ -1,6 +1,7 @@
 package cn.zhengjunren.myblog.system.controller;
 
 import cn.hutool.core.util.ObjectUtil;
+import cn.zhengjunren.myblog.common.annotation.MyLog;
 import cn.zhengjunren.myblog.common.consts.Consts;
 import cn.zhengjunren.myblog.common.controller.BaseController;
 import cn.zhengjunren.myblog.common.result.ApiResponse;
@@ -15,7 +16,6 @@ import com.alibaba.excel.EasyExcel;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -46,16 +46,11 @@ public class LogController extends BaseController<Log, LogService, LogQueryCondi
         super(service);
     }
 
+    @MyLog("查询日志")
     @Override
     @GetMapping()
     @ApiOperation(value = "查询日志", notes="根据时间、类型、分页查询")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "page", value = "页码", required = true, dataType = DataTypeUtils.LONG, paramType = ParamTypeUtils.QUERY),
-            @ApiImplicitParam(name = "limit", value = "笔数", required = true, dataType = DataTypeUtils.LONG, paramType = ParamTypeUtils.QUERY),
-            @ApiImplicitParam(name = "start", value = "开始", required = true, dataType = DataTypeUtils.DATETIME, paramType = ParamTypeUtils.QUERY),
-            @ApiImplicitParam(name = "end", value = "截止", required = true, dataType = DataTypeUtils.DATETIME, paramType = ParamTypeUtils.QUERY),
-            @ApiImplicitParam(name = "type", value = "类型：为 INFO 或 ERROR", required = true, dataType = DataTypeUtils.STRING, paramType = ParamTypeUtils.PATH),
-    })
+    @ApiImplicitParam(name = "condition", value = "查询条件", required = true, dataType = "LogQueryCondition", paramType = ParamTypeUtils.QUERY)
     public ApiResponse page(LogQueryCondition condition) {
         return ApiResponse.ofSuccess(service.page(condition.getPage(), condition.getLimit(), condition.getStart(), condition.getEnd(), condition.getType()));
     }
@@ -67,6 +62,7 @@ public class LogController extends BaseController<Log, LogService, LogQueryCondi
         return ApiResponse.ofSuccess(service.getErrorDetail(id));
     }
 
+    @MyLog("导出info日志excel")
     @Override
     @GetMapping("/info/excel")
     @ApiOperation(value = "导出info日志excel")
@@ -80,6 +76,7 @@ public class LogController extends BaseController<Log, LogService, LogQueryCondi
         EasyExcel.write(response.getOutputStream(), InfoLogDto.class).sheet("sheet1").doWrite(infoLogList);
     }
 
+    @MyLog("导出error日志excel")
     @GetMapping("/error/excel")
     @ApiOperation(value = "导出error日志excel")
     public void exportErrorLogExcel(HttpServletResponse response) throws IOException, ClassNotFoundException {
@@ -98,6 +95,7 @@ public class LogController extends BaseController<Log, LogService, LogQueryCondi
         EasyExcel.write(response.getOutputStream(), ErrorLogDto.class).sheet("sheet1").doWrite(collect);
     }
 
+    @MyLog("清空日志")
     @DeleteMapping("/{type}")
     @ApiOperation(value = "清空日志")
     @ApiImplicitParam(name = "type", value = "类型：为 INFO 或 ERROR", required = true, dataType = DataTypeUtils.STRING, paramType = ParamTypeUtils.PATH)

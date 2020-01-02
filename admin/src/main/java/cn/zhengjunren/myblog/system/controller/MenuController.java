@@ -77,6 +77,7 @@ public class MenuController extends BaseController<Menu, MenuService, BaseQueryP
      * 获取树形菜单列表
      * @return 树形菜单列表
      */
+    @MyLog("获取树形菜单列表")
     @GetMapping("list")
     @ApiOperation(value = "获取树形菜单列表")
     public ApiResponse getMenus() {
