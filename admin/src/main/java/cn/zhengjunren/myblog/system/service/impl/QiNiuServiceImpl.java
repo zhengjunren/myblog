@@ -1,5 +1,6 @@
 package cn.zhengjunren.myblog.system.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import cn.zhengjunren.myblog.common.dto.ListInfo;
 import cn.zhengjunren.myblog.common.exception.BadRequestException;
 import cn.zhengjunren.myblog.common.utils.FileUtil;
@@ -96,7 +97,11 @@ public class QiNiuServiceImpl implements QiNiuService {
         String upToken = auth.uploadToken(qiniuConfig.getBucket());
         try {
             String key = file.getOriginalFilename();
-            if(qiniuContentMapper.findByKey(key) != null) {
+            assert key != null;
+            String name = StrUtil.subPre(key, key.lastIndexOf('.'));
+            String type = StrUtil.subAfter(key, '.', true);
+            QiniuContent content = qiniuContentMapper.findByKey(name);
+            if (content != null && content.getSuffix().equals(type)) {
                 key = QiNiuUtil.getKey(key);
             }
             Response response = uploadManager.put(file.getBytes(), key, upToken);
@@ -154,7 +159,11 @@ public class QiNiuServiceImpl implements QiNiuService {
             QiniuContent qiniuContent;
             FileInfo[] items = fileListIterator.next();
             for (FileInfo item : items) {
-                if(qiniuContentMapper.findByKey(FileUtil.getFileNameNoEx(item.key)) == null){
+                QueryWrapper<QiniuContent> contentQueryWrapper = new QueryWrapper<>();
+                contentQueryWrapper.eq(QiniuContent.COL_NAME, FileUtil.getFileNameNoEx(item.key));
+                contentQueryWrapper.eq(QiniuContent.COL_SUFFIX, FileUtil.getExtensionName(item.key));
+                QiniuContent content = qiniuContentMapper.selectOne(contentQueryWrapper);
+                if(content == null) {
                     qiniuContent = new QiniuContent();
                     qiniuContent.setSize(FileUtil.getSize(Integer.parseInt(item.fsize+"")));
                     qiniuContent.setSuffix(FileUtil.getExtensionName(item.key));

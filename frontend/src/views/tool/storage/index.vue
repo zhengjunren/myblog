@@ -29,7 +29,7 @@
           <span>{{ scope.$index + (listQuery.page-1) * (listQuery.limit) + 1 }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="文件名" prop="name" align="left" min-width="250">
+      <el-table-column label="文件名" prop="name" align="left" min-width="240">
         <template slot-scope="scope">
           <el-link type="primary" :href="scope.row.url" target="_blank">{{scope.row.name}}</el-link>
         </template>
@@ -91,7 +91,7 @@
         <div slot="tip" style="display: block;" class="el-upload__tip">请勿上传违法文件，且文件不超过15M</div>
       </el-upload>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialog = false">确认</el-button>
+        <el-button type="primary" @click="doSubmit">确认</el-button>
       </div>
     </el-dialog>
   </div>
@@ -203,6 +203,12 @@ export default {
       _this.dialog = true
     },
 
+    doSubmit() {
+      this.fileList = []
+      this.dialog = false
+      this.fetchData()
+    },
+
     // 监听上传失败
     handleError(e, file, fileList) {
       const msg = JSON.parse(e.message)
@@ -213,12 +219,14 @@ export default {
       })
     },
     handleSuccess(response, file, fileList) {
-      this.fetchData()
+      const uid = file.uid
+      const id = response.data.id
+      this.files.push({ uid, id })
     },
     handleBeforeRemove(file, fileList) {
       for (let i = 0; i < this.files.length; i++) {
         if (this.files[i].uid === file.uid) {
-          // del(this.files[i].id).then(res => {})
+          del(this.files[i].id).then(res => {})
           return true
         }
       }
