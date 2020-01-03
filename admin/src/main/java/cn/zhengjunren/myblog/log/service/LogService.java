@@ -1,8 +1,9 @@
 package cn.zhengjunren.myblog.log.service;
 
+import cn.zhengjunren.myblog.common.dto.ListInfo;
 import cn.zhengjunren.myblog.log.domain.Log;
 import cn.zhengjunren.myblog.log.dto.InfoLogDto;
-import cn.zhengjunren.myblog.common.dto.ListInfo;
+import cn.zhengjunren.myblog.log.dto.OwnLogDTO;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.aspectj.lang.ProceedingJoinPoint;
 
@@ -43,6 +44,17 @@ public interface LogService extends IService<Log>{
 
     String getErrorDetail(long id);
 
-
+    /**
+     * 获取 info 类型日志
+     * @return 结果
+     */
     List<InfoLogDto>  getInfoLogList();
+
+    /**
+     * 根据用户名获取日志
+     * @param username 用户名
+     * @param number 条数
+     * @return 行为日志
+     */
+    List<OwnLogDTO> selectDetailByUsername(String username, Integer number);
 }

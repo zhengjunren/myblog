@@ -43,4 +43,18 @@
     WHERE log_type = 'INFO'
   </select>
 
+  <select id="selectOwnLogDetail" resultType="cn.zhengjunren.myblog.log.dto.OwnLogDTO">
+    SELECT
+      description,
+      COUNT( description ) AS 'count',
+      MAX(create_time) AS 'createTime'
+    FROM
+      log
+    WHERE username = #{username}
+    GROUP BY
+      description
+    ORDER BY MAX(create_time) DESC
+    LIMIT #{number}
+  </select>
+
 </mapper>

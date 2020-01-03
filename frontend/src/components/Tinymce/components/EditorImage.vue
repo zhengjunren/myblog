@@ -43,7 +43,7 @@ export default {
   },
   data() {
     return {
-      url: process.env.VUE_APP_BASE_API + "/qiniu",
+      url: process.env.VUE_APP_BASE_UPLOAD,
       headers: { 'Authorization': 'Bearer ' + getToken() },
       dialogVisible: false,
       listObj: {},

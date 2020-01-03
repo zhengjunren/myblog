@@ -15,4 +15,18 @@ public interface UserMapper extends BaseMapper<User> {
      * @return {@link User}
      */
     User selectOneByUsernameOrEmailOrPhone(@Param("usernameOrEmailOrPhone") String usernameOrEmailOrPhone);
+
+    /**
+     * 根据用户名更新头像
+     * @param username 用户名
+     * @param avatar 头像
+     */
+    void updateAvatarByUsername(@Param("username") String username, @Param("avatar") String avatar);
+
+    /**
+     * 根据用户名更新密码
+     * @param username 用户名
+     * @param password 密码
+     */
+    void updatePassword(@Param("username") String username, @Param("password") String password);
 }

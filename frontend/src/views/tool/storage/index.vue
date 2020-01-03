@@ -112,7 +112,7 @@ export default {
   components: { Pagination, eForm },
   data() {
     return {
-      url: process.env.VUE_APP_BASE_API + "/qiniu",
+      url: process.env.VUE_APP_BASE_UPLOAD,
       headers: { 'Authorization': 'Bearer ' + getToken() },
       fileList: [], files: [],
       dialog: false,

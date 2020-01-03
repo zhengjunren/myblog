@@ -1,0 +1,240 @@
+<template>
+  <el-card style="margin-bottom:20px;">
+    <div slot="header" class="clearfix">
+      <span>关于我</span>
+    </div>
+    <image-cropper
+      v-model="show"
+      field="file"
+      :width="300"
+      :height="300"
+      :url="imageUrl"
+      :headers="headers"
+      img-format="png"
+      @crop-success="cropSuccess"
+      @crop-upload-success="cropUploadSuccess"
+      @crop-upload-fail="cropUploadFail"
+    />
+    <div class="user-profile">
+      <div class="box-center">
+        <pan-thumb :image="user.avatar" :height="'100px'" :width="'100px'" :hoverable="false">
+          <div>Hello</div>
+        </pan-thumb>
+      </div>
+      <div class="box-center">
+        <div class="user-name text-center">{{ user.nickname }}</div>
+      </div>
+    </div>
+    <div class="user-skills user-bio-section">
+      <div class="user-bio-section-header"><svg-icon icon-class="skill" /><span>其他</span></div>
+      <div class="user-bio-section-body">
+        <ul class="user-info">
+          <li style="border-top: 0;">用户名称 <div class="user-right">{{ user.username }}</div></li>
+          <li>用户邮箱 <div class="user-right">{{ user.email }}</div></li>
+          <li>注册时间 <div class="user-right">{{ user.createTime }}</div></li>
+          <li>状态 <div class="user-right" style="margin-top: -5px"><el-tag :type="'success'">{{user.status}}</el-tag></div></li>
+          <li>
+            修改头像
+            <div class="user-right">
+              <a @click="toggleShow">点击上传</a>
+            </div>
+          </li>
+          <li>
+            安全设置
+            <div class="user-right">
+              <a @click="dialog=true">修改密码</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </el-card>
+</template>
+
+<script>
+import ImageCropper from 'vue-image-crop-upload'
+import PanThumb from '@/components/PanThumb'
+import { getToken } from '@/utils/auth'
+import { updateAvatar } from '@/api/profile'
+export default {
+  name: "UserCard",
+  components: { PanThumb, ImageCropper },
+  props: {
+    user: {
+      type: Object,
+      default: () => {
+        return {
+          username: '',
+          nickname:'',
+          email:'',
+          avatar:'',
+          phone: '',
+          status: 1,
+          birthday: '',
+          createTime: ''
+        }
+      }
+    }
+  },
+  data() {
+    const confirmPassword = (rule, value, callback) => {
+      if (value) {
+        if (this.form.newPassword !== value) {
+          callback(new Error('两次输入的密码不一致'))
+        } else {
+          callback()
+        }
+      } else {
+        callback(new Error('请再次输入密码'))
+      }
+    }
+    return {
+      loading: false, dialog: false, title: '修改密码',
+      form: { oldPassword: '', newPassword: '', confirmPassword: '' },
+      imageUrl: process.env.VUE_APP_BASE_UPLOAD,
+      show: false,
+      headers: {
+        smail: '*_~',
+        Authorization: 'Bearer ' + getToken()
+      },
+      image: this.$store.getters.avatar,
+      rules: {
+        oldPassword: [
+          { required: true, message: '请输入旧密码', trigger: 'blur' }
+        ],
+        newPassword: [
+          { required: true, message: '请输入新密码', trigger: 'blur' },
+          { min: 6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur' }
+        ],
+        confirmPassword: [
+          { required: true, validator: confirmPassword, trigger: 'blur' }
+        ]
+      }
+    }
+  },
+  methods: {
+    toggleShow() {
+      this.show = !this.show
+    },
+    /**
+     *
+     * @param image
+     * @param field
+     */
+    cropSuccess(image, field) {
+      console.log('-------- crop success --------')
+      this.image = image
+    },
+    /**
+     * 上传成功
+     * @param jsonData 服务器返回数据，已进行 JSON 转码
+     * @param field
+     */
+    cropUploadSuccess(jsonData, field) {
+      // 更新头像
+      updateAvatar({
+        avatar: jsonData.data.data[0]
+      }).then(response => {
+        this.$message({
+          message: '更新头像成功',
+          type: 'success'
+        })
+        // 更新 vuex 中的头像
+        // this.$store.dispatch('user/setAvatar', jsonData.data.path)
+        this.user.avatar = jsonData.data.path
+      }).catch(() => {
+        this.$message({
+          message: '更新邮箱失败',
+          type: 'danger'
+        })
+      })
+    },
+    /**
+     * 上传失败
+     * @param status 服务器返回的失败状态码
+     * @param field
+     */
+    cropUploadFail(status, field) {
+      console.log('-------- upload fail --------')
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+  .box-center {
+    margin: 0 auto;
+    display: table;
+  }
+
+  .text-muted {
+    color: #777;
+  }
+
+  .user-profile {
+    .user-name {
+      font-weight: bold;
+    }
+
+    .box-center {
+      padding-top: 10px;
+    }
+
+    .user-role {
+      padding-top: 10px;
+      font-weight: 400;
+      font-size: 14px;
+    }
+
+    .box-social {
+      padding-top: 30px;
+
+      .el-table {
+        border-top: 1px solid #dfe6ec;
+      }
+    }
+
+    .user-follow {
+      padding-top: 20px;
+    }
+  }
+
+  .user-bio {
+    margin-top: 20px;
+    color: #606266;
+
+    span {
+      padding-left: 4px;
+    }
+
+    .user-bio-section {
+      font-size: 14px;
+      padding: 15px 0;
+
+      .user-bio-section-header {
+        border-bottom: 1px solid #dfe6ec;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+    }
+  }
+  .user-info {
+    padding-left: 0px;
+    list-style: none;
+    li{
+      border-bottom: 1px solid #F0F3F4;
+      border-top: 1px solid #F0F3F4;
+      padding: 11px 0px;
+      font-size: 13px;
+    }
+    .user-right {
+      float: right;
+
+      a{
+        color: #317EF3;
+      }
+    }
+  }
+</style>
+

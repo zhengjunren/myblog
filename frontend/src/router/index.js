@@ -63,6 +63,20 @@ export const constantRoutes = [
       component: () => import('@/views/dashboard/index'),
       meta: { title: '首页', icon: 'dashboard' ,affix: true }
     }]
+  },
+  {
+    path: '/profile',
+    component: Layout,
+    hidden: true,
+    redirect: 'noredirect',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/profile/index'),
+        name: '个人中心',
+        meta: { title: '个人中心' }
+      }
+    ]
   }
 ]
 

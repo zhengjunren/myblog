@@ -2,13 +2,14 @@ package cn.zhengjunren.myblog.log.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.json.JSONObject;
-import cn.zhengjunren.myblog.log.domain.Log;
-import cn.zhengjunren.myblog.log.dto.InfoLogDto;
-import cn.zhengjunren.myblog.log.mapper.LogMapper;
-import cn.zhengjunren.myblog.log.service.LogService;
 import cn.zhengjunren.myblog.common.annotation.MyLog;
 import cn.zhengjunren.myblog.common.dto.ListInfo;
 import cn.zhengjunren.myblog.common.utils.UserAgentUtil;
+import cn.zhengjunren.myblog.log.domain.Log;
+import cn.zhengjunren.myblog.log.dto.InfoLogDto;
+import cn.zhengjunren.myblog.log.dto.OwnLogDTO;
+import cn.zhengjunren.myblog.log.mapper.LogMapper;
+import cn.zhengjunren.myblog.log.service.LogService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -94,5 +95,10 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements LogSe
     @Override
     public List<InfoLogDto> getInfoLogList() {
         return baseMapper.getInfoLogList();
+    }
+
+    @Override
+    public List<OwnLogDTO> selectDetailByUsername(String username, Integer number) {
+        return baseMapper.selectOwnLogDetail(username, number);
     }
 }

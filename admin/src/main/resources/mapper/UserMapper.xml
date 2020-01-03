@@ -27,4 +27,11 @@
     FROM user
     WHERE (username = #{usernameOrEmailOrPhone} OR email = #{usernameOrEmailOrPhone} OR phone = #{usernameOrEmailOrPhone})
   </select>
+
+  <update id="updateAvatarByUsername">
+    UPDATE `user` SET avatar = #{avatar} WHERE username = #{username}
+  </update>
+  <update id="updatePassword">
+    UPDATE `user` SET password = #{password} WHERE username = #{username}
+  </update>
 </mapper>
