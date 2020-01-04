@@ -73,6 +73,8 @@ import ImageCropper from 'vue-image-crop-upload'
 import PanThumb from '@/components/PanThumb'
 import { getToken } from '@/utils/auth'
 import { updateAvatar, updatePassword } from '@/api/profile'
+import {MessageBox} from "element-ui";
+import store from "../../../store";
 export default {
   name: "UserCard",
   components: { PanThumb, ImageCropper },
@@ -187,11 +189,20 @@ export default {
               type: 'success',
               duration: 1500
             })
-            setTimeout(() => {
-              this.$store.dispatch('user/logout').then(() => {
-                location.reload() // 为了重新实例化vue-router对象 避免bug
+            // setTimeout(() => {
+            //   this.$store.dispatch('user/resetToken').then(() => {
+            //     location.reload() // 为了重新实例化vue-router对象 避免bug
+            //   })
+            // }, 1500)
+            this.$confirm('密码修改成功，请重新登录！', '注意', {
+              confirmButtonText: '重新登录',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              store.dispatch('user/resetToken').then(() => {
+                location.reload()
               })
-            }, 1500)
+            })
           }).catch(err => {
             this.loading = false
             console.log(err.response.data.message)

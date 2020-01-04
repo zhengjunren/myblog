@@ -35,5 +35,5 @@ public interface UserService extends IService<User>{
      * @param user {@link User}
      * @param username 用户名
      */
-    void update(User user, String username);
+    void update(String username, User user);
 }

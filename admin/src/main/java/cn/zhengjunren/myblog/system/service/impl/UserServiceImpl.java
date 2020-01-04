@@ -39,6 +39,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
+    @CacheEvict(key = "#p0")
     public void updatePassword(String username, PasswordParams passwordParams) {
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
         userQueryWrapper.eq(User.COL_USERNAME, username);
@@ -57,7 +58,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public void update(User user, String username) {
+    @CacheEvict("#p0")
+    public void update(String username, User user) {
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
         userQueryWrapper.eq(User.COL_USERNAME, username);
         User user1 = baseMapper.selectOne(userQueryWrapper);

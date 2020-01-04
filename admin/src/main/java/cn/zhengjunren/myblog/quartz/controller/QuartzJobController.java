@@ -62,7 +62,7 @@ public class QuartzJobController extends BaseController<QuartzJob, QuartzJobServ
     @MyLog("执行定时任务")
     @PutMapping(value = "/exec/{id}")
     @ApiOperation("执行定时任务")
-    public ApiResponse execution(@PathVariable Long id){
+    public ApiResponse execute(@PathVariable Long id){
         service.execution(service.getById(id));
         return ApiResponse.ofSuccess();
     }
