@@ -6,7 +6,13 @@
           <user-card :user="user" />
         </el-col>
         <el-col :span="18" :xs="24">
-
+          <el-card>
+            <el-tabs v-model="activeTab">
+              <el-tab-pane label="账户" name="account">
+                <account :user="user" />
+              </el-tab-pane>
+            </el-tabs>
+          </el-card>
         </el-col>
       </el-row>
     </div>
@@ -15,12 +21,14 @@
 
 <script>
 import UserCard from './components/UserCard'
+import Account from './components/Account'
 import {getOwnInfo} from '@/api/profile'
 export default {
   name: "index",
-  components: { UserCard },
+  components: { UserCard, Account },
   data() {
     return {
+      activeTab: 'account',
       user: {
         username: '',
         nickname:'',

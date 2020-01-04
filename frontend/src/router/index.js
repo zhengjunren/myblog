@@ -68,13 +68,13 @@ export const constantRoutes = [
     path: '/profile',
     component: Layout,
     hidden: true,
-    redirect: 'noredirect',
+    redirect: '/profile/index',
     children: [
       {
         path: 'index',
         component: () => import('@/views/profile/index'),
-        name: '个人中心',
-        meta: { title: '个人中心' }
+        name: 'Profile',
+        meta: { title: '个人中心', noCache: true }
       }
     ]
   }
