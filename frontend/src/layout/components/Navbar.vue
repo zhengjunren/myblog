@@ -26,20 +26,17 @@
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">
-          <router-link to="/profile">
-            <el-dropdown-item>简介</el-dropdown-item>
-          </router-link>
           <router-link to="/">
-            <el-dropdown-item>首页</el-dropdown-item>
+            <el-dropdown-item>网站首页</el-dropdown-item>
+          </router-link>
+          <router-link to="/profile">
+            <el-dropdown-item>个人中心</el-dropdown-item>
           </router-link>
           <a target="_blank" href="https://zhengjunren.gitee.io">
-            <el-dropdown-item>博客</el-dropdown-item>
-          </a>
-          <a target="_blank" href="https://github.com/zhengjunren/myblog/">
-            <el-dropdown-item>Github</el-dropdown-item>
+            <el-dropdown-item>我的博客</el-dropdown-item>
           </a>
           <el-dropdown-item divided>
-            <span style="display:block;" @click="logout">注销</span>
+            <span style="display:block;" @click="logout">退出登录</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>

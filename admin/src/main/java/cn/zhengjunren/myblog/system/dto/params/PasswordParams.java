@@ -20,4 +20,6 @@ public class PasswordParams implements Serializable {
     private String oldPassword;
 
     private String newPassword;
+
+    private String confirmPassword;
 }

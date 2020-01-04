@@ -61,7 +61,6 @@ public class MenuController extends BaseController<Menu, MenuService, BaseQueryP
      * 根据角色生成前端所需的菜单
      * @return 菜单
      */
-    @MyLog("获取前端所需菜单")
     @GetMapping(value = "/build")
     @ApiOperation(value = "获取前端所需菜单")
     public ApiResponse build() {

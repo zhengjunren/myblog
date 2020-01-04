@@ -12,14 +12,24 @@
     <el-form-item label="手机">
       <el-input v-model.trim="user.phone" />
     </el-form-item>
-    <el-form-item label="手机">
-      <el-input v-model.trim="user.birthday" />
+    <el-form-item label="生日">
+      <el-date-picker
+        v-model="user.birthday"
+        :default-time="[user.birthday]"
+        type="date"
+        placeholder="选择日期">
+      </el-date-picker>
+    </el-form-item>
+    <el-form-item label="性别">
+      <el-radio-group v-model.trim="user.sex">
+        <el-radio :label = 1>男</el-radio>
+        <el-radio :label = 0>女</el-radio>
+      </el-radio-group>
     </el-form-item>
     <el-form-item label="状态">
       <el-radio-group v-model.trim="user.status" :disabled="true">
-        <el-radio label="正常" />
-        <el-radio label="冻结" />
-        <el-radio label="注销" />
+        <el-radio :label = 1>正常</el-radio>
+        <el-radio :label = 0>异常</el-radio>
       </el-radio-group>
     </el-form-item>
     <el-form-item>
@@ -29,6 +39,8 @@
 </template>
 
 <script>
+import {update} from "@/api/profile";
+
 export default {
   name: "Account",
   props: {
@@ -42,6 +54,7 @@ export default {
           avatar:'',
           phone: '',
           status: 1,
+          sex: 1,
           birthday: '',
           createTime: ''
         }
@@ -55,18 +68,18 @@ export default {
   },
   methods: {
     submit() {
-      // updateProfile(this.user).then(response => {
-      //   this.$message({
-      //     message: response.message,
-      //     type: 'success',
-      //     duration: 5 * 1000
-      //   })
-      // }).catch(() => {
-      //   this.$message({
-      //     message: "网络错误",
-      //     type: 'success'
-      //   })
-      // })
+      update(this.user).then(response => {
+        this.$message({
+          message: '更新成功',
+          type: 'success',
+          duration: 5 * 1000
+        })
+      }).catch(() => {
+        this.$message({
+          message: "网络错误",
+          type: 'success'
+        })
+      })
     }
   }
 }

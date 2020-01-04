@@ -15,6 +15,23 @@
       @crop-upload-success="cropUploadSuccess"
       @crop-upload-fail="cropUploadFail"
     />
+    <el-dialog :visible.sync="dialog" :close-on-click-modal="false" :before-close="cancel" :title="title" append-to-body width="500px" @close="cancel">
+      <el-form ref="form" :model="form" :rules="rules" size="small" label-width="88px">
+        <el-form-item label="旧密码" prop="oldPassword">
+          <el-input v-model="form.oldPassword" type="password" auto-complete="on" style="width: 370px;"/>
+        </el-form-item>
+        <el-form-item label="新密码" prop="newPassword">
+          <el-input v-model="form.newPassword" type="password" auto-complete="on" style="width: 370px;"/>
+        </el-form-item>
+        <el-form-item label="确认密码" prop="confirmPassword">
+          <el-input v-model="form.confirmPassword" type="password" auto-complete="on" style="width: 370px;"/>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="text" @click="cancel">取消</el-button>
+        <el-button :loading="loading" type="primary" @click="doSubmit">确认</el-button>
+      </div>
+    </el-dialog>
     <div class="user-profile">
       <div class="box-center">
         <pan-thumb :image="user.avatar" :height="'100px'" :width="'100px'" :hoverable="false">
@@ -26,13 +43,13 @@
       </div>
     </div>
     <div class="user-skills user-bio-section">
-      <div class="user-bio-section-header"><svg-icon icon-class="skill" /><span>其他</span></div>
+<!--      <div class="user-bio-section-header"><svg-icon icon-class="skill" /><span>其他</span></div>-->
       <div class="user-bio-section-body">
         <ul class="user-info">
           <li style="border-top: 0;">用户名称 <div class="user-right">{{ user.username }}</div></li>
           <li>用户邮箱 <div class="user-right">{{ user.email }}</div></li>
           <li>注册时间 <div class="user-right">{{ user.createTime }}</div></li>
-          <li>状态 <div class="user-right" style="margin-top: -5px"><el-tag :type="'success'">{{user.status}}</el-tag></div></li>
+          <li>状态 <div class="user-right" style="margin-top: -5px"><el-tag :type="'success'">{{user.status | statusFilter}}</el-tag></div></li>
           <li>
             修改头像
             <div class="user-right">
@@ -55,10 +72,18 @@
 import ImageCropper from 'vue-image-crop-upload'
 import PanThumb from '@/components/PanThumb'
 import { getToken } from '@/utils/auth'
-import { updateAvatar } from '@/api/profile'
+import { updateAvatar, updatePassword } from '@/api/profile'
 export default {
   name: "UserCard",
   components: { PanThumb, ImageCropper },
+  filters:{
+    statusFilter(status) {
+      return status === 1 ? "正常" : "异常"
+    },
+    tagTypeFilter(status) {
+      return status ? "warning" : "success"
+    },
+  },
   props: {
     user: {
       type: Object,
@@ -116,22 +141,11 @@ export default {
     toggleShow() {
       this.show = !this.show
     },
-    /**
-     *
-     * @param image
-     * @param field
-     */
     cropSuccess(image, field) {
       console.log('-------- crop success --------')
       this.image = image
     },
-    /**
-     * 上传成功
-     * @param jsonData 服务器返回数据，已进行 JSON 转码
-     * @param field
-     */
     cropUploadSuccess(jsonData, field) {
-      // 更新头像
       updateAvatar({
         avatar: jsonData.data.data[0]
       }).then(response => {
@@ -144,19 +158,49 @@ export default {
         this.user.avatar = jsonData.data.path
       }).catch(() => {
         this.$message({
-          message: '更新邮箱失败',
+          message: '更新头像失败',
           type: 'danger'
         })
       })
     },
-    /**
-     * 上传失败
-     * @param status 服务器返回的失败状态码
-     * @param field
-     */
     cropUploadFail(status, field) {
       console.log('-------- upload fail --------')
-    }
+    },
+
+
+    resetForm() {
+      this.dialog = false
+      this.$refs['form'].resetFields()
+      this.form = { oldPassword: '', newPassword: '', confirmPassword: '' }
+    },
+    cancel() {
+      this.resetForm()
+    },
+    doSubmit() {
+      this.$refs['form'].validate((valid) => {
+        if (valid) {
+          this.loading = true
+          updatePassword(this.form).then(response => {
+            this.resetForm()
+            this.$notify({
+              title: response.message,
+              type: 'success',
+              duration: 1500
+            })
+            setTimeout(() => {
+              this.$store.dispatch('user/logout').then(() => {
+                location.reload() // 为了重新实例化vue-router对象 避免bug
+              })
+            }, 1500)
+          }).catch(err => {
+            this.loading = false
+            console.log(err.response.data.message)
+          })
+        } else {
+          return false
+        }
+      })
+    },
   }
 }
 </script>

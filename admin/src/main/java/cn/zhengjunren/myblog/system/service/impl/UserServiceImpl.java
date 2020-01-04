@@ -44,10 +44,28 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         userQueryWrapper.eq(User.COL_USERNAME, username);
         User user = baseMapper.selectOne(userQueryWrapper);
         if (passwordEncoder.matches(passwordParams.getOldPassword(), user.getPassword())) {
-            baseMapper.updatePassword(username, passwordEncoder.encode(passwordParams.getNewPassword()));
+            if (passwordParams.getConfirmPassword().equals(passwordParams.getNewPassword())){
+                baseMapper.updatePassword(username, passwordEncoder.encode(passwordParams.getNewPassword()));
+            }
+            else {
+                throw new BadRequestException(400, "两次密码不同，请重试！");
+            }
         }
         else {
             throw new BadRequestException(400, "原始密码错误，请重试！");
         }
+    }
+
+    @Override
+    public void update(User user, String username) {
+        QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
+        userQueryWrapper.eq(User.COL_USERNAME, username);
+        User user1 = baseMapper.selectOne(userQueryWrapper);
+        user1.setBirthday(user.getBirthday());
+        user1.setNickname(user.getNickname());
+        user1.setPhone(user.getPhone());
+        user1.setEmail(user.getEmail());
+        user1.setSex(user.getSex());
+        baseMapper.updateById(user1);
     }
 }

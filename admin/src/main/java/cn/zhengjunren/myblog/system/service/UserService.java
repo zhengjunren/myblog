@@ -29,4 +29,11 @@ public interface UserService extends IService<User>{
      * @param passwordParams 密码
      */
     void updatePassword(String username, PasswordParams passwordParams);
+
+    /**
+     * 更新
+     * @param user {@link User}
+     * @param username 用户名
+     */
+    void update(User user, String username);
 }

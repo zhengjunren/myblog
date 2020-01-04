@@ -11,6 +11,9 @@
               <el-tab-pane label="账户" name="account">
                 <account :user="user" />
               </el-tab-pane>
+              <el-tab-pane label="行为日志" name="timeline">
+                <timeline />
+              </el-tab-pane>
             </el-tabs>
           </el-card>
         </el-col>
@@ -22,13 +25,17 @@
 <script>
 import UserCard from './components/UserCard'
 import Account from './components/Account'
+import Timeline from './components/Timeline'
 import {getOwnInfo} from '@/api/profile'
 export default {
   name: "index",
-  components: { UserCard, Account },
+  components: { UserCard, Account, Timeline },
   data() {
     return {
       activeTab: 'account',
+      count: 0,
+      data: [],
+      busy: false,
       user: {
         username: '',
         nickname:'',

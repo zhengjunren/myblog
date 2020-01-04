@@ -5,6 +5,7 @@ import cn.zhengjunren.myblog.log.dto.OwnLogDTO;
 import cn.zhengjunren.myblog.log.service.LogService;
 import cn.zhengjunren.myblog.security.utils.SecurityUtil;
 import cn.zhengjunren.myblog.security.vo.UserPrincipal;
+import cn.zhengjunren.myblog.system.domain.User;
 import cn.zhengjunren.myblog.system.dto.params.PasswordParams;
 import cn.zhengjunren.myblog.system.service.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -59,6 +60,12 @@ public class ProfileController {
     @PutMapping("password")
     public ApiResponse updatePassword(@RequestBody PasswordParams passwordParams) {
         userService.updatePassword(get(), passwordParams);
+        return ApiResponse.ofSuccess();
+    }
+
+    @PutMapping
+    public ApiResponse update(User user) {
+        userService.update(user, get());
         return ApiResponse.ofSuccess();
     }
 
