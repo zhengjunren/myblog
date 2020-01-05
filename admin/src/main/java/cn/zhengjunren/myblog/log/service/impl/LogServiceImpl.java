@@ -1,5 +1,6 @@
 package cn.zhengjunren.myblog.log.service.impl;
 
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.json.JSONObject;
 import cn.zhengjunren.myblog.common.annotation.MyLog;
@@ -103,7 +104,10 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements LogSe
 
     @Override
     public List<OwnLogDTO> selectDetailByUsername(String username, Integer number) {
-        return baseMapper.selectOwnLogDetail(username, number);
+        Date date = new Date();
+        Timestamp beginOfDay = new Timestamp(DateUtil.beginOfWeek(date).getTime());
+        Timestamp endOfDay = new Timestamp(DateUtil.endOfWeek(date).getTime());
+        return baseMapper.selectOwnLogDetail(username, number, beginOfDay, endOfDay);
     }
 
     @Override

@@ -50,14 +50,18 @@
       MAX(create_time) AS 'createTime'
     FROM
       log
-    WHERE username = #{username}
+    WHERE
+      username = #{username}
+      AND ( create_time BETWEEN #{beginOfDay} AND #{endOfDay} )
     GROUP BY
       description
     ORDER BY MAX(create_time) DESC
     LIMIT #{number}
   </select>
-    <delete id="deleteAMonthAgo">
-      DELETE FROM log WHERE create_time &lt; #{time}
-    </delete>
+
+
+  <delete id="deleteAMonthAgo">
+    DELETE FROM log WHERE create_time &lt; #{time}
+  </delete>
 
 </mapper>

@@ -26,7 +26,11 @@ public interface LogMapper extends BaseMapper<Log> {
      * @param number 条数
      * @return {@link OwnLogDTO}
      */
-    List<OwnLogDTO> selectOwnLogDetail(@Param("username") String username, @Param("number") Integer number);
+    List<OwnLogDTO> selectOwnLogDetail(
+            @Param("username") String username,
+            @Param("number") Integer number,
+            @Param("beginOfDay") Timestamp beginOfDay,
+            @Param("endOfDay") Timestamp endOfDay);
 
     /**
      * 删除指定时间点前的日志

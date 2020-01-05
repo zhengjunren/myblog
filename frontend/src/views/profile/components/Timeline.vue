@@ -4,7 +4,7 @@
       <el-timeline-item v-for="(item,index) of timeline" :key="index" :timestamp="item.createTime" placement="top">
         <el-card>
           <h4>{{ item.description }}</h4>
-          <p>共使用了 {{ item.count }} 次</p>
+          <p>今周共使用了 {{ item.count }} 次</p>
         </el-card>
       </el-timeline-item>
     </el-timeline>
