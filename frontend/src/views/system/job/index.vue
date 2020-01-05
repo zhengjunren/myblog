@@ -91,17 +91,17 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="描述" min-width="140">
+      <el-table-column align="center" label="描述" min-width="190">
         <template slot-scope="scope">
           <span>{{ scope.row.remark }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="创建时间" min-width="190">
+      <el-table-column align="center" label="创建时间" min-width="180">
         <template slot-scope="scope">
           <span>{{ scope.row.createTime }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" min-width="240" fixed="right">
+      <el-table-column align="center" label="操作" min-width="200" fixed="right">
         <template slot-scope="scope">
           <el-button-group>
             <el-button v-waves icon="el-icon-edit" type="primary" size="mini" @click="edit(scope.row)"/>

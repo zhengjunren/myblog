@@ -56,5 +56,8 @@
     ORDER BY MAX(create_time) DESC
     LIMIT #{number}
   </select>
+    <delete id="deleteAMonthAgo">
+      DELETE FROM log WHERE create_time &lt; #{time}
+    </delete>
 
 </mapper>

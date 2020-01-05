@@ -57,4 +57,9 @@ public interface LogService extends IService<Log>{
      * @return 行为日志
      */
     List<OwnLogDTO> selectDetailByUsername(String username, Integer number);
+
+    /**
+     * 删除一个月之前的日志
+     */
+    void deleteAMonthAgo();
 }

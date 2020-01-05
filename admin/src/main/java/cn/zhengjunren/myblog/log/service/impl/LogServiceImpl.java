@@ -21,6 +21,10 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
 
@@ -100,5 +104,18 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements LogSe
     @Override
     public List<OwnLogDTO> selectDetailByUsername(String username, Integer number) {
         return baseMapper.selectOwnLogDetail(username, number);
+    }
+
+    @Override
+    public void deleteAMonthAgo() {
+        baseMapper.deleteAMonthAgo(getAMonthAgoTime(LocalDateTime.now()));
+    }
+
+    private Timestamp getAMonthAgoTime(LocalDateTime now) {
+        now = now.minus(30, ChronoUnit.DAYS);
+        ZoneId zoneId = ZoneId.systemDefault();
+        ZonedDateTime zdt = now.atZone(zoneId);
+        Date date = Date.from(zdt.toInstant());
+        return new Timestamp(date.getTime());
     }
 }

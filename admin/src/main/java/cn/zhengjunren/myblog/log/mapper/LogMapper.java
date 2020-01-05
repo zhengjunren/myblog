@@ -6,6 +6,7 @@ import cn.zhengjunren.myblog.log.dto.OwnLogDTO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -26,4 +27,10 @@ public interface LogMapper extends BaseMapper<Log> {
      * @return {@link OwnLogDTO}
      */
     List<OwnLogDTO> selectOwnLogDetail(@Param("username") String username, @Param("number") Integer number);
+
+    /**
+     * 删除指定时间点前的日志
+     * @param time 时间
+     */
+    void deleteAMonthAgo(@Param("time") Timestamp time);
 }
