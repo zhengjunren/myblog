@@ -5,6 +5,8 @@ services:
     container_name: myblog-admin
     ports:
       - 8000:8000
+    volumes:
+      - /etc/localtime:/etc/localtime # 设置时区和宿主机一致
 
 networks:
   default:
