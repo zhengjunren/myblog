@@ -5,6 +5,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RuntimeUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
 import java.sql.Timestamp;
@@ -24,6 +25,7 @@ import java.util.Date;
  * @version 1.0.0
  * @date 2019/12/29 1:17
  */
+@Slf4j
 public class UUIDTest {
 
     @Test
@@ -59,5 +61,10 @@ public class UUIDTest {
         System.out.println(today_start.toString());
         DateTime dateTime = DateUtil.beginOfDay(new Date());
         System.out.println(new Timestamp(dateTime.getTime()));
+    }
+
+    @Test
+    public void testTime(){
+        log.info("执行时间为：{}", new Date());
     }
 }

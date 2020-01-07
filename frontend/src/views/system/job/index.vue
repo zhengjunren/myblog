@@ -177,7 +177,7 @@ export default {
           { required: true, message: '请输入Cron表达式', trigger: 'blur' }
         ]
       },
-      form: {id: undefined, jobName: '', beanName: '', methodName: '', params: '', cronExpression: '', isPause: 'false', remark: '', createTime: undefined },
+      form: {id: undefined, jobName: '', beanName: '', methodName: '', params: '', cronExpression: '', isPause: false, remark: '', createTime: undefined },
       isAdd: false,
       listLoading: true,
       downloadLoading: false,
@@ -306,7 +306,7 @@ export default {
     resetForm() {
       this.dialogVisible = false
       this.$refs['form'].resetFields()
-      this.form = {id: undefined, jobName: '', beanName: '', methodName: '', params: '', cronExpression: '', isPause: 'false', remark: '', createTime: undefined }
+      this.form = {id: undefined, jobName: '', beanName: '', methodName: '', params: '', cronExpression: '', isPause: false, remark: '', createTime: undefined }
     }
   }
 }
