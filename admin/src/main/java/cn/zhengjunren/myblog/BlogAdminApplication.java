@@ -8,6 +8,9 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.annotation.PostConstruct;
+import java.util.TimeZone;
+
 /**
  * <p>ClassName: AdminApplication</p>
  * <p>Description: </p>
@@ -23,6 +26,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class BlogAdminApplication {
     public static void main(String[] args) {
         SpringApplication.run(BlogAdminApplication.class, args);
+    }
+
+    @PostConstruct
+    void setDefaultTimezone() {
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Shanghai"));
     }
 
     @Bean
