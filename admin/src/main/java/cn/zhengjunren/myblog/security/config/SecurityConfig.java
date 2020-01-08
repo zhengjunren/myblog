@@ -74,8 +74,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 认证请求
                 .authorizeRequests()
                 // 所有请求都需要登录访问
-                .anyRequest()
-                .authenticated()
+//                .anyRequest()
+//                .authenticated()
                 // RBAC 动态 url 认证
                 .anyRequest()
                 .access("@rbacAuthorityService.hasPermission(request,authentication)")
