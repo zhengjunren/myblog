@@ -13,6 +13,8 @@ import cn.zhengjunren.myblog.log.dto.InfoLogDto;
 import cn.zhengjunren.myblog.log.service.LogService;
 import cn.zhengjunren.myblog.system.dto.condition.LogQueryCondition;
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
+import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -67,19 +69,26 @@ public class LogController extends BaseController<Log, LogService, LogQueryCondi
     @GetMapping("/info/excel")
     @ApiOperation(value = "导出info日志excel")
     public void exportExcel(HttpServletResponse response) throws IOException, ClassNotFoundException {
+        HorizontalCellStyleStrategy horizontalCellStyleStrategy = setExcelStyle();
         // 这里注意 有同学反应使用swagger 会导致各种问题，请直接用浏览器或者用postman
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");
         // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
         response.setHeader("Content-disposition", "attachment;filename=infoLog.xlsx");
         List<InfoLogDto> infoLogList = service.getInfoLogList();
-        EasyExcel.write(response.getOutputStream(), InfoLogDto.class).sheet("sheet1").doWrite(infoLogList);
+        EasyExcel
+                .write(response.getOutputStream(), InfoLogDto.class)
+                .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
+                .registerWriteHandler(horizontalCellStyleStrategy)
+                .sheet("sheet1")
+                .doWrite(infoLogList);
     }
 
     @MyLog("导出error日志excel")
     @GetMapping("/error/excel")
     @ApiOperation(value = "导出error日志excel")
     public void exportErrorLogExcel(HttpServletResponse response) throws IOException, ClassNotFoundException {
+        HorizontalCellStyleStrategy horizontalCellStyleStrategy = setExcelStyle();
         // 这里注意 有同学反应使用swagger 会导致各种问题，请直接用浏览器或者用postman
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");
@@ -92,7 +101,12 @@ public class LogController extends BaseController<Log, LogService, LogQueryCondi
             errorLogDto.setExceptionDetail(new String(ObjectUtil.isNotNull(exceptionDetail) ? exceptionDetail : "".getBytes()));
             return errorLogDto;
         }).collect(Collectors.toList());
-        EasyExcel.write(response.getOutputStream(), ErrorLogDto.class).sheet("sheet1").doWrite(collect);
+        EasyExcel
+                .write(response.getOutputStream(), ErrorLogDto.class)
+                .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
+                .registerWriteHandler(horizontalCellStyleStrategy)
+                .sheet("sheet1")
+                .doWrite(collect);
     }
 
     @MyLog("清空日志")

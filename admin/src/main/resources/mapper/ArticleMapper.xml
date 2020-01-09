@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhengjunren.myblog.system.mapper.ArticleMapper">
+  <resultMap id="BaseResultMap" type="cn.zhengjunren.myblog.system.domain.Article">
+    <!--@mbg.generated-->
+    <!--@Table article-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="category_id" jdbcType="BIGINT" property="categoryId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="summary" jdbcType="LONGVARCHAR" property="summary" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+    <result column="view_count" jdbcType="INTEGER" property="viewCount" />
+    <result column="comment_count" jdbcType="INTEGER" property="commentCount" />
+    <result column="like_count" jdbcType="INTEGER" property="likeCount" />
+    <result column="is_comment" jdbcType="BIT" property="isComment" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, user_id, category_id, title, summary, content, view_count, comment_count, like_count,
+    is_comment, `status`, `sort`, update_time, create_time
+  </sql>
+  <sql id="Base_Column_List_No_Content">
+    <!--@mbg.generated-->
+    article.id, article.user_id, article.category_id, article.title, article.summary, article.view_count,
+    article.comment_count, article.like_count, article.is_comment, article.`status`, article.`sort`,
+    article.update_time, article.create_time
+  </sql>
+
+  <select id="selectWithCateAndUser" resultType="cn.zhengjunren.myblog.system.dto.ArticleDTO">
+    SELECT
+    <include refid="Base_Column_List_No_Content"/>,
+      ac.`name` AS 'categoryName',
+      u.username
+    FROM
+      article
+      LEFT JOIN article_category AS ac ON ac.id = article.category_id
+      LEFT JOIN `user` AS u ON u.id = article.user_id
+    ${ew.customSqlSegment}
+  </select>
+
+</mapper>

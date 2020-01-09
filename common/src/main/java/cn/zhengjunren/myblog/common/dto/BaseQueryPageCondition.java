@@ -16,6 +16,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BaseQueryPageCondition {
+
+    /**
+     * 页码
+     */
     protected long page;
+    /**
+     * 每页多少数据
+     */
     protected long limit;
 }

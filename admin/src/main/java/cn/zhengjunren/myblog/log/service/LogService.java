@@ -48,7 +48,7 @@ public interface LogService extends IService<Log>{
      * 获取 info 类型日志
      * @return 结果
      */
-    List<InfoLogDto>  getInfoLogList();
+    List<InfoLogDto> getInfoLogList();
 
     /**
      * 根据用户名获取日志

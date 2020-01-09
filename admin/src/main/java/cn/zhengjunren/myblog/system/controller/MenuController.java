@@ -49,8 +49,6 @@ public class MenuController extends BaseController<Menu, MenuService, BaseQueryP
 
     private final RoleService roleService;
 
-    private final static String ENTITY_NAME = "menu";
-
     public MenuController(MenuService service, RoleService roleService) {
         super(service);
         this.roleService = roleService;

@@ -99,7 +99,9 @@ public interface Consts {
      */
     String ERROR_LOG_TYPE = "ERROR";
 
-
-
+    /**
+     * excel 字体名称
+     */
+    String EXCEL_FONT_NAME = "等线 Light";
 }
 

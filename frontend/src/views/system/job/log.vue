@@ -122,12 +122,10 @@ export default {
   methods: {
     fetchData() {
       const date = this.time
-      console.log(this.time)
       if(date !== undefined && date !== null) {
         this.listQuery.start = date[0]
         this.listQuery.end = date[1]
       }
-      console.log(this.listQuery)
       getJobsLogs(this.listQuery).then(response => {
         this.list = response.data.items
         this.total = response.data.total

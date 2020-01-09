@@ -2,6 +2,7 @@ package cn.zhengjunren.myblog.common.controller;
 
 import cn.hutool.core.util.StrUtil;
 import cn.zhengjunren.myblog.common.annotation.MyLog;
+import cn.zhengjunren.myblog.common.consts.Consts;
 import cn.zhengjunren.myblog.common.domain.BaseDomain;
 import cn.zhengjunren.myblog.common.dto.BaseQueryPageCondition;
 import cn.zhengjunren.myblog.common.dto.ListInfo;
@@ -10,11 +11,16 @@ import cn.zhengjunren.myblog.common.result.ApiResponse;
 import cn.zhengjunren.myblog.common.staus.Status;
 import cn.zhengjunren.myblog.common.utils.ParamTypeUtils;
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.write.metadata.style.WriteCellStyle;
+import com.alibaba.excel.write.metadata.style.WriteFont;
+import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
+import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -65,6 +71,7 @@ public abstract class BaseController<T extends BaseDomain, S extends IService<T>
     @MyLog("导出excel数据")
     @ApiOperation(value = "导出Excel")
     public <T> void  exportExcel(HttpServletResponse response) throws IOException, ClassNotFoundException {
+        HorizontalCellStyleStrategy horizontalCellStyleStrategy = setExcelStyle();
         // 这里注意 有同学反应使用swagger 会导致各种问题，请直接用浏览器或者用postman
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");
@@ -73,7 +80,21 @@ public abstract class BaseController<T extends BaseDomain, S extends IService<T>
         Class<?> aClass = Class.forName(parameterizedType.getActualTypeArguments()[0].getTypeName());
         String[] split = StrUtil.split(parameterizedType.getActualTypeArguments()[0].getTypeName(), ".");
         response.setHeader("Content-disposition", "attachment;filename=" + split[split.length-1] + ".xlsx");
-        EasyExcel.write(response.getOutputStream(), aClass).sheet("sheet1").doWrite(service.list());
+        EasyExcel
+                .write(response.getOutputStream(), aClass)
+                .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
+                .registerWriteHandler(horizontalCellStyleStrategy)
+                .sheet("sheet1")
+                .doWrite(service.list());
     }
 
+    protected HorizontalCellStyleStrategy setExcelStyle() {
+        WriteCellStyle headWriteCellStyle = new WriteCellStyle();
+        WriteFont writeFont = new WriteFont();
+        writeFont.setFontName(Consts.EXCEL_FONT_NAME);
+        headWriteCellStyle.setWriteFont(writeFont);
+        headWriteCellStyle.setFillForegroundColor(IndexedColors.WHITE.getIndex());
+        WriteCellStyle contentWriteCellStyle = new WriteCellStyle();
+        return new HorizontalCellStyleStrategy(headWriteCellStyle, contentWriteCellStyle);
+    }
 }
