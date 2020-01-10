@@ -199,7 +199,7 @@ export default {
     },
     push(id){
       this.$router.push({
-        name: 'Edit',
+        name: 'EditArticle',
         params: {
           id: id
         }
