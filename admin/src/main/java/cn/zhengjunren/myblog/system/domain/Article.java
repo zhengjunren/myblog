@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @author ZhengJunren
@@ -90,7 +90,7 @@ public class Article extends BaseDomain implements Serializable {
      * 编辑时间
      */
     @TableField(value = "update_time")
-    private LocalDateTime updateTime;
+    private Date updateTime;
 
     private static final long serialVersionUID = 1L;
 
