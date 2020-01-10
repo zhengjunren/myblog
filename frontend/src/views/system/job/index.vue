@@ -54,12 +54,22 @@
       fit
       highlight-current-row
       style="width: 100%">
+      <el-table-column type="expand">
+        <template slot-scope="props">
+          <el-form label-position="left" inline class="demo-table-expand">
+            <el-form-item label="参数：">
+              <span v-if="!(props.row.params === null || props.row.params ==='')">{{ props.row.params }}</span>
+              <span v-else>无</span>
+            </el-form-item>
+          </el-form>
+        </template>
+      </el-table-column>
       <el-table-column align="center" label="序号" width="60">
         <template slot-scope="scope">
           <span>{{ scope.$index + (listQuery.page-1) * (listQuery.limit) + 1 }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="任务名称" min-width="80">
+      <el-table-column align="left" label="任务名称" min-width="100">
         <template slot-scope="scope">
           <span>{{ scope.row.jobName }}</span>
         </template>
@@ -74,11 +84,6 @@
           <span>{{ scope.row.methodName }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="参数" min-width="100">
-        <template slot-scope="scope">
-          <span>{{ scope.row.params }}</span>
-        </template>
-      </el-table-column>
       <el-table-column align="center" label="cron表达式" min-width="120">
       <template slot-scope="scope">
         <span>{{ scope.row.cronExpression }}</span>
@@ -91,7 +96,7 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="描述" min-width="190">
+      <el-table-column align="left" label="描述" min-width="190">
         <template slot-scope="scope">
           <span>{{ scope.row.remark }}</span>
         </template>
@@ -314,5 +319,20 @@ export default {
 </script>
 
 <style scoped>
+  .demo-table-expand {
+    font-size: 0;
+  }
+  .demo-table-expand label {
+    width: 70px;
+    color: #99a9bf;
+  }
+  .demo-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 100%;
+  }
+  .demo-table-expand .el-form-item__content {
+    font-size: 15px;
 
+  }
 </style>

@@ -27,10 +27,10 @@
           <el-table-column type="expand">
             <template slot-scope="props">
               <el-form label-position="left" inline class="demo-table-expand">
-                <el-form-item label="请求方法">
+                <el-form-item label="请求方法：">
                   <span>{{ props.row.method }}</span>
                 </el-form-item>
-                <el-form-item label="请求参数">
+                <el-form-item label="请求参数：">
                   <span>{{ props.row.params }}</span>
                 </el-form-item>
               </el-form>
@@ -92,10 +92,10 @@
           <el-table-column type="expand">
             <template slot-scope="props">
               <el-form label-position="left" inline class="demo-table-expand">
-                <el-form-item label="请求方法">
+                <el-form-item label="请求方法：">
                   <span>{{ props.row.method }}</span>
                 </el-form-item>
-                <el-form-item label="请求参数">
+                <el-form-item label="请求参数：">
                   <span>{{ props.row.params }}</span>
                 </el-form-item>
               </el-form>

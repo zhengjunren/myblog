@@ -28,19 +28,19 @@
       <el-table-column type="expand">
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand">
-            <el-form-item label="评论数">
+            <el-form-item label="评论数：">
               <span>{{ props.row.commentCount }}</span>
             </el-form-item>
-            <el-form-item label="点赞数">
+            <el-form-item label="点赞数：">
               <span>{{ props.row.likeCount }}</span>
             </el-form-item>
-            <el-form-item label="浏览数">
+            <el-form-item label="浏览数：">
               <span>{{ props.row.viewCount }}</span>
             </el-form-item>
-            <el-form-item v-if="!(props.row.summary === null || props.row.summary ==='')" label="摘要">
+            <el-form-item v-if="!(props.row.summary === null || props.row.summary ==='')" label="摘要：">
               <span>{{ props.row.summary }}</span>
             </el-form-item>
-            <el-form-item label="编辑时间">
+            <el-form-item label="编辑时间：">
               <span>{{ props.row.updateTime }}</span>
             </el-form-item>
           </el-form>
