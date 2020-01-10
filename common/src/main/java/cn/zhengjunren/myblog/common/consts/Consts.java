@@ -103,5 +103,10 @@ public interface Consts {
      * excel 字体名称
      */
     String EXCEL_FONT_NAME = "等线 Light";
+
+    /**
+     * 索引需要减一！
+     */
+    String[] WEEKDAY = {"周一","周二","周三","周四","周五","周六","周日"};
 }
 

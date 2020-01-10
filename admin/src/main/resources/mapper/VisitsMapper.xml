@@ -21,4 +21,9 @@
       FROM
         ( SELECT request_ip FROM log WHERE create_time BETWEEN #{date1} AND #{date2} GROUP BY request_ip ) AS s
     </select>
+    <select id="findByDate" resultMap="BaseResultMap">
+      SELECT *
+      FROM visits
+      WHERE date = #{date}
+    </select>
 </mapper>

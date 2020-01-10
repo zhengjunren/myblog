@@ -90,14 +90,14 @@ custom:
     ignores:
       get:
         - "/api/auth/code"
-      # 需要过滤的 post 请求
       post:
         - "/api/auth/login"
         - "/api/auth/logout"
       # 需要过滤的请求，不限方法
       pattern:
-        - "/api/notification/**"
-        - "/webjars/**"
+        - "/api/notification/**" # websocket
+        - "/api/visits/**" # 访客
+        - "/webjars/**" # swagger2
         - "/resources/**"
         - "/v2/api-docs"
         - "/swagger-resources/**"

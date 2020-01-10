@@ -16,4 +16,11 @@ public interface VisitsMapper extends BaseMapper<Visits> {
      * @return IP数目
      */
     Long findIp(@Param("date1") String date1, @Param("date2") String date2);
+
+    /**
+     * 根据时间查找
+     * @param date 日期
+     * @return {@link Visits}
+     */
+    Visits findByDate(@Param("date") String date);
 }

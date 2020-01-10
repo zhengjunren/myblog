@@ -166,7 +166,7 @@ export default {
         // just for test
         // this.postForm.title += `   Article Id:${this.postForm.id}`
         // this.postForm.summary += `   Article Id:${this.postForm.id}`
-        this.isComment = this.postForm.isComment !== 0;
+        this.isComment = this.postForm.isComment
 
         // set tagsview title
         this.setTagsViewTitle()
