@@ -2,17 +2,18 @@ package cn.zhengjunren.myblog.system.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.zhengjunren.myblog.common.consts.Consts;
+import cn.zhengjunren.myblog.common.exception.BadRequestException;
+import cn.zhengjunren.myblog.common.exception.EntityExistException;
+import cn.zhengjunren.myblog.common.utils.ValidationUtil;
 import cn.zhengjunren.myblog.system.domain.Menu;
 import cn.zhengjunren.myblog.system.domain.Role;
 import cn.zhengjunren.myblog.system.dto.MenuDTO;
 import cn.zhengjunren.myblog.system.mapper.MenuMapper;
 import cn.zhengjunren.myblog.system.service.MenuService;
+import cn.zhengjunren.myblog.system.service.mapper.MenuMapperStruct;
 import cn.zhengjunren.myblog.system.vo.MenuMetaVo;
 import cn.zhengjunren.myblog.system.vo.MenuVo;
-import cn.zhengjunren.myblog.common.consts.Consts;
-import cn.zhengjunren.myblog.common.exception.BadRequestException;
-import cn.zhengjunren.myblog.common.exception.EntityExistException;
-import cn.zhengjunren.myblog.common.utils.ValidationUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
@@ -20,7 +21,6 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -38,15 +38,21 @@ import java.util.stream.Collectors;
 @CacheConfig(cacheNames = Consts.MENU_CACHE_NAME)
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {
 
-    @Resource
-    MenuMapper menuMapper;
+//    @Resource
+//    MenuMapper menuMapper;
+
+    private final MenuMapperStruct menuMapperStruct;
+
+    public MenuServiceImpl(MenuMapperStruct menuMapperStruct) {
+        this.menuMapperStruct = menuMapperStruct;
+    }
 
     @Override
     public List<Menu> findByParentId(Long parentId) {
         QueryWrapper<Menu> menuQueryWrapper = new QueryWrapper<>();
         menuQueryWrapper.eq(Menu.COL_PARENT_ID, parentId);
         menuQueryWrapper.orderByAsc(Menu.COL_SORT);
-        return menuMapper.selectList(menuQueryWrapper);
+        return baseMapper.selectList(menuQueryWrapper);
     }
 
     @Override
@@ -55,7 +61,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         if(resources.getId().equals(resources.getParentId())) {
             throw new BadRequestException(400, "上级不能为自己");
         }
-        Menu menu = menuMapper.selectById(resources.getId());
+        Menu menu = baseMapper.selectById(resources.getId());
         if (menu == null) {
             menu = new Menu();
         }
@@ -68,7 +74,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         }
         QueryWrapper<Menu> menuQueryWrapper = new QueryWrapper<>();
         menuQueryWrapper.eq(Menu.COL_NAME, resources.getName());
-        Menu menu1 = menuMapper.selectOne(menuQueryWrapper);
+        Menu menu1 = baseMapper.selectOne(menuQueryWrapper);
 
         if(menu1 != null && !menu1.getId().equals(menu.getId())){
             throw new EntityExistException(Menu.class,"菜单标题",resources.getName());
@@ -77,7 +83,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         if(StringUtils.isNotBlank(resources.getComponentName())){
             QueryWrapper<Menu> menuQueryWrapper2 = new QueryWrapper<>();
             menuQueryWrapper2.eq(Menu.COL_COMPONENT_NAME, resources.getComponentName());
-            menu1 = menuMapper.selectOne(menuQueryWrapper2);
+            menu1 = baseMapper.selectOne(menuQueryWrapper2);
             if(menu1 != null && !menu1.getId().equals(menu.getId())){
                 throw new EntityExistException(Menu.class,"组件名",resources.getComponentName());
             }
@@ -94,13 +100,13 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         menu.setComponentName(resources.getComponentName());
         menu.setPermission(resources.getPermission());
         menu.setType(resources.getType());
-        return menuMapper.updateById(menu);
+        return baseMapper.updateById(menu);
     }
 
     @Override
     @CacheEvict(allEntries = true)
     public int delete(List<Long> ids) {
-        return menuMapper.deleteBatchIds(ids);
+        return baseMapper.deleteBatchIds(ids);
     }
 
     @Override
@@ -110,7 +116,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         for (Menu menu1 : menuList) {
             menuSet.add(menu1);
             menuQueryWrapper.eq(Menu.COL_PARENT_ID, menu1.getId());
-            List<Menu> menus = menuMapper.selectList(menuQueryWrapper);
+            List<Menu> menus = baseMapper.selectList(menuQueryWrapper);
             if(menus!=null && menus.size()!=0){
                 getDeleteMenus(menus, menuSet);
             }
@@ -122,18 +128,18 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     public List<MenuDTO> getAll() {
         QueryWrapper<Menu> menuQueryWrapper = new QueryWrapper<>();
         menuQueryWrapper.orderByAsc(Menu.COL_SORT);
-        List<Menu> menus = menuMapper.selectList(menuQueryWrapper);
-        return menuMapper.toDto(menus);
+        List<Menu> menus = baseMapper.selectList(menuQueryWrapper);
+        return menuMapperStruct.toDto(menus);
     }
 
     @Override
     public List<MenuDTO> findByRoles(List<Role> roles) {
         Set<Menu> menus = new LinkedHashSet<>();
         for (Role role : roles) {
-            List<Menu> menus1 = new ArrayList<>(menuMapper.findByRolesIdAndTypeIsNotInOrderBySortAsc(role.getId(), 2));
+            List<Menu> menus1 = new ArrayList<>(baseMapper.findByRolesIdAndTypeIsNotInOrderBySortAsc(role.getId(), 2));
             menus.addAll(menus1);
         }
-        return menus.stream().map(menuMapper::toDto).collect(Collectors.toList());
+        return menus.stream().map(menuMapperStruct::toDto).collect(Collectors.toList());
     }
 
 

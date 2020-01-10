@@ -50,7 +50,6 @@ export default {
   },
   methods: {
     doConfig() {
-      console.log("hahahah")
       const _this = this.$refs.config
       _this.fetchData()
       _this.dialog = true

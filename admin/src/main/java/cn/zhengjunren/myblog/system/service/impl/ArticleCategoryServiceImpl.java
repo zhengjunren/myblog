@@ -1,23 +1,35 @@
 package cn.zhengjunren.myblog.system.service.impl;
 
 import cn.zhengjunren.myblog.system.domain.ArticleCategory;
+import cn.zhengjunren.myblog.system.dto.ArticleCategoryDTO;
 import cn.zhengjunren.myblog.system.mapper.ArticleCategoryMapper;
 import cn.zhengjunren.myblog.system.service.ArticleCategoryService;
+import cn.zhengjunren.myblog.system.service.mapper.ArticleCategoryMapperStruct;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author ZhengJunren
  */
 @Service
 public class ArticleCategoryServiceImpl extends ServiceImpl<ArticleCategoryMapper, ArticleCategory> implements ArticleCategoryService {
+
+
+    private final ArticleCategoryMapperStruct articleCategoryMapperStruct;
+
+    public ArticleCategoryServiceImpl(ArticleCategoryMapperStruct articleCategoryMapperStruct) {
+        this.articleCategoryMapperStruct = articleCategoryMapperStruct;
+    }
 
     @Override
     public Object getMenuTree(List<ArticleCategory> articleCategories) {
@@ -61,6 +73,41 @@ public class ArticleCategoryServiceImpl extends ServiceImpl<ArticleCategoryMappe
             }
         }
         return ids;
+    }
+
+    @Override
+    public List<ArticleCategoryDTO> getAll() {
+        QueryWrapper<ArticleCategory> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByAsc(ArticleCategory.COL_SORT);
+        List<ArticleCategory> articleCategories = baseMapper.selectList(queryWrapper);
+        return articleCategoryMapperStruct.toDto(articleCategories);
+    }
+
+    @Override
+    public Map<String, Object> buildTree(List<ArticleCategoryDTO> articleCategoryDTOS) {
+        List<ArticleCategoryDTO> trees = new ArrayList<>();
+        Set<Long> ids = new HashSet<>();
+        for (ArticleCategoryDTO categoryDTO : articleCategoryDTOS) {
+            if (categoryDTO.getParentId() == 0) {
+                trees.add(categoryDTO);
+            }
+            for (ArticleCategoryDTO it : articleCategoryDTOS) {
+                if (it.getParentId().equals(categoryDTO.getId())) {
+                    if (categoryDTO.getChildren() == null) {
+                        categoryDTO.setChildren(new ArrayList<>());
+                    }
+                    categoryDTO.getChildren().add(it);
+                    ids.add(it.getId());
+                }
+            }
+        }
+        if (trees.size() == 0) {
+            trees = articleCategoryDTOS.stream().filter(s -> !ids.contains(s.getId())).collect(Collectors.toList());
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("content", trees);
+        map.put("totalElements", articleCategoryDTOS.size());
+        return map;
     }
 }
 

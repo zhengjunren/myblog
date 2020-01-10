@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @author ZhengJunren
@@ -25,7 +25,7 @@ public class ArticleCategory extends BaseDomain implements Serializable {
      * 父类目ID=0时，代表的是一级的类目
      */
     @TableField(value = "parent_id")
-    private Integer parentId;
+    private Long parentId;
 
     /**
      * 分类名称
@@ -49,7 +49,7 @@ public class ArticleCategory extends BaseDomain implements Serializable {
      * 创建时间
      */
     @TableField(value = "update_time")
-    private LocalDateTime updateTime;
+    private Date updateTime;
 
     private static final long serialVersionUID = 1L;
 

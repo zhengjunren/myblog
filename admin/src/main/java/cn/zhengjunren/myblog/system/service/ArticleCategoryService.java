@@ -2,9 +2,11 @@ package cn.zhengjunren.myblog.system.service;
 
 import cn.zhengjunren.myblog.system.domain.ArticleCategory;
 import cn.zhengjunren.myblog.system.domain.Menu;
+import cn.zhengjunren.myblog.system.dto.ArticleCategoryDTO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author ZhengJunren
@@ -32,6 +34,19 @@ public interface ArticleCategoryService extends IService<ArticleCategory> {
      * @return /
      */
     List<Long> getChildrenIds(Long id);
+
+    /**
+     * 获取所有的菜单数据
+     * @return {@link List<ArticleCategoryDTO>}
+     */
+    List<ArticleCategoryDTO> getAll();
+
+    /**
+     * 构建菜单树
+     * @param articleCategoryDTOS {@link List<ArticleCategoryDTO>}
+     * @return 结果集
+     */
+    Map<String,Object> buildTree(List<ArticleCategoryDTO> articleCategoryDTOS);
 }
 
 

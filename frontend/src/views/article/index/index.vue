@@ -14,7 +14,7 @@
         <el-option v-for="item in enabledTypeOptions" :key="item.key" :label="item.display_name" :value="item.key"/>
       </el-select>
       <el-input class="filter-item" v-model="listQuery.username" placeholder="作者名" style="width: 100px" />
-      <treeselect v-model="listQuery.categoryId" :options="categories" class="filter-item" style="width: 200px;" placeholder="选择分类" />
+      <treeselect v-model="listQuery.categoryId" :options="categories" class="filter-item" style="width: 250px;" placeholder="选择分类" />
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="fetchData">搜索</el-button>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-refresh" @click="reset">重置</el-button>
     </div>
@@ -63,7 +63,7 @@
       </el-table-column>
       <el-table-column align="left" label="标题" min-width="220">
         <template slot-scope="scope">
-          <span>{{ scope.row.title }}</span>
+          <el-link @click="push(scope.row.id)">{{ scope.row.title }}</el-link>
         </template>
       </el-table-column>
       <el-table-column align="center" label="状态" min-width="80">
@@ -196,6 +196,14 @@ export default {
     reset() {
       this.listQuery = {page: 1, limit: 10, categoryId: 0, username: undefined, status: undefined, start: undefined, end: undefined}
       this.fetchData()
+    },
+    push(id){
+      this.$router.push({
+        name: 'Edit',
+        params: {
+          id: id
+        }
+      })
     }
   }
 }
