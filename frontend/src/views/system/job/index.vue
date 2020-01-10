@@ -255,6 +255,7 @@ export default {
           duration: 2500
         })
       })
+      this.cancel()
     },
     execute(id) {
       execute(id).then(response => {

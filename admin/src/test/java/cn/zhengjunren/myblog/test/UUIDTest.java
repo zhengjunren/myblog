@@ -5,6 +5,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RuntimeUtil;
+import cn.zhengjunren.myblog.common.consts.Consts;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
@@ -65,6 +66,6 @@ public class UUIDTest {
 
     @Test
     public void testTime(){
-        log.info("执行时间为：{}", new Date());
+        System.out.println(Consts.WEEKDAY[DateUtil.thisDayOfWeek() - 1]);
     }
 }
