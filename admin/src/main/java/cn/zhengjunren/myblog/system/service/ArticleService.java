@@ -24,5 +24,12 @@ public interface ArticleService extends IService<Article> {
      * @param id id
      */
     void updateComment(Long id);
+
+    /**
+     * 更新文章状态
+     * @param id id
+     * @param status 状态
+     */
+    void updateStatus(Long id, Integer status);
 }
 

@@ -17,6 +17,14 @@ export function updateComment(id) {
   })
 }
 
+export function updateStatus(id, status) {
+  return request({
+    url: '/articles/status/' + id,
+    method: 'put',
+    params: {status:status}
+  })
+}
+
 export function fetchArticle(id) {
   return request({
     url: '/articles/' + id,
@@ -54,5 +62,21 @@ export function getArticleCategories() {
   return request({
     url: '/article/categories/list',
     method: 'get'
+  })
+}
+
+export function createArticleCategory(data) {
+  return request({
+    url: '/article/categories',
+    method: 'post',
+    data
+  })
+}
+
+export function updateArticleCategory(data) {
+  return request({
+    url: '/article/categories',
+    method: 'put',
+    data
   })
 }

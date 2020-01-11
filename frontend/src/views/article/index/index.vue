@@ -85,17 +85,10 @@
       </el-table-column>
       <el-table-column align="center" label="操作" min-width="120" fixed="right">
         <template slot-scope="scope">
-          <el-popover
-            :ref="scope.row.id"
-            placement="top"
-            width="200">
-            <p>确定踢出吗！</p>
-            <div style="text-align: right; margin: 0">
-              <el-button size="mini" type="text" @click="$refs[scope.row.id].doClose()">取消</el-button>
-              <el-button :loading="delLoading" type="primary" size="mini" @click="">确定</el-button>
-            </div>
-            <el-button slot="reference" size="mini" type="danger"><svg-icon icon-class="kick"/></el-button>
-          </el-popover>
+          <el-button style="margin-left: 3px;" size="small" type="text" @click="push(scope.row.id)">编辑</el-button>
+          <el-button v-if="scope.row.status !== 1" style="margin-left: 3px;" size="small" type="text" @click="updateStatus(scope.row, 1)" >发布文章</el-button>
+          <el-button v-if="scope.row.status !== 2" style="margin-left: 3px;" size="small" type="text" @click="updateStatus(scope.row, 2)" >设为草稿</el-button>
+          <el-button v-if="scope.row.status !== 3" style="margin-left: -1px;" type="text" size="small" @click="updateStatus(scope.row, 3)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -104,7 +97,7 @@
 </template>
 
 <script>
-import {getArticles, getArticleCategoryTree, updateComment} from '@/api/article'
+import {getArticles, getArticleCategoryTree, updateComment, updateStatus} from '@/api/article'
 import Treeselect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import Pagination from '@/components/Pagination'
@@ -197,12 +190,26 @@ export default {
       this.listQuery = {page: 1, limit: 10, categoryId: 0, username: undefined, status: undefined, start: undefined, end: undefined}
       this.fetchData()
     },
+    /**
+     * 链接到编辑文章页面
+     * @param id id
+     */
     push(id){
       this.$router.push({
         name: 'EditArticle',
         params: {
           id: id
         }
+      })
+    },
+    updateStatus(row, status) {
+      updateStatus(row.id, status).then(response => {
+        row.status = status
+        this.$notify({
+          title: "修改状态成功",
+          type: 'success',
+          duration: 2500
+        })
       })
     }
   }

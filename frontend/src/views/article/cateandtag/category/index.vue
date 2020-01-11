@@ -1,5 +1,10 @@
 <template>
   <div class="app-container">
+    <div class="filter-container">
+      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus" @click="add">
+        新增
+      </el-button>
+    </div>
     <el-table
       v-loading="listLoading"
       :data="treeData"
@@ -25,7 +30,7 @@
       <el-table-column label="操作" align="center" width="200px">
         <template slot-scope="scope">
           <el-button-group>
-            <el-button size="mini" type="primary" icon="el-icon-edit" @click=""/>
+            <el-button size="mini" type="primary" icon="el-icon-edit" @click="edit(scope.row)"/>
             <el-popover
               :ref="scope.row.id"
               placement="top"
@@ -41,13 +46,16 @@
         </template>
       </el-table-column>
     </el-table>
+    <eForm ref="form" :is-add="isAdd"/>
   </div>
 </template>
 
 <script>
 import { getArticleCategories } from '@/api/article'
+import eForm from './form'
 export default {
   name: "ArticleCategory",
+  components: { eForm },
   data() {
     return {
       treeData: [],
@@ -67,6 +75,18 @@ export default {
         this.treeData = response.data.content
         this.listLoading = false
       })
+    },
+    add() {
+      this.isAdd = true
+      this.$refs.form.getCategories()
+      this.$refs.form.dialog = true
+    },
+    edit(data) {
+      this.isAdd = false
+      const _this = this.$refs.form
+      _this.getCategories()
+      _this.form = { id: data.id, name: data.name, sort: data.sort, parentId: data.parentId, updateTime: data.updateTime, createTime: data.createTime}
+      _this.dialog = true
     },
   }
 }

@@ -13,6 +13,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,7 +35,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         QueryWrapper<ArticleDTO> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(StringUtils.isNotBlank(condition.getUsername()), ArticleDTO.COL_USERNAME, condition.getUsername());
         queryWrapper.eq(condition.getStatus() != null, "article.status", condition.getStatus());
-//        queryWrapper.eq(condition.getCategoryId()!= null, ArticleDTO.COL_CATEGORY_ID, condition.getCategoryId());
         queryWrapper.in(ids != null, ArticleDTO.COL_CATEGORY_ID, ids);
         boolean flag = condition.getStart() != null && condition.getEnd() != null;
         queryWrapper.between(flag, "article.create_time", condition.getStart(), condition.getEnd());
@@ -46,6 +46,15 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     public void updateComment(Long id) {
         Article article = baseMapper.selectById(id);
         article.setIsComment(!article.getIsComment());
+        article.setUpdateTime(new Date());
+        baseMapper.updateById(article);
+    }
+
+    @Override
+    public void updateStatus(Long id, Integer status) {
+        Article article = baseMapper.selectById(id);
+        article.setStatus(status);
+        article.setUpdateTime(new Date());
         baseMapper.updateById(article);
     }
 }

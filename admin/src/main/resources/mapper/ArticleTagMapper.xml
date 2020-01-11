@@ -5,7 +5,7 @@
     <!--@mbg.generated-->
     <!--@Table article_tag-->
     <id column="tag_id" jdbcType="BIGINT" property="tagId" />
-    <id column="article_id" jdbcType="INTEGER" property="articleId" />
+    <id column="article_id" jdbcType="BIGINT" property="articleId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>

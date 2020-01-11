@@ -29,7 +29,7 @@ public class ArticleTag implements Serializable {
      * 文章ID
      */
     @TableId(value = "article_id", type = IdType.INPUT)
-    private Integer articleId;
+    private Long articleId;
 
     /**
      * 添加时间

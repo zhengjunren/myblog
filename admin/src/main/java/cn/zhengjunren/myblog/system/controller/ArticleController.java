@@ -93,6 +93,12 @@ public class ArticleController extends BaseController<Article, ArticleService, A
         return ApiResponse.ofSuccess();
     }
 
+    @PutMapping("/status/{id}")
+    public ApiResponse updateStatus(@PathVariable Long id, Integer status) {
+        service.updateStatus(id, status);
+        return ApiResponse.ofSuccess();
+    }
+
     @Override
     public <T> void exportExcel(HttpServletResponse response) {
         throw new BadRequestException(Status.NOT_ALLOW_ACCESS);

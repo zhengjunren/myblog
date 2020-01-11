@@ -90,7 +90,7 @@ export default {
   data() {
     return {
       loading: false, dialog: false, menus: [],
-      form: { name: '', sort: 999, path: '', component: '', componentName: '', iframe: 'false', roles: [], parentId: 0, icon: '', cache: false, hidden: false, type: 0, permission: '' },
+      form: { id: undefined, name: '', sort: 999, path: '', component: '', componentName: '', iframe: 'false', roles: [], parentId: 0, icon: '', cache: false, hidden: false, type: 0, permission: '' },
       rules: {
         name: [
           { required: true, message: '请输入名称', trigger: 'blur' }

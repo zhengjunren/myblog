@@ -156,6 +156,12 @@
             <groupId>cn.zhengjunren.myblog</groupId>
             <artifactId>common</artifactId>
             <version>${parent.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>asm</artifactId>
+                    <groupId>org.ow2.asm</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
     </dependencies>

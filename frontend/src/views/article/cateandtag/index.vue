@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import category from "./category";
+import category from "./category/index";
 export default {
   name: "index",
   components: {category}
